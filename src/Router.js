@@ -7,7 +7,6 @@ import Signin from "./main-component/Pages/Signin";
 import Signup from "./main-component/Pages/Signup";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Navbar from "./main-component/sub-component/Navbar";
-import App from "./App";
 const Router = () => {
   return (
     <>

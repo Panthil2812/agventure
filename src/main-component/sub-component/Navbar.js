@@ -1,8 +1,8 @@
 import React from "react";
 import logo from "../../assets/logo.png";
-import { Link, NavLink, Outlet, useLocation } from "react-router-dom";
+import { Link, NavLink, Outlet } from "react-router-dom";
 import { FaHome } from "react-icons/fa";
-import { RiAuctionFill, RiLoginBoxFill } from "react-icons/ri";
+import { RiAuctionFill } from "react-icons/ri";
 import { ImBlogger } from "react-icons/im";
 import { AiFillShopping } from "react-icons/ai";
 import styled, { css } from "styled-components";

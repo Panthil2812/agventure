@@ -1,9 +1,6 @@
 import React from "react";
 import Slider from "../sub-component/slider";
 const Home = () => {
-  const src3 =
-    "https://images.pexels.com/photos/4054850/pexels-photo-4054850.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940";
-
   return (
     <>
       <div>

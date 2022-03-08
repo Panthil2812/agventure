@@ -13,14 +13,11 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { styled } from "@mui/material/styles";
-import Radio from "@mui/material/Radio";
-import RadioGroup from "@mui/material/RadioGroup";
-import { useTheme } from "@mui/material/styles";
-import OutlinedInput from "@mui/material/OutlinedInput";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
+import Autocomplete from "@mui/material/Autocomplete";
 function Copyright(props) {
   return (
     <Typography variant="body2" color="#33691e" align="center" {...props}>
@@ -92,37 +89,115 @@ const ScrollDiv = styled(Grid)({
     display: "none",
   },
 });
-
+const CityName = [
+  { label: "Mumbai" },
+  { label: "Delhi" },
+  { label: "Bangalore" },
+  { label: "Hyderabad" },
+  { label: "Ahmedabad" },
+  { label: "Chennai" },
+  { label: "Kolkata" },
+  { label: "Surat" },
+  { label: "Pune" },
+  { label: "Jaipur" },
+  { label: "Lucknow" },
+  { label: "Kanpur" },
+  { label: "Nagpur" },
+  { label: "Indore" },
+  { label: "Thane" },
+  { label: "Bhopal" },
+  { label: "Visakhapatnam" },
+  { label: "Pimpri and Chinchwad" },
+  { label: "Patna" },
+  { label: "Vadodara" },
+  { label: "Ghaziabad" },
+  { label: "Ludhiana" },
+  { label: "Agra" },
+  { label: "Nashik" },
+  { label: "Faridabad" },
+  { label: "Meerut" },
+  { label: "Rajkot" },
+  { label: "Kalyan" },
+  { label: "Vasai" },
+  { label: "Varanasi" },
+];
+const StateName = [
+  { label: "Daman" },
+  { label: "Diu" },
+  { label: "Silvassa" },
+  { label: "Mumbai" },
+  { label: "Delhi" },
+  { label: "Karnataka" },
+  { label: "Andhra Pradesh" },
+  { label: "Gujarat" },
+  { label: "Tamil Nadu" },
+  { label: "Rajasthan" },
+  { label: "Uttar Pradesh" },
+  { label: "Madhya Pradesh" },
+  { label: "Bihar" },
+  { label: "Punjab" },
+  { label: "Arunachal Pradesh" },
+  { label: "Assam" },
+  { label: "Chhattisgarh" },
+  { label: "Goa" },
+  { label: "Haryana" },
+  { label: "Himachal Pradesh" },
+  { label: "Jharkhand" },
+  { label: "Kerala" },
+  { label: "Manipur" },
+  { label: "Meghalaya" },
+  { label: "Mizoram" },
+  { label: "Nagaland" },
+  { label: "Odisha" },
+  { label: "Sikkim" },
+  { label: "Tripura" },
+  { label: "Uttarakhand" },
+  { label: "West Bengal" },
+];
 export default function SignInSide() {
   const handleSubmit = (event) => {
     event.preventDefault();
-    const data = new FormData(event.FormData);
-    data.set("First Name", data.get("First Name") + "panthil");
-    // eslint-disable-next-line no-console
-    console.log(data.target.value);
+    const data = new FormData(event.currentTarget);
+    const info = {
+      firstname: data.get("firstname"),
+      lastname: data.get("lastname"),
+      emailid: data.get("emailid"),
+      password: data.get("password"),
+      repassword: data.get("repassword"),
+      gender: Gender,
+      ctype: Type,
+      address: data.get("address"),
+      city: data.get("city"),
+      state: data.get("state"),
+      phone: data.get("phone"),
+      checkbox: data.get("checkbox"),
+    };
+    console.log(info);
   };
-  const [Gender, setAge] = React.useState("");
-
-  const handleChange = (event) => {
-    setAge(event.target.value);
+  const [Gender, setGender] = React.useState("");
+  const [Type, setType] = React.useState("");
+  const handleGenderChange = (event) => {
+    setGender(event.target.value);
+  };
+  const handleTypeChange = (event) => {
+    setType(event.target.value);
   };
   return (
     <ThemeProvider theme={theme}>
-      <Grid container columns={12} sx={{ height: "100vh" }}>
+      <Grid container component="main" sx={{ height: "100vh", color: "green" }}>
         <ScrollDiv
           item
-          xs={6}
-          sx={{
-            height: "100vh",
-            overflow: "auto",
-          }}
+          xs={12}
+          sm={8}
+          md={5}
           component={Paper}
           elevation={6}
           square
+          sx={{ height: "100vh", overflow: "auto" }}
         >
           <Box
             sx={{
-              marginTop: 8,
+              marginTop: 4,
               display: "flex",
               flexDirection: "column",
               alignItems: "center",
@@ -143,7 +218,7 @@ export default function SignInSide() {
               noValidate
               onSubmit={handleSubmit}
               sx={{
-                my: 8,
+                my: 4,
                 mx: 4,
                 display: "flex",
                 flexDirection: "column",
@@ -154,10 +229,10 @@ export default function SignInSide() {
                 <Grid item xs={12} sm={6}>
                   <CssTextField
                     autoComplete="given-name"
-                    name="firstName"
+                    name="firstname"
                     required
                     fullWidth
-                    id="firstName"
+                    id="firstname"
                     label="First Name"
                   />
                 </Grid>
@@ -165,9 +240,9 @@ export default function SignInSide() {
                   <CssTextField
                     required
                     fullWidth
-                    id="lastName"
+                    id="lastname"
                     label="Last Name"
-                    name="lastName"
+                    name="lastname"
                     autoComplete="family-name"
                   />
                 </Grid>
@@ -175,9 +250,9 @@ export default function SignInSide() {
                   <CssTextField
                     required
                     fullWidth
-                    id="email"
+                    id="emailid"
                     label="Email Address"
-                    name="email"
+                    name="emailid"
                     autoComplete="email"
                   />
                 </Grid>
@@ -196,23 +271,23 @@ export default function SignInSide() {
                   <CssTextField
                     required
                     fullWidth
-                    name="re-password"
+                    name="repassword"
                     label="
                     Re-Password"
-                    type="re-password"
-                    id="re-password"
+                    type="password"
+                    id="repassword"
                     autoComplete="new-password"
                   />
                 </Grid>
-                <Grid item xs={12}>
+                <Grid item xs={12} sm={6}>
                   <Box CssTextField sx={{ minWidth: 120 }}>
                     <CssFormControl
                       fullWidth
                       required
-                      name="Gender"
+                      name="gender"
                       label="Gender"
                       type="Gender"
-                      id="Gender"
+                      id="gender"
                       autoComplete="Gender"
                     >
                       <InputLabel id="demo-simple-select-label">
@@ -222,24 +297,134 @@ export default function SignInSide() {
                         labelId="demo-simple-select-label"
                         id="demo-simple-select"
                         value={Gender}
-                        label="Gender"
-                        onChange={handleChange}
+                        name="gender"
+                        label="gender"
+                        onChange={handleGenderChange}
+                      >
+                        <MenuItem value={0}>Male</MenuItem>
+                        <MenuItem value={1}>Female</MenuItem>
+                      </Select>
+                    </CssFormControl>
+                  </Box>
+                </Grid>
+                <Grid item xs={12} sm={6}>
+                  <Box CssTextField sx={{ minWidth: 120 }}>
+                    <CssFormControl
+                      fullWidth
+                      required
+                      name="ctype"
+                      label="Type"
+                      type="select"
+                      id="ctype"
+                      autoComplete="Type"
+                    >
+                      <InputLabel id="demo-simple-select-label">
+                        Type
+                      </InputLabel>
+                      <Select
+                        labelId="demo-simple-select-label"
+                        id="demo-simple-select"
+                        value={Type}
+                        label="Type"
+                        name="ctype"
+                        onChange={handleTypeChange}
                         className={theme.select}
                       >
-                        <MenuItem value={10}>Male</MenuItem>
-                        <MenuItem value={20}>Female</MenuItem>
-                        <MenuItem value={30}>Other</MenuItem>
+                        <MenuItem value={0}>Vendor</MenuItem>
+                        <MenuItem value={1}>Customers</MenuItem>
                       </Select>
                     </CssFormControl>
                   </Box>
                 </Grid>
                 <Grid item xs={12}>
+                  <CssTextField
+                    required
+                    fullWidth
+                    id="address"
+                    label="Address"
+                    name="address"
+                    autoComplete="address"
+                  />
+                </Grid>
+                <Grid item xs={12} sm={6}>
+                  <Box CssTextField sx={{ minWidth: 120 }}>
+                    <CssFormControl
+                      fullWidth
+                      required
+                      name="city"
+                      label="City"
+                      type="City"
+                      id="city"
+                      autoComplete="City"
+                    >
+                      <Autocomplete
+                        required
+                        id="combo-box-city"
+                        options={CityName}
+                        renderInput={(params) => (
+                          <TextField
+                            {...params}
+                            label="City"
+                            name="city"
+                            id="city"
+                            autoComplete="City"
+                          />
+                        )}
+                      />
+                    </CssFormControl>
+                  </Box>
+                </Grid>
+                <Grid item xs={12} sm={6}>
+                  <Box CssTextField sx={{ minWidth: 120 }}>
+                    <CssFormControl
+                      fullWidth
+                      required
+                      name="state"
+                      label="State"
+                      type="State"
+                      id="state"
+                      autoComplete="State"
+                    >
+                      <Autocomplete
+                        required
+                        id="combo-box-state"
+                        options={StateName}
+                        renderInput={(params) => (
+                          <TextField
+                            {...params}
+                            label="State"
+                            id="state"
+                            name="state"
+                            autoComplete="State"
+                          />
+                        )}
+                      />
+                    </CssFormControl>
+                  </Box>
+                </Grid>
+                <Grid item xs={12}>
+                  <CssTextField
+                    required
+                    fullWidth
+                    name="phone"
+                    label="Phone"
+                    type="Phone"
+                    id="phone"
+                    autoComplete="new-Phone"
+                  />
+                </Grid>
+                <Grid item xs={12}>
                   <FormControlLabel
                     control={
-                      <Checkbox value="allowExtraEmails" color="success" />
+                      <Checkbox
+                        value="allowExtraEmails"
+                        name="checkbox"
+                        id="checkbox"
+                        color="success"
+                      />
                     }
                     sx={{ color: "#33691e" }}
-                    label="I want to receive inspiration, marketing promotions and updates via email."
+                    label="I've read and accept the terms and conditions *"
                   />
                 </Grid>
               </Grid>
@@ -269,9 +454,10 @@ export default function SignInSide() {
         </ScrollDiv>
         <Grid
           item
-          xs={6}
+          xs={false}
+          sm={4}
+          md={7}
           sx={{
-            height: "100vh",
             backgroundImage: "url(https://source.unsplash.com/random)",
             backgroundRepeat: "no-repeat",
             backgroundColor: (t) =>
@@ -281,7 +467,7 @@ export default function SignInSide() {
             backgroundSize: "cover",
             backgroundPosition: "center",
           }}
-        ></Grid>
+        />
       </Grid>
     </ThemeProvider>
   );
