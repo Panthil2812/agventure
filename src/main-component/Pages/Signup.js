@@ -18,18 +18,12 @@ import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import Autocomplete from "@mui/material/Autocomplete";
-function Copyright(props) {
-  return (
-    <Typography variant="body2" color="#33691e" align="center" {...props}>
-      {"Copyright © "}
-      <Link color="#33691e" href="https://google.com/">
-        Agventure
-      </Link>{" "}
-      {new Date().getFullYear()}
-      {"."}
-    </Typography>
-  );
-}
+import Copyright from "../sub-component/Copyright";
+import ValidatorSignup from "../Validator/ValidatorSignup";
+import Snackbar from "@mui/material/Snackbar";
+import Alert from "@mui/material/Alert";
+import { useNavigate } from "react-router-dom";
+import validator from "validator";
 
 const theme = createTheme();
 const CssTextField = styled(TextField)({
@@ -155,33 +149,120 @@ const StateName = [
   { label: "West Bengal" },
 ];
 export default function SignInSide() {
+  let navigate = useNavigate();
+  const [state, setState] = React.useState({
+    open: false,
+    isLogged: false,
+    message: "",
+  });
+
+  const { isLogged, open, message } = state;
+  const errorfunction = () => {
+    if (isLogged) {
+      return (
+        <div>
+          <Snackbar
+            open={open}
+            sx={{ width: "50%" }}
+            anchorOrigin={{ vertical: "top", horizontal: "center" }}
+            autoHideDuration={3000}
+            onClose={handleClose}
+          >
+            <Alert
+              variant="filled"
+              onClose={handleClose}
+              severity="success"
+              sx={{ width: "100%" }}
+            >
+              {message}
+            </Alert>
+          </Snackbar>
+        </div>
+      );
+    } else {
+      return (
+        <div>
+          <Snackbar
+            open={open}
+            sx={{ width: "50%" }}
+            anchorOrigin={{ vertical: "top", horizontal: "center" }}
+            autoHideDuration={3000}
+            onClose={handleClose}
+          >
+            <Alert
+              variant="filled"
+              onClose={handleClose}
+              severity="error"
+              sx={{ width: "100%" }}
+            >
+              {message}
+            </Alert>
+          </Snackbar>
+        </div>
+      );
+    }
+  };
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     const info = {
-      firstname: data.get("firstname"),
-      lastname: data.get("lastname"),
-      emailid: data.get("emailid"),
-      password: data.get("password"),
-      repassword: data.get("repassword"),
+      firstname: validator.trim(data.get("firstname")),
+      lastname: validator.trim(data.get("lastname")),
+      emailid: validator.trim(data.get("emailid")),
+      password: validator.trim(data.get("password")),
+      repassword: validator.trim(data.get("repassword")),
       gender: Gender,
-      ctype: Type,
-      address: data.get("address"),
+      ctype: CType,
+      address: validator.trim(data.get("address")),
       city: data.get("city"),
       state: data.get("state"),
-      phone: data.get("phone"),
+      phone: validator.trim(data.get("phone")),
       checkbox: data.get("checkbox"),
     };
-    console.log(info);
+    const errorMessage = ValidatorSignup(info);
+    console.log(errorMessage);
+    if (!errorMessage.flag) {
+      setState({
+        open: true,
+        message: errorMessage.message,
+      });
+    } else {
+      setState({
+        isLogged: true,
+        open: true,
+        message: errorMessage.message,
+      });
+      setTimeout(() => {
+        console.log("settimeout");
+        navigate("/signin");
+      }, 3000);
+    }
+  };
+  const handleClose = () => {
+    setState({ ...state, open: false });
   };
   const [Gender, setGender] = React.useState("");
-  const [Type, setType] = React.useState("");
+  const [CType, setCType] = React.useState("");
   const handleGenderChange = (event) => {
     setGender(event.target.value);
   };
-  const handleTypeChange = (event) => {
-    setType(event.target.value);
+  const handleCTypeChange = (event) => {
+    setCType(event.target.value);
   };
+  const buttons = (
+    <React.Fragment>
+      <Button
+        type="submit"
+        fullWidth
+        variant="contained"
+        color="success"
+        sx={{ mt: 3, mb: 2 }}
+      >
+        Sign Up
+      </Button>
+      <div>{errorfunction()}</div>
+    </React.Fragment>
+  );
   return (
     <ThemeProvider theme={theme}>
       <Grid container component="main" sx={{ height: "100vh", color: "green" }}>
@@ -324,10 +405,10 @@ export default function SignInSide() {
                       <Select
                         labelId="demo-simple-select-label"
                         id="demo-simple-select"
-                        value={Type}
+                        value={CType}
                         label="Type"
                         name="ctype"
-                        onChange={handleTypeChange}
+                        onChange={handleCTypeChange}
                         className={theme.select}
                       >
                         <MenuItem value={0}>Vendor</MenuItem>
@@ -408,7 +489,7 @@ export default function SignInSide() {
                     fullWidth
                     name="phone"
                     label="Phone"
-                    type="Phone"
+                    type="number"
                     id="phone"
                     autoComplete="new-Phone"
                   />
@@ -428,15 +509,7 @@ export default function SignInSide() {
                   />
                 </Grid>
               </Grid>
-              <Button
-                type="submit"
-                fullWidth
-                variant="contained"
-                color="success"
-                sx={{ mt: 3, mb: 2 }}
-              >
-                Sign Up
-              </Button>
+              {buttons}
               <Grid container justifyContent="flex-end">
                 <Grid item>
                   <Link
@@ -448,7 +521,7 @@ export default function SignInSide() {
                   </Link>
                 </Grid>
               </Grid>
-              <Copyright sx={{ mt: 5, fontWeight: "bold" }} />
+              <Copyright />
             </Box>
           </Box>
         </ScrollDiv>

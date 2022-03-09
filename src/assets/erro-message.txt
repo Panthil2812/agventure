@@ -1,0 +1,22 @@
+Please Enter a First name.
+Please Enter a Last  name.
+Please Select a City name.
+Please Select a State name.
+Please Select a Gender name.
+Please Select a Type name.
+Please Enter a Address.
+Please Enter a Phone.
+Please Enter a Password.
+Please Enter a Re-password.
+Please Enter a Valid Email-Id Address.
+Please Enter a Valid First name.
+Please Enter a Valid Last name.
+Please Enter a 10-digit Phone Number.
+Password don't Match.Try Again !.
+Please password must be at least 8 characters long and at least one sy.
+Your old password was enterd incorrectly.Please enter it again.
+An account using this email address already exists.
+This Field is Required.
+Sign in Success! Redirecting....
+Sign up Success! Redirecting....
+Invalid Username/email and password

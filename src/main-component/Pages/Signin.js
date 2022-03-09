@@ -16,20 +16,8 @@ import { styled } from "@mui/material/styles";
 import Snackbar from "@mui/material/Snackbar";
 import Alert from "@mui/material/Alert";
 import { useNavigate } from "react-router-dom";
-// import { withRouter } from "react-router-dom";
-// import { browserHistory } from "react-router";
-
-function Copyright(props) {
-  return (
-    <Typography variant="body2" color="#33691e" align="center" {...props}>
-      {"Copyright © "}
-      <Link color="#33691e" href="/">
-        Agventure
-      </Link>
-      {new Date().getFullYear()}
-    </Typography>
-  );
-}
+import isEmail from "validator/lib/isEmail";
+import Copyright from "../sub-component/Copyright";
 const theme = createTheme();
 const CssTextField = styled(TextField)({
   "& label.Mui-focused": {
@@ -74,6 +62,7 @@ export default function SignInSide() {
             onClose={handleClose}
           >
             <Alert
+              variant="filled"
               onClose={handleClose}
               severity="success"
               sx={{ width: "100%" }}
@@ -94,8 +83,9 @@ export default function SignInSide() {
             onClose={handleClose}
           >
             <Alert
+              variant="filled"
               onClose={handleClose}
-              severity="success"
+              severity="error"
               sx={{ width: "100%" }}
             >
               Invalid Username/email and password
@@ -114,22 +104,20 @@ export default function SignInSide() {
       password: data.get("password").toString(),
     };
     console.log("Submit");
-    if (
-      info.email === "pmalaviya356@rku.ac.in" &&
-      info.password === "1234567890"
-    ) {
+    if (isEmail(info.email) && info.password === "1234567890") {
       setState({
         isLogged: true,
         open: true,
       });
-
-      navigate("/", {  name: "panthil"  });
-      console.log(state);
+      setTimeout(() => {
+        console.log("settimeout");
+        navigate("/");
+      }, 3000);
     } else {
       setState({
         open: true,
       });
-      console.log(state);
+      // console.log(state);
     }
   };
   const handleClose = () => {
@@ -255,7 +243,7 @@ export default function SignInSide() {
                     </Link>
                   </Grid>
                 </Grid>
-                <Copyright sx={{ mt: 5, fontWeight: "bold" }} />
+                <Copyright />
               </Box>
             </Box>
           </Grid>
