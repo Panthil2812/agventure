@@ -17,7 +17,17 @@ import Snackbar from "@mui/material/Snackbar";
 import Alert from "@mui/material/Alert";
 import { useNavigate } from "react-router-dom";
 import isEmail from "validator/lib/isEmail";
+import isStrongPassword from "validator/lib/isStrongPassword";
 import Copyright from "../sub-component/Copyright";
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import DialogContentText from "@mui/material/DialogContentText";
+import DialogTitle from "@mui/material/DialogTitle";
+import Slide from "@mui/material/Slide";
+import Backdrop from "@mui/material/Backdrop";
+import CircularProgress from "@mui/material/CircularProgress";
+
 const theme = createTheme();
 const CssTextField = styled(TextField)({
   "& label.Mui-focused": {
@@ -42,16 +52,79 @@ const CssTextField = styled(TextField)({
     },
   },
 });
+const Transition = React.forwardRef(function Transition(props, ref) {
+  return <Slide direction="up" ref={ref} {...props} />;
+});
 export default function SignInSide() {
   let navigate = useNavigate();
   const [state, setState] = React.useState({
     open: false,
     isLogged: false,
+    message: "",
   });
 
-  const { isLogged, open } = state;
+  const { isLogged, open, message } = state;
+  const [dialog, setDialog] = React.useState(false);
+  const [Forget, setForget] = React.useState({
+    isForget: false,
+    fEmail: "",
+    fPassword: "",
+  });
+  const { isForget, fEmail, fPassword } = Forget;
+
+  const handleClickDialog = () => {
+    setForget({
+      isForget: false,
+      fEmail: "",
+      fPassword: "",
+    });
+    setDialog(true);
+  };
+
+  const handleCloseDialog = () => {
+    setDialog(false);
+  };
+  const handleSubmitDialog = () => {
+    if (!isEmail(fEmail)) {
+      setState({
+        open: true,
+        message: "Please Enter a Valid Email-Id Address.",
+      });
+    } else if (fEmail !== "pmalaviya356@rku.ac.in") {
+      setState({
+        open: true,
+        message:
+          "The user ID you entered does not exist.Please check that you have typed your ID correctly.",
+      });
+    } else if (
+      !isStrongPassword(fPassword, {
+        minLength: 8,
+        minLowercase: 1,
+        minUppercase: 0,
+        minNumbers: 1,
+        minSymbols: 1,
+      })
+    ) {
+      setState({
+        open: true,
+        message:
+          "Please password must be at least 8 characters long and at least one Symbols,Number.",
+      });
+    } else {
+      console.log(fEmail);
+      console.log(fPassword);
+      setForget({
+        isForget: true,
+      });
+      setDialog(false);
+      setState({
+        open: true,
+        message: "Your Password has been changed Successfully.",
+      });
+    }
+  };
   const errorfunction = () => {
-    if (isLogged) {
+    if (isForget) {
       return (
         <div>
           <Snackbar
@@ -67,9 +140,44 @@ export default function SignInSide() {
               severity="success"
               sx={{ width: "100%" }}
             >
-              Login Success! Redirecting....
+              {message}
             </Alert>
           </Snackbar>
+          {/* <Backdrop
+            sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
+            open={isForget}
+            onClick={handleClose}
+          >
+            <CircularProgress color="success" />
+          </Backdrop> */}
+        </div>
+      );
+    } else if (isLogged) {
+      return (
+        <div>
+          <Snackbar
+            open={open}
+            sx={{ width: "50%" }}
+            anchorOrigin={{ vertical: "top", horizontal: "center" }}
+            autoHideDuration={3000}
+            onClose={handleClose}
+          >
+            <Alert
+              variant="filled"
+              onClose={handleClose}
+              severity="success"
+              sx={{ width: "100%" }}
+            >
+              {message}
+            </Alert>
+          </Snackbar>
+          <Backdrop
+            sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
+            open={isLogged}
+            onClick={handleClose}
+          >
+            <CircularProgress color="success" />
+          </Backdrop>
         </div>
       );
     } else {
@@ -88,7 +196,7 @@ export default function SignInSide() {
               severity="error"
               sx={{ width: "100%" }}
             >
-              Invalid Username/email and password
+              {message}
             </Alert>
           </Snackbar>
         </div>
@@ -103,19 +211,19 @@ export default function SignInSide() {
       email: data.get("email").toString(),
       password: data.get("password").toString(),
     };
-    console.log("Submit");
     if (isEmail(info.email) && info.password === "1234567890") {
       setState({
         isLogged: true,
         open: true,
+        message: "Sign in Success! Redirecting....",
       });
       setTimeout(() => {
-        console.log("settimeout");
         navigate("/");
       }, 3000);
     } else {
       setState({
         open: true,
+        message: "Invalid Username/email and password",
       });
       // console.log(state);
     }
@@ -225,13 +333,92 @@ export default function SignInSide() {
                 {buttons}
                 <Grid container>
                   <Grid item xs>
-                    <Link
-                      href="#"
-                      variant="body2"
-                      sx={{ color: "#33691e", fontWeight: "bold" }}
-                    >
-                      Forgot password?
-                    </Link>
+                    <div>
+                      <Typography
+                        component="span"
+                        variant="h5"
+                        onClick={handleClickDialog}
+                        sx={{
+                          color: "#33691e",
+                          fontWeight: "bold",
+                          fontSize: 15,
+                        }}
+                      >
+                        <u> Forgot password?</u>
+                      </Typography>
+                      <Dialog
+                        open={dialog}
+                        TransitionComponent={Transition}
+                        keepMounted
+                        aria-describedby="alert-dialog-slide-description"
+                      >
+                        <DialogTitle
+                          align="center"
+                          sx={{
+                            color: "#33691e",
+                            fontWeight: "bold",
+                            fontSize: "20px",
+                          }}
+                        >
+                          Forgot password?
+                        </DialogTitle>
+                        <DialogContent>
+                          <CssTextField
+                            margin="normal"
+                            required
+                            fullWidth
+                            name="username"
+                            label="UserName"
+                            type="email"
+                            id="username"
+                            value={fEmail}
+                            onChange={(e) => {
+                              setForget({
+                                ...Forget,
+                                fEmail: e.target.value,
+                              });
+                              // console.log("email: " + fEmail);
+                            }}
+                          />
+                          <CssTextField
+                            margin="normal"
+                            required
+                            fullWidth
+                            name="fpassword"
+                            label="New Password"
+                            type="password"
+                            id="fpassword"
+                            value={fPassword}
+                            onChange={(e) => {
+                              setForget({
+                                ...Forget,
+                                fPassword: e.target.value,
+                              });
+                              // console.log("password: " + fPassword);
+                            }}
+                          />
+                        </DialogContent>
+                        <DialogActions>
+                          <Button
+                            variant="contained"
+                            color="success"
+                            align="right"
+                            onClick={handleCloseDialog}
+                          >
+                            Cancel
+                          </Button>
+                          <Button
+                            variant="contained"
+                            color="success"
+                            align="center"
+                            onClick={handleSubmitDialog}
+                          >
+                            Submit
+                          </Button>
+                          <div>{errorfunction()}</div>
+                        </DialogActions>
+                      </Dialog>
+                    </div>
                   </Grid>
                   <Grid item>
                     <Link

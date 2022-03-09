@@ -20,3 +20,6 @@ This Field is Required.
 Sign in Success! Redirecting....
 Sign up Success! Redirecting....
 Invalid Username/email and password
+I acknowledge that I have read and agree to the terms and Condition and Privacy Policy.
+The user ID you entered does not exist.Please check that you have typed your ID correctly.
+Your Password has been changed Successfully.

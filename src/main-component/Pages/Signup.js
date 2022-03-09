@@ -505,7 +505,7 @@ export default function SignInSide() {
                       />
                     }
                     sx={{ color: "#33691e" }}
-                    label="I've read and accept the terms and conditions *"
+                    label="I acknowledge that I have read and agree to the terms and Condition and Privacy Policy.*"
                   />
                 </Grid>
               </Grid>
