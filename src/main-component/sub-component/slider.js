@@ -21,13 +21,13 @@ const slideImages = [
     url: agri2,
     captionTitle: "Slide Image Title Two",
     caption:
-      "Learn how to create a responsive slideshow with CSS and JavaScript.",
+      "Learn how to create a responsive slideshow with CSS and reate a responsive slideshow with CSS andJavaScript.",
   },
   {
     url: agri3,
     captionTitle: "Slide Image Title Three",
     caption:
-      "Learn how to create a responsive slideshow with CSS and JavaScript.",
+      "Learn how to create a responsive slideshow to create a responsive with CSS and JavaScript.",
   },
 ];
 const ImageText = styled.span`
@@ -51,7 +51,7 @@ const TextDiv = styled.div`
 
   background-color: black;
   opacity: 0.8;
-  padding: 10px;
+  padding: 25px;
   box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
 
   border-radius: 25px;
@@ -79,6 +79,7 @@ const Slideshow = () => {
             >
               <TextDiv>
                 <ImageTitle>{slideImage.captionTitle}</ImageTitle>
+                <br />
                 <br />
                 <ImageText>{slideImage.caption}</ImageText>
               </TextDiv>

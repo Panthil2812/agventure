@@ -104,7 +104,8 @@ const ValidatorSignup = (info) => {
   } else {
     return {
       flag: true,
-      message: "Sign up Success! Redirecting....",
+      message:
+        "Congratulation,Your account has been Successfully created, Redirecting....",
     };
   }
 };

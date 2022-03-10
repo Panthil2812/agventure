@@ -3,13 +3,9 @@ import Slider from "../sub-component/slider";
 const Home = () => {
   return (
     <>
-      <div>
-        <h1>panthil malaviya</h1>
-      </div>
-      <div>
-        <Slider />
-        <h1>Panthil Malaviya</h1>
-      </div>
+      <Slider />
+      <h1>Panthil Malaviya</h1>
+
       {/* <div
         style={{
           backgroundColor: "#FF0000",

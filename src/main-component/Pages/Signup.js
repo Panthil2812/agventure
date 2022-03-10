@@ -498,7 +498,7 @@ export default function SignInSide() {
                   <FormControlLabel
                     control={
                       <Checkbox
-                        value="allowExtraEmails"
+                        value="true"
                         name="checkbox"
                         id="checkbox"
                         color="success"

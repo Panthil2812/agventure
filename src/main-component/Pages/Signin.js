@@ -27,6 +27,7 @@ import DialogTitle from "@mui/material/DialogTitle";
 import Slide from "@mui/material/Slide";
 import Backdrop from "@mui/material/Backdrop";
 import CircularProgress from "@mui/material/CircularProgress";
+import { setCookie, getCookie } from "../Validator/CookieFunction";
 
 const theme = createTheme();
 const CssTextField = styled(TextField)({
@@ -57,12 +58,13 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 });
 export default function SignInSide() {
   let navigate = useNavigate();
+
+  const checklogin = getCookie("login");
   const [state, setState] = React.useState({
     open: false,
     isLogged: false,
     message: "",
   });
-
   const { isLogged, open, message } = state;
   const [dialog, setDialog] = React.useState(false);
   const [Forget, setForget] = React.useState({
@@ -72,6 +74,11 @@ export default function SignInSide() {
   });
   const { isForget, fEmail, fPassword } = Forget;
 
+  const [remember, setRemember] = React.useState({
+    rEmail: getCookie("username") ? getCookie("username") : "",
+    rPassword: "",
+  });
+  const { rEmail, rPassword } = remember;
   const handleClickDialog = () => {
     setForget({
       isForget: false,
@@ -210,15 +217,22 @@ export default function SignInSide() {
     const info = {
       email: data.get("email").toString(),
       password: data.get("password").toString(),
+      checkbox: data.get("checkbox"),
     };
     if (isEmail(info.email) && info.password === "1234567890") {
       setState({
         isLogged: true,
         open: true,
-        message: "Sign in Success! Redirecting....",
+        message:
+          "Congratulation,You have Successfully logged in, Redirecting....",
       });
+      if (info.checkbox) {
+        setCookie("username", info.email, 24);
+      }
+      setCookie("login", JSON.stringify(info), 1);
       setTimeout(() => {
-        navigate("/");
+        // navigate("/");
+        window.location.replace("/");
       }, 3000);
     } else {
       setState({
@@ -312,6 +326,13 @@ export default function SignInSide() {
                   id="email"
                   label="Email Address"
                   name="email"
+                  value={rEmail}
+                  onChange={(e) => {
+                    setRemember({
+                      ...remember,
+                      rEmail: e.target.value,
+                    });
+                  }}
                   autoComplete="email"
                   autoFocus
                 />
@@ -327,7 +348,14 @@ export default function SignInSide() {
                 />
                 <FormControlLabel
                   sx={{ color: "#33691e" }}
-                  control={<Checkbox value="remember" color="success" />}
+                  control={
+                    <Checkbox
+                      value="remember"
+                      name="checkbox"
+                      id="checkbox"
+                      color="success"
+                    />
+                  }
                   label="Remember me"
                 />
                 {buttons}
