@@ -1,20 +1,24 @@
 import React from "react";
 import Slider from "../sub-component/slider";
+import ImageBar from "../sub-component/ImageBar";
+import Footer from "../sub-component/Footer";
 const Home = () => {
   return (
     <>
       <Slider />
       <h1>Panthil Malaviya</h1>
+      <ImageBar />
+      <h1>Panthil Malaviya</h1>
+      <h1>Panthil Malaviya</h1>
+      <h1>Panthil Malaviya</h1>
+      <h1>Panthil Malaviya</h1>
+      <h1>Panthil Malaviya</h1>
+      <h1>Panthil Malaviya</h1>
+      <h1>Panthil Malaviya</h1>
 
-      {/* <div
-        style={{
-          backgroundColor: "#FF0000",
-          width: "auto",
-          height: "400px",
-        }}
-      >
-        
-      </div>
+      <Footer />
+      {/*  
+     
       <div
         style={{
           backgroundColor: "#00FFFF",

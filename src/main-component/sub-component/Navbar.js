@@ -99,7 +99,7 @@ const Navbar = (prop) => {
         <Link to="/">
           <Image src={logo} alt="Example2" />
         </Link>
-        {/*  */}
+
         {Loginckeck() ? (
           <NAvatar to="/dashbord">
             <Avatar
