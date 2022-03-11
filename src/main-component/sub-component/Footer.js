@@ -9,9 +9,15 @@ import UnstyledInput from "./UnstyledInput";
 import { styled } from "@mui/system";
 import { makeStyles } from "@mui/styles";
 import logo from "../../assets/logo2.png";
-import LocationOnIcon from "@mui/icons-material/LocationOn";
-import LocalPhoneIcon from "@mui/icons-material/LocalPhone";
 import EmailIcon from "@mui/icons-material/Email";
+import Avatar from "@mui/material/Avatar";
+
+import { FaFacebookF, FaLinkedinIn, FaPhoneAlt } from "react-icons/fa";
+import { RiGithubFill } from "react-icons/ri";
+import { ImLocation2 } from "react-icons/im";
+import { MdEmail } from "react-icons/md";
+import { BsTwitter, BsGoogle, BsInstagram } from "react-icons/bs";
+
 const ColorButton = styled(Button)(({ theme }) => ({
   color: "#0d4d29",
   backgroundColor: "#ddf6e4",
@@ -43,6 +49,9 @@ const useStyles = makeStyles(() => ({
     "&:hover": {
       textDecoration: "underline",
     },
+  },
+  slink: {
+    color: "#fff",
   },
 }));
 const blue = {
@@ -110,17 +119,6 @@ const Footer = () => {
             </Grid>
             <Grid item xs={7} sx={{ textAlign: "center", padding: "15px" }}>
               <div className={classes.leftSide}>
-                {/* <UnstyledInput
-                  name="email"
-                  label="email"
-                  id="email"
-                  onChange={(e) => {
-                    console.log("panthil");
-                    setEmail({
-                      email: e.target.value,
-                    });
-                  }}
-                /> */}
                 <StyledInputElement
                   name="email"
                   id="email"
@@ -294,20 +292,64 @@ const Footer = () => {
                       backgroundColor: "#0d4d29",
                     }}
                   />
-                  <div style={{ margin: "5px" }}>
-                    <LocationOnIcon /> Rk University,Rajkot
+                  <div style={{ margin: "10px" }}>
+                    <ImLocation2 /> Rk University,Rajkot
                   </div>
-                  <div style={{ margin: "5px" }}>
-                    <LocalPhoneIcon /> Phone: (0039)333 12 347
+                  <div style={{ margin: "10px" }}>
+                    <FaPhoneAlt /> Phone: (0039)333 12 347
                   </div>
-                  <div style={{ margin: "5px" }}>
-                    <EmailIcon /> Email: admin@ibid.com
+                  <div style={{ margin: "10px" }}>
+                    <MdEmail /> Email: admin@ibid.com
                   </div>
                 </div>
               </Grid>
             </Grid>
           </Grid>
         </Grid>
+      </Box>
+      <Box
+        sx={{
+          bgcolor: "#0d4d29",
+          textAlign: "center",
+          padding: "10px 70px 10px 70px",
+          display: "flex",
+          flexDirection: "row",
+          alignItems: "center",
+          alignContent: "center",
+          justifyContent: "center",
+          borderBottom: "3px solid #fff",
+        }}
+      >
+        <Avatar sx={{ m: 1, bgcolor: "#3b5998" }}>
+          <a className={classes.slink} href="https://www.facebook.com/">
+            <FaFacebookF />
+          </a>
+        </Avatar>
+        <Avatar sx={{ m: 1, bgcolor: "#55acee" }}>
+          <a className={classes.slink} href="https://www.twitter.com/">
+            <BsTwitter />
+          </a>
+        </Avatar>
+        <Avatar sx={{ m: 1, bgcolor: "#dd4b39" }}>
+          <a className={classes.slink} href="https://www.google.com/">
+            <BsGoogle />
+          </a>
+        </Avatar>
+        <Avatar sx={{ m: 1, bgcolor: "#3b5998" }}>
+          <a className={classes.slink} href="https://www.instagram.com/">
+            <BsInstagram />{" "}
+          </a>
+        </Avatar>
+        <Avatar sx={{ m: 1, bgcolor: "#0082ca" }}>
+          <a className={classes.slink} href="https://www.linkedin.com/">
+            <FaLinkedinIn />{" "}
+          </a>
+        </Avatar>
+        <Avatar sx={{ m: 1, bgcolor: "#333333" }}>
+          <a className={classes.slink} href="https://www.gihub.com/">
+            <RiGithubFill />{" "}
+          </a>
+        </Avatar>
       </Box>
       <Box sx={{ p: 2, bgcolor: "#0d4d29" }}>
         <Typography

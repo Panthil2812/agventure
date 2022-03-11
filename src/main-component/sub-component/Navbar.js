@@ -20,6 +20,7 @@ const NBar = styled.div`
   overflow: hidden;
   background-color: rgb(255, 255, 255);
   padding: 5px;
+  border-bottom: 5px solid #0d4d29;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
   position: sticky; /* Set the navbar to fixed position */
   margin: 0;
