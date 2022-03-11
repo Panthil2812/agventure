@@ -1,5 +1,5 @@
 import React from "react";
-import logo from "../../assets/logo1.png";
+import logo from "../../assets/Images/logo1.png";
 import { Link, NavLink, Outlet } from "react-router-dom";
 import { FaHome } from "react-icons/fa";
 import { RiAuctionFill } from "react-icons/ri";

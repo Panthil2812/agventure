@@ -8,7 +8,7 @@ import Paper from "@mui/material/Paper";
 import UnstyledInput from "./UnstyledInput";
 import { styled } from "@mui/system";
 import { makeStyles } from "@mui/styles";
-import logo from "../../assets/logo2.png";
+import logo from "../../assets/Images/logo2.png";
 import EmailIcon from "@mui/icons-material/Email";
 import Avatar from "@mui/material/Avatar";
 
@@ -154,6 +154,7 @@ const Footer = () => {
         sx={{
           p: 2,
           height: "200px",
+          bgcolor: "#f9f9f9",
           boxShadow: "0 8px 16px 0 rgba(0, 0, 0, 0.2)",
           textAlign: "center",
         }}

@@ -1,17 +1,13 @@
 import * as React from "react";
 import Box from "@mui/material/Box";
-import styled, { css } from "styled-components";
-import Paper from "@mui/material/Paper";
-import Grid from "@mui/material/Grid";
-import Typography from "@mui/material/Typography";
-
-import organic1 from "../../assets/organic-01.png";
-import organic2 from "../../assets/organic-02.png";
-import organic3 from "../../assets/organic-03.png";
-import organic4 from "../../assets/organic-04.png";
-import organic5 from "../../assets/organic-05.png";
-import organic6 from "../../assets/organic-06.png";
-import organic7 from "../../assets/organic-07.png";
+import styled from "styled-components";
+import organic1 from "../../assets/Images/organic-01.png";
+import organic2 from "../../assets/Images/organic-02.png";
+import organic3 from "../../assets/Images/organic-03.png";
+import organic4 from "../../assets/Images/organic-04.png";
+import organic5 from "../../assets/Images/organic-05.png";
+import organic6 from "../../assets/Images/organic-06.png";
+import organic7 from "../../assets/Images/organic-07.png";
 const Img = styled.img`
   width: 140px;
   height: 90px;
