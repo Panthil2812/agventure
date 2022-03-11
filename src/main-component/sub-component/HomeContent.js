@@ -3,7 +3,11 @@ import styled from "styled-components";
 import Box from "@mui/material/Box";
 import Paper from "@mui/material/Paper";
 import Grid from "@mui/material/Grid";
-import organic1 from "../../assets/Images/homeimg.jpeg";
+import organic from "../../assets/Images/homeimg.png";
+import organic1 from "../../assets/Images/homeimg1.png";
+import organic2 from "../../assets/Images/homeimg2.png";
+import organic3 from "../../assets/Images/homeimg3.png";
+import organic4 from "../../assets/Images/homeimg4.png";
 
 import { CgMonday } from "react-icons/cg";
 const Img = styled.img`
@@ -18,6 +22,20 @@ const Title = styled.h1`
 const Content = styled.p`
   color: #0d4d29;
 `;
+const myArray = [
+  organic,
+  organic1,
+  organic2,
+  organic3,
+  organic4,
+  organic,
+  organic1,
+  organic2,
+  organic3,
+  organic4,
+];
+const rand = myArray[(Math.random() * myArray.length) | 0];
+
 const HomeContect = () => {
   return (
     <>
@@ -27,7 +45,7 @@ const HomeContect = () => {
         <Grid container spacing={2}>
           <Grid item xs={6} md={5}>
             <Box sx={{ height: "600px" }}>
-              <Img src={organic1} alt="organic1" />
+              <Img src={rand} alt="organic1" />
             </Box>
           </Grid>
           <Grid item xs={6} md={7}>

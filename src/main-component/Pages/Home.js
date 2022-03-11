@@ -3,6 +3,8 @@ import Slider from "../sub-component/slider";
 import ImageBar from "../sub-component/ImageBar";
 import Footer from "../sub-component/Footer";
 import HomeContect from "../sub-component/HomeContent";
+import { UnstyledInput } from "../sub-component/UnstyledInput";
+import { TotalCounter } from "../sub-component/TotalCounter";
 const Home = () => {
   return (
     <>
@@ -15,7 +17,9 @@ const Home = () => {
       <h1>Panthil Malaviya</h1>
       <h1>Panthil Malaviya</h1>
       <h1>Panthil Malaviya</h1>
+      <TotalCounter />
       <HomeContect />
+      <UnstyledInput />
       <ImageBar />
       <h1>Panthil Malaviya</h1>
       <h1>Panthil Malaviya</h1>

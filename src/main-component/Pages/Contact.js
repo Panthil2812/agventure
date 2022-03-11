@@ -1,9 +1,10 @@
 import React from "react";
+import { HomeCard } from "../sub-component/HomeCard";
 
 const Contact = () => {
   return (
     <>
-      <h1>CONTACT PAGE</h1>
+      <HomeCard />
     </>
   );
 };
