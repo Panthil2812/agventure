@@ -1,9 +1,12 @@
 import React from "react";
 
+import Contactform from "../sub-component/Contactform";
+import Footer from "../sub-component/Footer";
 const Contact = () => {
   return (
     <>
-      <h1>Panthil Malaviya</h1>
+      <Contactform />
+      <Footer />
     </>
   );
 };

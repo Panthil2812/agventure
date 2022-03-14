@@ -1,7 +1,6 @@
 import * as React from "react";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
-import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
@@ -24,57 +23,59 @@ import Snackbar from "@mui/material/Snackbar";
 import Alert from "@mui/material/Alert";
 import { useNavigate } from "react-router-dom";
 import validator from "validator";
+import Backdrop from "@mui/material/Backdrop";
+import CircularProgress from "@mui/material/CircularProgress";
 
 const theme = createTheme();
 const CssTextField = styled(TextField)({
   "& label.Mui-focused": {
-    color: "green",
+    color: "#325240",
   },
   "& .MuiInput-underline:after": {
     borderWidth: "2px",
-    borderBottomColor: "green",
+    borderBottomColor: "#325240",
   },
   "& .MuiOutlinedInput-root": {
     "& fieldset": {
       borderWidth: "2px",
-      borderColor: "green",
+      borderColor: "#325240",
     },
     "&:hover fieldset": {
       borderWidth: "2px",
-      borderColor: "green",
+      borderColor: "#325240",
     },
     "&.Mui-focused fieldset": {
       borderWidth: "2px",
-      borderColor: "green",
+      borderColor: "#325240",
     },
   },
 });
 const CssFormControl = styled(FormControl)({
   "& .MuiFormControlLabel-label": {
-    color: "green",
+    color: "#325240",
   },
   "::-webkit-scrollbar": {
     display: "none",
   },
   "& label.Mui-focused": {
-    color: "green",
+    color: "#325240",
   },
   "& .MuiInput-underline:after": {
     borderWidth: "2px",
-    borderBottomColor: "green",
+    borderBottomColor: "#325240",
   },
   "& .MuiOutlinedInput-root": {
     "& fieldset": {
       borderWidth: "2px",
-      borderColor: "green",
+      borderColor: "#325240",
     },
     "&:hover fieldset": {
       borderWidth: "2px",
-      borderColor: "green",
+      borderColor: "#325240",
     },
     "&.Mui-focused fieldset": {
       borderWidth: "2px",
-      borderColor: "green",
+      borderColor: "#325240",
     },
   },
 });
@@ -172,11 +173,18 @@ export default function SignInSide() {
               variant="filled"
               onClose={handleClose}
               severity="success"
-              sx={{ width: "100%" }}
+              sx={{ width: "100%", bgcolor: "#325240" }}
             >
               {message}
             </Alert>
           </Snackbar>
+          <Backdrop
+            sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
+            open={open}
+            onClick={handleClose}
+          >
+            <CircularProgress sx={{ color: "#325240" }} />
+          </Backdrop>
         </div>
       );
     } else {
@@ -256,7 +264,7 @@ export default function SignInSide() {
         fullWidth
         variant="contained"
         color="success"
-        sx={{ mt: 3, mb: 2 }}
+        sx={{ mt: 3, mb: 2, bgcolor: "#325240" }}
       >
         Sign Up
       </Button>
@@ -265,7 +273,11 @@ export default function SignInSide() {
   );
   return (
     <ThemeProvider theme={theme}>
-      <Grid container component="main" sx={{ height: "100vh", color: "green" }}>
+      <Grid
+        container
+        component="main"
+        sx={{ height: "100vh", color: "#325240" }}
+      >
         <ScrollDiv
           item
           xs={12}
@@ -284,13 +296,13 @@ export default function SignInSide() {
               alignItems: "center",
             }}
           >
-            <Avatar sx={{ m: 1, bgcolor: "#33691e" }}>
+            <Avatar sx={{ m: 1, bgcolor: "#325240" }}>
               <LockOutlinedIcon />
             </Avatar>
             <Typography
               component="h1"
               variant="h5"
-              sx={{ color: "#33691e", fontWeight: "bold" }}
+              sx={{ color: "#325240", fontWeight: "bold" }}
             >
               Sign Up
             </Typography>
@@ -504,7 +516,7 @@ export default function SignInSide() {
                         color="success"
                       />
                     }
-                    sx={{ color: "#33691e" }}
+                    sx={{ color: "#325240" }}
                     label="I acknowledge that I have read and agree to the terms and Condition and Privacy Policy.*"
                   />
                 </Grid>
@@ -515,7 +527,7 @@ export default function SignInSide() {
                   <Link
                     href="/signin"
                     variant="body2"
-                    sx={{ color: "green", fontWeight: "bold" }}
+                    sx={{ color: "#325240", fontWeight: "bold" }}
                   >
                     Already have an account? Sign in
                   </Link>

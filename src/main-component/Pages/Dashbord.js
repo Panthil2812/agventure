@@ -34,7 +34,11 @@ const Dashbord = () => {
             variant="filled"
             onClose={handleClose}
             severity="success"
-            sx={{ width: "100%", texttransform: "capitalize" }}
+            sx={{
+              width: "100%",
+              texttransform: "capitalize",
+              bgcolor: "#325240",
+            }}
           >
             {message}
           </Alert>
@@ -44,7 +48,7 @@ const Dashbord = () => {
           open={Progress}
           onClick={handleClose}
         >
-          <CircularProgress color="success" />
+          <CircularProgress sx={{ color: "#325240" }} />
         </Backdrop>
       </>
     );
@@ -59,6 +63,7 @@ const Dashbord = () => {
         <Button
           variant="contained"
           color="success"
+          sx={{ bgcolor: "#325240" }}
           align="center"
           onClick={() => {
             //

@@ -297,7 +297,7 @@ const Footer = () => {
                     <FaPhoneAlt /> Phone: (0039)333 12 347
                   </div>
                   <div style={{ margin: "10px" }}>
-                    <MdEmail /> Email: admin@ibid.com
+                    <MdEmail /> Email: agventureibid@gmail.com
                   </div>
                 </div>
               </Grid>

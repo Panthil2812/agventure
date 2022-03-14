@@ -31,24 +31,24 @@ import { setCookie, getCookie } from "../Validator/CookieFunction";
 const theme = createTheme();
 const CssTextField = styled(TextField)({
   "& label.Mui-focused": {
-    color: "green",
+    color: "#325240",
   },
   "& .MuiInput-underline:after": {
     borderWidth: "2px",
-    borderBottomColor: "green",
+    borderBottomColor: "#325240",
   },
   "& .MuiOutlinedInput-root": {
     "& fieldset": {
       borderWidth: "2px",
-      borderColor: "green",
+      borderColor: "#325240",
     },
     "&:hover fieldset": {
       borderWidth: "2px",
-      borderColor: "green",
+      borderColor: "#325240",
     },
     "&.Mui-focused fieldset": {
       borderWidth: "2px",
-      borderColor: "green",
+      borderColor: "#325240",
     },
   },
 });
@@ -144,7 +144,7 @@ export default function SignInSide() {
               variant="filled"
               onClose={handleClose}
               severity="success"
-              sx={{ width: "100%" }}
+              sx={{ width: "100%", bgcolor: "#325240" }}
             >
               {message}
             </Alert>
@@ -172,7 +172,7 @@ export default function SignInSide() {
               variant="filled"
               onClose={handleClose}
               severity="success"
-              sx={{ width: "100%" }}
+              sx={{ width: "100%", bgcolor: "#325240" }}
             >
               {message}
             </Alert>
@@ -182,7 +182,7 @@ export default function SignInSide() {
             open={isLogged}
             onClick={handleClose}
           >
-            <CircularProgress color="success" />
+            <CircularProgress sx={{ color: "#325240" }} />
           </Backdrop>
         </div>
       );
@@ -249,9 +249,9 @@ export default function SignInSide() {
       <Button
         type="submit"
         fullWidth
-        variant="contained"
         color="success"
-        sx={{ mt: 3, mb: 2 }}
+        variant="contained"
+        sx={{ mt: 3, mb: 2, bgcolor: "#325240" }}
       >
         Sign In
       </Button>
@@ -265,7 +265,7 @@ export default function SignInSide() {
         <Grid
           container
           component="main"
-          sx={{ height: "100vh", color: "green" }}
+          sx={{ height: "100vh", color: "#325240" }}
         >
           <CssBaseline />
           <Grid
@@ -302,13 +302,13 @@ export default function SignInSide() {
                 alignItems: "center",
               }}
             >
-              <Avatar sx={{ m: 1, bgcolor: "#33691e" }}>
+              <Avatar sx={{ m: 1, bgcolor: "#325240" }}>
                 <LockOutlinedIcon />
               </Avatar>
               <Typography
                 component="h1"
                 variant="h5"
-                sx={{ color: "#33691e", fontWeight: "bold" }}
+                sx={{ color: "#325240", fontWeight: "bold" }}
               >
                 Sign in
               </Typography>
@@ -346,7 +346,7 @@ export default function SignInSide() {
                   autoComplete="current-password"
                 />
                 <FormControlLabel
-                  sx={{ color: "#33691e" }}
+                  sx={{ color: "#325240" }}
                   control={
                     <Checkbox
                       value="remember"
@@ -366,7 +366,7 @@ export default function SignInSide() {
                         variant="h5"
                         onClick={handleClickDialog}
                         sx={{
-                          color: "#33691e",
+                          color: "#325240",
                           fontWeight: "bold",
                           fontSize: 15,
                         }}
@@ -382,7 +382,7 @@ export default function SignInSide() {
                         <DialogTitle
                           align="center"
                           sx={{
-                            color: "#33691e",
+                            color: "#325240",
                             fontWeight: "bold",
                             fontSize: "20px",
                           }}
@@ -431,12 +431,13 @@ export default function SignInSide() {
                             color="success"
                             align="right"
                             onClick={handleCloseDialog}
+                            sx={{ bgcolor: "#325240" }}
                           >
                             Cancel
                           </Button>
                           <Button
                             variant="contained"
-                            color="success"
+                            sx={{ bgcolor: "#325240" }}
                             align="center"
                             onClick={handleSubmitDialog}
                           >
@@ -451,7 +452,7 @@ export default function SignInSide() {
                     <Link
                       href="/signup"
                       variant="body2"
-                      sx={{ color: "#33691e", fontWeight: "bold" }}
+                      sx={{ color: "#325240", fontWeight: "bold" }}
                     >
                       {"Don't have an account? Sign Up"}
                     </Link>
