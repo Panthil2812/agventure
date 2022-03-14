@@ -17,7 +17,6 @@ const useStyles = makeStyles(() => ({
     width: "100%",
     display: "flex",
     justifyContent: "space-around",
-    marginTop: "50px",
     marginBottom: "50px",
     alignItems: "center",
     margin: "0 auto",

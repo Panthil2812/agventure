@@ -133,7 +133,7 @@ const Contactform = () => {
     };
     if (validator.isEmpty(info.name)) {
       setState({ flag: true, message: "Please Enter a Name." });
-    } else if (!validator.isAlpha(info.name, ["en-IN"])) {
+    } else if (!validator.isAlpha(info.firstname, ["en-IN"])) {
       setState({
         flag: true,
         message: "plase enter vaild Name",
@@ -181,7 +181,8 @@ const Contactform = () => {
           bgcolor: "#fff",
           height: "100vh",
           padding: "50px",
-          backgroundImage: `url(${organic})`,
+          backgroundImage: `url(${organic})`,backgroundSize: "cover",
+          backgroundPosition: "center",
         }}
       >
         <Box
@@ -287,8 +288,8 @@ const Contactform = () => {
               justifyContent: "center",
             }}
           >
+            <h1>CONTACT US</h1>
             <div align="left">
-              <h1>CONTACT US</h1>
               <hr
                 style={{
                   height: "2px",
@@ -296,6 +297,7 @@ const Contactform = () => {
                   backgroundColor: "#fff",
                 }}
               />
+
               <div style={{ margin: "15px" }}>
                 <ImLocation2 /> Rk University,Rajkot
               </div>

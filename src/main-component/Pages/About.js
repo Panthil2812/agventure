@@ -1,9 +1,12 @@
 import React from "react";
+import Aboutcontent from "../sub-component/Aboutcontent";
+import Footer from "../sub-component/Footer";
 
 const About = () => {
   return (
     <>
-      <h1>ABOUT PAGE</h1>
+      <Aboutcontent />
+      <Footer />
     </>
   );
 };
