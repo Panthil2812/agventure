@@ -1,79 +1,128 @@
-import * as React from "react";
+import React, { Component } from "react";
+import photo from "../../assets/Images/india1.png";
+import { BsCart4, BsPersonBoundingBox, BsPersonFill } from "react-icons/bs";
+import { ImHammer2 } from "react-icons/im";
+import { MdOutlineAccountBox } from "react-icons/md";
+import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
-import styled from "styled-components";
-import organic1 from "../../assets/Images/organic-01.png";
-import organic2 from "../../assets/Images/organic-02.png";
-import organic3 from "../../assets/Images/organic-03.png";
-import organic4 from "../../assets/Images/organic-04.png";
-import organic5 from "../../assets/Images/organic-05.png";
-import organic6 from "../../assets/Images/organic-06.png";
-import organic7 from "../../assets/Images/organic-07.png";
-const Img = styled.img`
-  width: 140px;
-  height: 90px;
-  margin: 5px;
-  backgourndcolor: red;
-  display: inline;
-`;
-
-export const TotalCounter = () => {
-  return (
-    <>
-      <Box
-        sx={{
-          bgcolor: "#0d4d29",
-          height: "100px",
-          padding: "50px 70px 40px 70px",
-          textAlign: "center",
-        }}
-      >
-        <Img src={organic4} alt="organic4" />
-        <Img src={organic5} alt="organic5" />
-        <Img src={organic6} alt="organic6" />
-        <Img src={organic7} alt="organic7" />
-      </Box>
-    </>
-  );
+const styles = {
+  paperContainer: {
+    background: `url(https://images.pexels.com/photos/4069291/pexels-photo-4069291.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940)  no-repeat`,
+    backgroundSize: "100%",
+    opacity: "0.9",
+    height: "250px",
+    alignItems: "center",
+  },
+  subContainer: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    margin: " 0 -5px",
+  },
+  title: {
+    fontSize: "25px",
+    fontWeight: "bold",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  border: {
+    height: "2px",
+    borderWidth: "0",
+    backgroundColor: "#fff",
+  },
 };
+export default class Crd extends Component {
+  render() {
+    return (
+      <>
+        <div>
+          <Box style={styles.paperContainer}>
+            <Grid
+              sx={{ flexGrow: 1, justifyContent: "center" }}
+              container
+              spacing={2}
+            >
+              <Grid item xs={12}>
+                <Grid container justifyContent="center" spacing={5}>
+                  <Grid
+                    item
+                    sx={{
+                      height: 200,
+                      width: 250,
+                      color: "#fff",
+                    }}
+                  >
+                    <div>
+                      <div style={styles.subContainer}>
+                        <ImHammer2 size={60} />
+                        <h1 style={{ padding: "15px" }}>345</h1>
+                      </div>
+                      <hr style={styles.border} />
 
-// import React from "react";
-// import Image from "react-bootstrap/Image";
-// import pexelsphoto2 from "../../assets/Images/success.png";
-// import { BsCart4 } from "react-icons/bs";
-// import { BiDollarCircle } from "react-icons/bi";
-// import { makeStyles } from "@mui/styles";
-// import { RiProductHuntLine, RiAccountPinBoxLine } from "react-icons/ri";
+                      <a style={styles.title}>Auction</a>
+                    </div>
+                  </Grid>
+                  <Grid
+                    item
+                    sx={{
+                      height: 200,
+                      width: 250,
+                      color: "#fff",
+                    }}
+                  >
+                    <div>
+                      <div style={styles.subContainer}>
+                        <MdOutlineAccountBox size={60} />
+                        <h1 style={{ padding: "15px" }}>1250</h1>
+                      </div>
+                      <hr style={styles.border} />
 
-// export const TotalCounter = () => {
-//   const classes = useStyles();
+                      <a style={styles.title}>Seller Acounts</a>
+                    </div>
+                  </Grid>
+                  <Grid
+                    item
+                    sx={{
+                      height: 200,
+                      width: 250,
+                      color: "#fff",
+                    }}
+                  >
+                    <div>
+                      <div style={styles.subContainer}>
+                        <BsCart4 size={60} />
+                        <h1 style={{ padding: "15px" }}>1659</h1>
+                      </div>
+                      <hr style={styles.border} />
 
-//   return (
-//     <>
-//       <div>
-//         <Image
-//           src={pexelsphoto2}
-//           style={{
-//             opacity: "0.9",
-//             backgroundSize: "cover",
-//             height: "40vh",
-//             width: "100%",
-//             backgroundpPosition: "center",
-//             backgroundRepeat: "no-repeat",
-//             backgroundSize: "cover",
-//           }}
-//         />
-//         <div className={classes.aSide}>
-//           <h4>Nature</h4>
-//           <p>What a beautiful sunrise</p>
-//         </div>
-//       </div>
-//     </>
-//   );
-// };
-// // import React, { Component } from 'react';
+                      <a style={styles.title}>Products</a>
+                    </div>
+                  </Grid>
+                  <Grid
+                    item
+                    sx={{
+                      height: 200,
+                      width: 250,
+                      color: "#fff",
+                    }}
+                  >
+                    <div>
+                      <div style={styles.subContainer}>
+                        <BsPersonFill size={60} />
+                        <h1 style={{ padding: "15px" }}>538</h1>
+                      </div>
+                      <hr style={styles.border} />
 
-// // export default class Crd extends Component {
-// //     render() {
-// //    return
-// //     }
-// // }
+                      <a style={styles.title}>Vendor Acounts</a>
+                    </div>
+                  </Grid>
+                </Grid>
+              </Grid>
+            </Grid>
+          </Box>
+        </div>
+      </>
+    );
+  }
+}

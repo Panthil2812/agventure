@@ -18,7 +18,7 @@ const ImageBar = () => {
     <>
       <Box
         sx={{
-          bgcolor: "#0d4d29",
+          bgcolor: "#325240",
           height: "100px",
           padding: "50px 70px 40px 70px",
           textAlign: "center",

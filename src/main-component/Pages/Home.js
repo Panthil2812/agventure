@@ -3,103 +3,19 @@ import Slider from "../sub-component/slider";
 import ImageBar from "../sub-component/ImageBar";
 import Footer from "../sub-component/Footer";
 import HomeContect from "../sub-component/HomeContent";
-import { UnstyledInput } from "../sub-component/UnstyledInput";
-import { TotalCounter } from "../sub-component/TotalCounter";
+import IndiaContect from "../sub-component/IndiaContect";
+import TotalCounter from "../sub-component/TotalCounter";
+import { HomeCard } from "../sub-component/HomeCard";
 const Home = () => {
   return (
     <>
       <Slider />
-      <h1>Panthil Malaviya</h1>
-      <h1>Panthil Malaviya</h1>
-      <h1>Panthil Malaviya</h1>
-      <h1>Panthil Malaviya</h1>
-      <h1>Panthil Malaviya</h1>
-      <h1>Panthil Malaviya</h1>
-      <h1>Panthil Malaviya</h1>
-      <h1>Panthil Malaviya</h1>
+      <IndiaContect />
+      <HomeCard />
       <TotalCounter />
       <HomeContect />
-      <UnstyledInput />
       <ImageBar />
-      <h1>Panthil Malaviya</h1>
-      <h1>Panthil Malaviya</h1>
-      <h1>Panthil Malaviya</h1>
-      <h1>Panthil Malaviya</h1>
       <Footer />
-      {/*  
-     
-      <div
-        style={{
-          backgroundColor: "#00FFFF",
-          width: "auto",
-          height: "485px",
-        }}
-      >
-        <Slider />
-      </div>
-      <div
-        style={{
-          backgroundColor: "#FF0000",
-          width: "auto",
-          height: "400px",
-        }}
-      ></div>
-      <div
-        style={{
-          backgroundColor: "#00FFFF",
-          width: "auto",
-          height: "485px",
-        }}
-      ></div>
-      <div
-        style={{
-          backgroundColor: "#FF0000",
-          width: "auto",
-          height: "400px",
-        }}
-      ></div>
-      <div
-        style={{
-          backgroundColor: "#00FFFF",
-          width: "auto",
-          height: "485px",
-        }}
-      ></div>
-      <div
-        style={{
-          backgroundColor: "#FF0000",
-          width: "auto",
-          height: "400px",
-        }}
-      ></div>
-      <div
-        style={{
-          backgroundColor: "#00FFFF",
-          width: "auto",
-          height: "485px",
-        }}
-      ></div>
-      <div
-        style={{
-          backgroundColor: "#FF0000",
-          width: "auto",
-          height: "400px",
-        }}
-      ></div>
-      <div
-        style={{
-          backgroundColor: "#00FFFF",
-          width: "auto",
-          height: "485px",
-        }}
-      ></div>
-      <div
-        style={{
-          backgroundColor: "#FF0000",
-          width: "auto",
-          height: "400px",
-        }}
-      ></div> */}
     </>
   );
 };

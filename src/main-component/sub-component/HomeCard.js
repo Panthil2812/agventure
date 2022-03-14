@@ -1,20 +1,30 @@
 import React from "react";
-import "./HomeCard.css";
-import styled from "styled-components";
+
+import Box from "@mui/material/Box";
 import { makeStyles } from "@mui/styles";
-import classNames from "classnames";
+import Typography from "@mui/material/Typography";
+import organic1 from "../../assets/Images/coffees.png";
+import organic2 from "../../assets/Images/rice.png";
+import organic3 from "../../assets/Images/tomatoes.png";
+import organic4 from "../../assets/Images/cotton.png";
+import organic5 from "../../assets/Images/apples.png";
+import organic6 from "../../assets/Images/mangoes.png";
+import organic7 from "../../assets/Images/chili.png";
+import organic8 from "../../assets/Images/potatoes.png";
 const useStyles = makeStyles(() => ({
   container: {
     height: "100%",
     width: "100%",
     display: "flex",
     justifyContent: "space-around",
+    marginTop: "50px",
+    marginBottom: "50px",
     alignItems: "center",
     margin: "0 auto",
   },
   card: {
-    height: "379px",
-    width: "300px",
+    height: "320px",
+    width: "250px",
     background: "grey",
     borderRadius: "10px",
     transition: "background 0.8s",
@@ -25,10 +35,20 @@ const useStyles = makeStyles(() => ({
     justifyContent: "center",
     alignItems: "center",
     position: "relative",
+    backgroundPosition: "center",
+    backgroundRepeat: "no-repeat",
+    backgroundSize: "300px",
+    "&:hover": {
+      backgroundSize: "600px",
+      backgroundPosition: "left center",
+    },
+    "& h2": {
+      opacity: "1",
+    },
   },
   border: {
-    height: "369px",
-    width: "290px",
+    height: "300px",
+    width: "230px",
     background: "transparent",
     borderRadius: "10px",
     transition: "border 1s",
@@ -37,43 +57,7 @@ const useStyles = makeStyles(() => ({
       border: "3px solid white",
     },
   },
-  card0: {
-    background: `url("https://images.pexels.com/photos/5085407/pexels-photo-5085407.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500")
-      center center no-repeat`,
-    backgroundSize: "300px",
-    "& h2": {
-      opacity: "1",
-    },
-    fa: {
-      opacity: "1",
-    },
-    "&:hover": {
-      background: `url("https://images.pexels.com/photos/5085407/pexels-photo-5085407.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500")
-        left center no-repeat`,
-      backgroundSize: "600px",
-    },
-  },
-  card1: {
-    background: `url("https://i.pinimg.com/originals/ee/85/08/ee850842e68cfcf6e3943c048f45c6d1.jpg")
-      center center no-repeat`,
-    backgroundSize: "300px",
-    "&:hover": {
-      background: `url("https://i.pinimg.com/originals/ee/85/08/ee850842e68cfcf6e3943c048f45c6d1.jpg")
-        left center no-repeat`,
-      backgroundSize: "600px",
-    },
-  },
-  card2: {
-    background: `url("https://i.pinimg.com/originals/28/d2/e6/28d2e684e7859a0dd17fbd0cea00f8a9.jpg")
-      center center no-repeat`,
-    backgroundSize: "300px",
-    "&:hover": {
-      background: `url("https://i.pinimg.com/originals/28/d2/e6/28d2e684e7859a0dd17fbd0cea00f8a9.jpg")
-        left center no-repeat`,
-      backgroundSize: "600px",
-    },
-  },
-  "& h2": {
+  title: {
     fontFamily: `"Helvetica Neue", Helvetica, Arial, sans-serif`,
     color: "white",
     margin: "20px",
@@ -85,24 +69,112 @@ export const HomeCard = () => {
   const classes = useStyles();
   return (
     <>
-      <div className={classes.container}>
-        <div className={classNames(classes.card, classes.card0)}>
-          <div className={classes.border}>
-            <h2 className={classes.h}>Al Pacino</h2>
+      <Box sx={{ p: 2, bgcolor: "#f9f9f9" }}>
+        <Typography
+          variant="body2"
+          color="#325240"
+          sx={{
+            fontWeight: "bold",
+            fontSize: "110px",
+            color: "#f9f9f9",
+            textShadow: `-2px 2px 0 #000,
+                          2px 2px 0 #000,
+                         2px -2px 0 #000,
+                        -2px -2px 0 #000`,
+          }}
+          align="center"
+        >
+          Best Selling Products
+        </Typography>
+      </Box>
+      <Box
+        sx={{ flexGrow: 1, bgcolor: "#f9f9f9", padding: "50px 70px 40px 70px" }}
+      >
+        <div className={classes.container}>
+          <div
+            className={classes.card}
+            style={{
+              backgroundImage: `url(${organic1})`,
+            }}
+          >
+            <div className={classes.border}>
+              <h2 className={classes.title}>Coffee Beans</h2>
+            </div>
+          </div>
+          <div
+            className={classes.card}
+            style={{
+              backgroundImage: `url(${organic2})`,
+            }}
+          >
+            <div className={classes.border}>
+              <h2 className={classes.title}>Rice</h2>
+            </div>
+          </div>
+          <div
+            className={classes.card}
+            style={{
+              backgroundImage: `url(${organic3})`,
+            }}
+          >
+            <div className={classes.border}>
+              <h2 className={classes.title}>Tomatoes</h2>
+            </div>
+          </div>
+          <div
+            className={classes.card}
+            style={{
+              backgroundImage: `url(${organic4})`,
+            }}
+          >
+            <div className={classes.border}>
+              <h2 className={classes.title}>Cotton</h2>
+            </div>
           </div>
         </div>
-
-        <div className="card card1">
-          <div className="border">
-            <h2>Ben Stiller</h2>
+        <div className={classes.container}>
+          <div
+            className={classes.card}
+            style={{
+              backgroundImage: `url(${organic5})`,
+            }}
+          >
+            <div className={classes.border}>
+              <h2 className={classes.title}>Apples</h2>
+            </div>
+          </div>
+          <div
+            className={classes.card}
+            style={{
+              backgroundImage: `url(${organic6})`,
+            }}
+          >
+            <div className={classes.border}>
+              <h2 className={classes.title}>Mangoes</h2>
+            </div>
+          </div>
+          <div
+            className={classes.card}
+            style={{
+              backgroundImage: `url(${organic7})`,
+            }}
+          >
+            <div className={classes.border}>
+              <h2 className={classes.title}>Red Chili</h2>
+            </div>
+          </div>
+          <div
+            className={classes.card}
+            style={{
+              backgroundImage: `url(${organic8})`,
+            }}
+          >
+            <div className={classes.border}>
+              <h2 className={classes.title}>Potatoes</h2>
+            </div>
           </div>
         </div>
-        <div className="card card2">
-          <div className="border">
-            <h2>Patrick Stewart</h2>
-          </div>
-        </div>
-      </div>
+      </Box>
     </>
   );
 };

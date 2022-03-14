@@ -4,14 +4,10 @@ import { Link } from "react-router-dom";
 import Typography from "@mui/material/Typography";
 import Grid from "@mui/material/Grid";
 import Button from "@mui/material/Button";
-import Paper from "@mui/material/Paper";
-import UnstyledInput from "./UnstyledInput";
 import { styled } from "@mui/system";
 import { makeStyles } from "@mui/styles";
 import logo from "../../assets/Images/logo2.png";
-import EmailIcon from "@mui/icons-material/Email";
 import Avatar from "@mui/material/Avatar";
-
 import { FaFacebookF, FaLinkedinIn, FaPhoneAlt } from "react-icons/fa";
 import { RiGithubFill } from "react-icons/ri";
 import { ImLocation2 } from "react-icons/im";
@@ -19,7 +15,7 @@ import { MdEmail } from "react-icons/md";
 import { BsTwitter, BsGoogle, BsInstagram } from "react-icons/bs";
 
 const ColorButton = styled(Button)(({ theme }) => ({
-  color: "#0d4d29",
+  color: "#325240",
   backgroundColor: "#ddf6e4",
   marginTop: "6px",
   borderRadius: "25px",
@@ -107,7 +103,8 @@ const Footer = () => {
       <Box
         sx={{
           p: 2,
-          bgcolor: "#0d4d29",
+          marginTop: "10px",
+          bgcolor: "#325240",
           height: "50px",
           boxShadow: "0 8px 8px 0 rgba(0, 0, 0, 0.2)",
         }}
@@ -167,7 +164,7 @@ const Footer = () => {
                 sx={{
                   height: 200,
                   width: 250,
-                  color: "#0d4d29",
+                  color: "#325240",
                 }}
               >
                 <div align="left">
@@ -176,9 +173,9 @@ const Footer = () => {
                     style={{
                       height: "2px",
                       borderWidth: "0",
-                      color: "#0d4d29",
+                      color: "#325240",
                       margin: "5px",
-                      backgroundColor: "#0d4d29",
+                      backgroundColor: "#325240",
                     }}
                   />
                   <p>
@@ -192,7 +189,7 @@ const Footer = () => {
                 sx={{
                   height: 200,
                   width: 250,
-                  color: "#0d4d29",
+                  color: "#325240",
                 }}
               >
                 <div align="center">
@@ -201,8 +198,8 @@ const Footer = () => {
                     style={{
                       height: "2px",
                       borderWidth: "0",
-                      color: "#0d4d29",
-                      backgroundColor: "#0d4d29",
+                      color: "#325240",
+                      backgroundColor: "#325240",
                     }}
                   />
                   <div style={{ margin: "5px" }}>
@@ -236,7 +233,7 @@ const Footer = () => {
                 sx={{
                   height: 200,
                   width: 250,
-                  color: "#0d4d29",
+                  color: "#325240",
                 }}
               >
                 <div align="center">
@@ -245,8 +242,8 @@ const Footer = () => {
                     style={{
                       height: "2px",
                       borderWidth: "0",
-                      color: "#0d4d29",
-                      backgroundColor: "#0d4d29",
+                      color: "#325240",
+                      backgroundColor: "#325240",
                     }}
                   />
                   <div style={{ margin: "5px" }}>
@@ -280,7 +277,7 @@ const Footer = () => {
                 sx={{
                   height: 200,
                   width: 250,
-                  color: "#0d4d29",
+                  color: "#325240",
                 }}
               >
                 <div align="left">
@@ -289,8 +286,8 @@ const Footer = () => {
                     style={{
                       height: "2px",
                       borderWidth: "0",
-                      color: "#0d4d29",
-                      backgroundColor: "#0d4d29",
+                      color: "#325240",
+                      backgroundColor: "#325240",
                     }}
                   />
                   <div style={{ margin: "10px" }}>
@@ -310,7 +307,7 @@ const Footer = () => {
       </Box>
       <Box
         sx={{
-          bgcolor: "#0d4d29",
+          bgcolor: "#f9f9f9",
           textAlign: "center",
           padding: "10px 70px 10px 70px",
           display: "flex",
@@ -352,7 +349,7 @@ const Footer = () => {
           </a>
         </Avatar>
       </Box>
-      <Box sx={{ p: 2, bgcolor: "#0d4d29" }}>
+      <Box sx={{ p: 2, bgcolor: "#325240" }}>
         <Typography
           variant="body2"
           color="#ffffff"

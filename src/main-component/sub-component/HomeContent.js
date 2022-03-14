@@ -1,8 +1,8 @@
 import React from "react";
 import styled from "styled-components";
 import Box from "@mui/material/Box";
-import Paper from "@mui/material/Paper";
 import Grid from "@mui/material/Grid";
+
 import organic from "../../assets/Images/homeimg.png";
 import organic1 from "../../assets/Images/homeimg1.png";
 import organic2 from "../../assets/Images/homeimg2.png";
@@ -17,10 +17,10 @@ const Img = styled.img`
   border-radius: 30px;
 `;
 const Title = styled.h1`
-  color: #0d4d29;
+  color: #325240;
 `;
 const Content = styled.p`
-  color: #0d4d29;
+  color: #325240;
 `;
 const myArray = [
   organic,
@@ -56,9 +56,10 @@ const HomeContect = () => {
                     <CgMonday /> Great value for the money
                   </Title>
                   <Content>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed
-                    sagittis nibh sit amet quam hendrerit, in suscipit tellus
-                    eleifend.
+                    Best value for money is defined as the most advantageous
+                    combination of cost, quality and sustainability to meet
+                    customer requirements.cost means consideration of the whole
+                    life cost.
                   </Content>
                 </div>
               </Box>
@@ -66,7 +67,7 @@ const HomeContect = () => {
                 sx={{
                   height: "170px",
                   padding: "10px 70px 10px 70px",
-                  color: "0d4d29",
+                  color: "325240",
                 }}
               >
                 <div>
@@ -74,9 +75,12 @@ const HomeContect = () => {
                     <CgMonday sx={{ marign: "8px" }} /> Fresh products delivery
                   </Title>
                   <Content>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed
-                    sagittis nibh sit amet quam hendrerit, in suscipit tellus
-                    eleifend.
+                    Here, you can find best options at lower prices, right from
+                    fresh fruits, spices, dals, seasonings and vegetables to
+                    packaged products, meats, personal care products and
+                    beverages. Since, green vegetables provide necessary
+                    proteins and vitamins to the body, people prefer to buy
+                    vegetables and consume them, in daily food habits.
                   </Content>
                 </div>
               </Box>
@@ -87,9 +91,12 @@ const HomeContect = () => {
                     <CgMonday /> Bio fruits from local farmers
                   </Title>
                   <Content>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed
-                    sagittis nibh sit amet quam hendrerit, in suscipit tellus
-                    eleifend.
+                    Farmers are often members of local, regional, or national
+                    farmers' unions or agricultural producers' organizations and
+                    can exert significant political influence. The Grange
+                    movement in the United States was effective in advancing
+                    farmers' agendas, especially against railroad and
+                    agribusiness interests early in the 20th century.
                   </Content>
                 </div>
               </Box>

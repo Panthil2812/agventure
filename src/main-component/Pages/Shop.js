@@ -1,10 +1,9 @@
 import React from "react";
-import { UnstyledInput } from "../sub-component/UnstyledInput";
 
 const Shop = () => {
   return (
     <>
-      <UnstyledInput/>
+      <h1>Panthil malaviya</h1>
     </>
   );
 };

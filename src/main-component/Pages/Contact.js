@@ -1,10 +1,9 @@
 import React from "react";
-import { HomeCard } from "../sub-component/HomeCard";
 
 const Contact = () => {
   return (
     <>
-      <HomeCard />
+      <h1>Panthil Malaviya</h1>
     </>
   );
 };

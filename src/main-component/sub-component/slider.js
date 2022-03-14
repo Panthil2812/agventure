@@ -9,25 +9,56 @@ const agri2 =
   "https://images.pexels.com/photos/4946628/pexels-photo-4946628.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500";
 const agri3 =
   "https://images.pexels.com/photos/4054850/pexels-photo-4054850.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940";
-
+const caption = [
+  "Without farmers, no country can progress",
+  "The life of an Indian farmer is dedicated to his fields",
+  " Shaping your food",
+  "Connecting you to fields",
+  "Reforming conventional Agri perspective",
+  "Imagine living, impossible without farming",
+  "Redefining farming",
+  "Become biggest food producers",
+  "Reforming Agri Living",
+  "Re-explore Agri with us",
+  "Keep giving food to world",
+  "Imagine food, imagine farming",
+  "Green is always better",
+  "Connecting with green is better",
+  "Green is healthy",
+  "Technology for farms",
+  "Farming is farmers imagination",
+  "Fine agriculture with a difference",
+  "Grab the best way to love your field",
+  "Caring field caring life",
+  "May goddess nature bless farmer’s",
+  "Think new Agri technology, think future",
+  " Cultivate new ideas cultivate more crops",
+  "New farming technology is new in",
+  "Exploring cultivation discovering nature",
+  "Farming is core of life",
+  "Agro innovation",
+  "Cultivation gives you what you want",
+  "Grow more to get best",
+  "Meet the farming needs",
+  "Sustainability along with profitable",
+  "Explore new cultivating ideas",
+  "Agriculture is the most healthful work to do",
+  "Agriculture? you can’t live without it",
+  "Never lazy and always dedicated, he is an Indian farmer.",
+  "The job most can’t handle,",
+];
 const slideImages = [
   {
     url: agri1,
-    captionTitle: "Slide Image Title One",
-    caption:
-      "Learn how to create a responsive slideshow with CSS and JavaScript.",
+    captionTitle: caption[(Math.random() * caption.length) | 5],
   },
   {
     url: agri2,
-    captionTitle: "Slide Image Title Two",
-    caption:
-      "Learn how to create a responsive slideshow with CSS and reate a responsive slideshow with CSS andJavaScript.",
+    captionTitle: caption[(Math.random() * caption.length) | 8],
   },
   {
     url: agri3,
-    captionTitle: "Slide Image Title Three",
-    caption:
-      "Learn how to create a responsive slideshow to create a responsive with CSS and JavaScript.",
+    captionTitle: caption[(Math.random() * caption.length) | 2],
   },
 ];
 const ImageText = styled.span`
@@ -79,9 +110,9 @@ const Slideshow = () => {
             >
               <TextDiv>
                 <ImageTitle>{slideImage.captionTitle}</ImageTitle>
+                {/* <br />
                 <br />
-                <br />
-                <ImageText>{slideImage.caption}</ImageText>
+                <ImageText>{slideImage.caption}</ImageText> */}
               </TextDiv>
             </div>
           </div>

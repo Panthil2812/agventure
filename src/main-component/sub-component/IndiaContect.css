@@ -1,8 +1,3 @@
-body {
-  font-family: "Open Sans", arial, sans-serif;
-  color: #333;
-  font-size: 14px;
-}
 .projcard-container {
   margin: 50px 0;
 }
@@ -15,7 +10,7 @@ body {
 .projcard-container {
   margin-left: auto;
   margin-right: auto;
-  width: 95%;
+  width: 92%;
   margin: 50px;
 }
 .projcard {
@@ -116,10 +111,11 @@ body {
 .projcard-title {
   font-family: "Voces", "Open Sans", arial, sans-serif;
   font-size: 24px;
+  color: #325240;
 }
 .projcard-subtitle {
   font-family: "Voces", "Open Sans", arial, sans-serif;
-  color: #888;
+  color: #325240;
 }
 .projcard-bar {
   left: -2px;
@@ -130,32 +126,15 @@ body {
   background-color: #424242;
   transition: width 0.2s ease;
 }
-.projcard-blue .projcard-bar {
-  background-color: #0088ff;
-}
-.projcard-blue::before {
-  background-image: linear-gradient(-70deg, #0088ff, transparent 50%);
-}
-.projcard-blue:nth-child(2n)::before {
-  background-image: linear-gradient(-250deg, #0088ff, transparent 50%);
-}
-.projcard-red .projcard-bar {
-  background-color: #d62f1f;
-}
-.projcard-red::before {
-  background-image: linear-gradient(-70deg, #d62f1f, transparent 50%);
-}
-.projcard-red:nth-child(2n)::before {
-  background-image: linear-gradient(-250deg, #d62f1f, transparent 50%);
-}
+
 .projcard-green .projcard-bar {
-  background-color: #40bd00;
+  background-color: #325240;
 }
 .projcard-green::before {
-  background-image: linear-gradient(-70deg, #40bd00, transparent 50%);
+  background-image: linear-gradient(-70deg, #325240, transparent 50%);
 }
 .projcard-green:nth-child(2n)::before {
-  background-image: linear-gradient(-250deg, #40bd00, transparent 50%);
+  background-image: linear-gradient(-250deg, #325240, transparent 50%);
 }
 .projcard-yellow .projcard-bar {
   background-color: #f5af41;
@@ -212,8 +191,8 @@ body {
 }
 .projcard-description {
   z-index: 10;
-  font-size: 15px;
-  color: #424242;
+  font-size: 16px;
+  color: #325240;
   height: 125px;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -228,8 +207,8 @@ body {
 }
 .projcard-tag {
   display: inline-block;
-  background: #e0e0e0;
-  color: #777;
+  background: #325240;
+  color: #fff;
   border-radius: 3px 0 0 3px;
   line-height: 26px;
   padding: 0 10px 0 23px;
@@ -254,7 +233,7 @@ body {
   content: "";
   position: absolute;
   border-bottom: 13px solid transparent;
-  border-left: 10px solid #e0e0e0;
+  border-left: 10px solid #325240;
   border-top: 13px solid transparent;
   right: -10px;
   top: 0;

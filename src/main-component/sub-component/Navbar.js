@@ -20,7 +20,7 @@ const NBar = styled.div`
   overflow: hidden;
   background-color: rgb(255, 255, 255);
   padding: 5px;
-  border-bottom: 5px solid #0d4d29;
+  border-bottom: 5px solid #325240;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
   position: sticky; /* Set the navbar to fixed position */
   margin: 0;
@@ -45,7 +45,7 @@ const Image = styled.img`
   float: left;
   padding: 15px;
   display: inline-block;
-  color: #0d4d29;
+  color: #325240;
   text-align: center;
   align-items: right;
 `;
@@ -55,7 +55,7 @@ const NLink = styled(NavLink)`
   margin-right: 5px;
   margin-bottom: 5px;
   display: inline-block;
-  color: #0d4d29;
+  color: #325240;
   text-decoration: none;
   font-weight: bold;
   text-align: center;
@@ -66,7 +66,7 @@ const NLink = styled(NavLink)`
   }
   :hover {
     background-color: #ddf6e4;
-    color: #0d4d29;
+    color: #325240;
     border-radius: 12px;
     box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
   }
@@ -75,11 +75,11 @@ const NAvatar = styled(NavLink)`
   float: right;
   margin: 2px;
   display: inline-block;
-  color: #0d4d29;
+  color: #325240;
   align-items: right;
   :hover {
     background-color: #ddf6e4;
-    color: #0d4d29;
+    color: #325240;
     border-radius: 12px;
     box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
   }
@@ -104,7 +104,7 @@ const Navbar = (prop) => {
         {Loginckeck() ? (
           <NAvatar to="/dashbord">
             <Avatar
-              sx={{ m: 1, bgcolor: "#0d4d29", height: "33px", width: "33px" }}
+              sx={{ m: 1, bgcolor: "#325240", height: "33px", width: "33px" }}
             >
               <BsPersonFill />
             </Avatar>
