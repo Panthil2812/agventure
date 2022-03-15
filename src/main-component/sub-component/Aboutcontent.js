@@ -2,12 +2,26 @@ import React from "react";
 import organic from "../../assets/Images/about.png";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
+import Grid from "@mui/material/Grid";
+import { CgMonday } from "react-icons/cg";
+import styled from "styled-components";
 import { makeStyles } from "@mui/styles";
 import Typography from "@mui/material/Typography";
 import team from "../../assets/Images/team3.png";
+import logo from "../../assets/Images/logo1.png";
 import team1 from "../../assets/Images/team1.png";
 import team2 from "../../assets/Images/team2.png";
 import team3 from "../../assets/Images/team3.png";
+const Img = styled.img`
+  height: 30%;
+  width: 50%;
+`;
+const Title = styled.h1`
+  color: #325240;
+`;
+const Content = styled.p`
+  color: #325240;
+`;
 const useStyles = makeStyles(() => ({
   container: {
     height: "100%",
@@ -127,6 +141,34 @@ const Aboutcontent = () => {
           </div>
         </Box>
       </Box>
+
+      {/* <Box
+        sx={{ flexGrow: 1, bgcolor: "#f9f9f9", padding: "50px 70px 0px 70px" }}
+      >
+        <Grid container spacing={2}>
+          <Grid item xs={6} md={2}>
+            <Box sx={{ height: "200px" }}>
+              <Img src={logo} alt="organic1" />
+            </Box>
+          </Grid>
+          <Grid item xs={6} md={10}>
+            <Box sx={{ height: "200px" }}>
+              <Box sx={{ height: "170px", padding: "10px 70px 10px 70px" }}>
+                <div>
+                  <Content>
+                    <CgMonday /> Completely synergize resource taxing
+                    relationships via premier niche markets. Professionally
+                    cultivate one-to-one customer service with robust ideas.
+                    Dynamically innovate resource-leveling customer service for
+                    state of the art customer service. Objectively innovate
+                    empowered manufactured products whereas parallel platforms.
+                  </Content>
+                </div>
+              </Box>
+            </Box>
+          </Grid>
+        </Grid>
+      </Box> */}
       <Box sx={{ p: 2, bgcolor: "#f9f9f9" }}>
         <Typography
           variant="body2"
@@ -152,6 +194,7 @@ const Aboutcontent = () => {
           }}
         />
       </Box>
+
       <Box
         sx={{ flexGrow: 1, bgcolor: "#f9f9f9", padding: "50px 70px 40px 70px" }}
       >

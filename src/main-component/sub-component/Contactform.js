@@ -3,7 +3,7 @@ import Box from "@mui/material/Box";
 import { FaPhoneAlt } from "react-icons/fa";
 import { ImLocation2 } from "react-icons/im";
 import { MdEmail } from "react-icons/md";
-import organic from "../../assets/Images/contact.png";
+import organic from "../../assets/Images/contact2.png";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import Grid from "@mui/material/Grid";
@@ -13,7 +13,6 @@ import FormControl from "@mui/material/FormControl";
 import Snackbar from "@mui/material/Snackbar";
 import Alert from "@mui/material/Alert";
 import validator from "validator";
-const theme = createTheme();
 const CssTextField = styled(TextField)({
   "& label.Mui-focused": {
     color: "#325240",
@@ -181,7 +180,8 @@ const Contactform = () => {
           bgcolor: "#fff",
           height: "100vh",
           padding: "50px",
-          backgroundImage: `url(${organic})`,backgroundSize: "cover",
+          backgroundImage: `url(${organic})`,
+          backgroundSize: "cover",
           backgroundPosition: "center",
         }}
       >

@@ -59,6 +59,7 @@ const Dashbord = () => {
       <h1>Dashbord PAGE</h1>
       <h1>UserName : {username}</h1>
       <h1>Passowrd : {password}</h1>
+      <h1>Passowrd : {password}</h1>
       <div>
         <Button
           variant="contained"
