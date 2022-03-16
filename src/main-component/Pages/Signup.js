@@ -155,7 +155,7 @@ const StateName = [
 export default function SignInSide() {
   //console.log(enCrypt("U2FsdGVkX1+CEJvYZDsZFAARLkhA/6fG6ZCx5pz90vs="));
 
-  let navigate = useNavigate();
+  // let navigate = useNavigate();
   const [state, setState] = React.useState({
     open: false,
     isLogged: false,
@@ -183,13 +183,13 @@ export default function SignInSide() {
               {message}
             </Alert>
           </Snackbar>
-          <Backdrop
+          {/* <Backdrop
             sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
             open={open}
             onClick={handleClose}
           >
             <CircularProgress sx={{ color: "#325240" }} />
-          </Backdrop>
+          </Backdrop> */}
         </div>
       );
     } else {
@@ -295,12 +295,16 @@ export default function SignInSide() {
               });
               setFlag(false);
               setTimeout(() => {
-                navigate("/signin");
+                //navigate("/signin");
+                window.location.replace("/signin");
               }, 1000);
             }
           })
           .catch(function (error) {
-            console.log(error.response.headers);
+            setState({
+              open: true,
+              message: "Please Try again!",
+            });
           });
         // axios
         //   .get("https://jsonplaceholder.typicode.com/posts")

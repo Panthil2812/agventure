@@ -1,4 +1,7 @@
 import * as React from "react";
+import axios from "axios";
+import { enCrypt } from "../Validator/crypto";
+import qs from "query-string";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -71,6 +74,7 @@ export default function SignInSide() {
     fPassword: "",
   });
   const { isForget, fEmail, fPassword } = Forget;
+  const [flag, setFlag] = React.useState(false);
 
   const [remember, setRemember] = React.useState({
     rEmail: getCookie("username") ? getCookie("username") : "",
@@ -175,13 +179,13 @@ export default function SignInSide() {
               {message}
             </Alert>
           </Snackbar>
-          <Backdrop
+          {/* <Backdrop
             sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
             open={isLogged}
             onClick={handleClose}
           >
             <CircularProgress sx={{ color: "#325240" }} />
-          </Backdrop>
+          </Backdrop> */}
         </div>
       );
     } else {
@@ -207,6 +211,19 @@ export default function SignInSide() {
       );
     }
   };
+  const backDrop = () => {
+    return (
+      <>
+        <Backdrop
+          sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
+          open={flag}
+          onClick={handleClose}
+        >
+          <CircularProgress sx={{ color: "#325240" }} />
+        </Backdrop>
+      </>
+    );
+  };
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
@@ -216,28 +233,83 @@ export default function SignInSide() {
       password: data.get("password").toString(),
       checkbox: data.get("checkbox"),
     };
-    if (isEmail(info.email) && info.password === "1234567890") {
-      setState({
-        isLogged: true,
-        open: true,
-        message:
-          "Congratulation,You have Successfully logged in, Redirecting....",
-      });
-      if (info.checkbox) {
-        setCookie("username", info.email, 24);
-      }
-      setCookie("login", JSON.stringify(info), 1);
-      setTimeout(() => {
-        // navigate("/");
-        window.location.replace("/");
-      }, 3000);
-    } else {
+    if (info.email === "" || info.password === "" || !isEmail(info.email)) {
       setState({
         open: true,
         message: "Invalid Username/email and password",
       });
-      // console.log(state);
+    } else {
+      setFlag(true);
+      const Data = {
+        email_id: info.email,
+        password: enCrypt(info.password),
+      };
+      //  console.log(Data);
+      setTimeout(async () => {
+        await axios({
+          method: "post",
+          headers: { "content-type": "application/x-www-form-urlencoded" },
+          data: qs.stringify(Data),
+          url: "http://localhost:5050/authorise/login/",
+        })
+          .then(function (response) {
+            // console.log(response.data);
+            if (response.data.status === 500) {
+              setState({
+                open: true,
+                message: "Invalid Username/email and password",
+              });
+              setFlag(false);
+            }
+            if (response.data.status === 200) {
+              setState({
+                isLogged: true,
+                open: true,
+                message:
+                  "Congratulation,You have Successfully logged in, Redirecting....",
+              });
+              setFlag(false);
+              setTimeout(() => {
+                //navigate("/signin");
+                if (info.checkbox) {
+                  setCookie("username", info.email, 24);
+                }
+                setCookie("token", response.data.data, 1);
+                setCookie("login", JSON.stringify(Data), 1);
+                window.location.replace("/");
+              }, 1000);
+            }
+          })
+          .catch(function (error) {
+            setState({
+              open: true,
+              message: "Please Try again!",
+            });
+          });
+      }, 3000);
     }
+    // if (isEmail(info.email) && info.password === "1234567890") {
+    //   setState({
+    //     isLogged: true,
+    //     open: true,
+    //     message:
+    //       "Congratulation,You have Successfully logged in, Redirecting....",
+    //   });
+    // if (info.checkbox) {
+    //   setCookie("username", info.email, 24);
+    // }
+    // setCookie("login", JSON.stringify(info), 1);
+    //   setTimeout(() => {
+    //     // navigate("/");
+    //     window.location.replace("/");
+    //   }, 3000);
+    // } else {
+    //   setState({
+    //     open: true,
+    //     message: "Invalid Username/email and password",
+    //   });
+    //   // console.log(state);
+    // }
   };
   const handleClose = () => {
     setState({ ...state, open: false });
@@ -254,6 +326,7 @@ export default function SignInSide() {
         Sign In
       </Button>
       <div>{errorfunction()}</div>
+      <div>{backDrop()}</div>
     </React.Fragment>
   );
 
