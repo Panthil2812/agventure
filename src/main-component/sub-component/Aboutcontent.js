@@ -2,26 +2,23 @@ import React from "react";
 import organic from "../../assets/Images/about.png";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
-import Grid from "@mui/material/Grid";
-import { CgMonday } from "react-icons/cg";
-import styled from "styled-components";
+// import styled from "styled-components";
 import { makeStyles } from "@mui/styles";
 import Typography from "@mui/material/Typography";
 import team from "../../assets/Images/team3.png";
-import logo from "../../assets/Images/logo1.png";
 import team1 from "../../assets/Images/team1.png";
 import team2 from "../../assets/Images/team2.png";
 import team3 from "../../assets/Images/team3.png";
-const Img = styled.img`
-  height: 30%;
-  width: 50%;
-`;
-const Title = styled.h1`
-  color: #325240;
-`;
-const Content = styled.p`
-  color: #325240;
-`;
+// const Img = styled.img`
+//   height: 30%;
+//   width: 50%;
+// `;
+// const Title = styled.h1`
+//   color: #325240;
+// `;
+// const Content = styled.p`
+//   color: #325240;
+// `;
 const useStyles = makeStyles(() => ({
   container: {
     height: "100%",
@@ -37,7 +34,6 @@ const useStyles = makeStyles(() => ({
     width: "300px",
     marginLeft: "10px",
     marginRight: "10px",
-    background: "grey",
     borderRadius: "20%",
     transition: "background 0.8s",
     overflow: "hidden",

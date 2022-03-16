@@ -15,7 +15,7 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { styled } from "@mui/material/styles";
 import Snackbar from "@mui/material/Snackbar";
 import Alert from "@mui/material/Alert";
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 import isEmail from "validator/lib/isEmail";
 import isStrongPassword from "validator/lib/isStrongPassword";
 import Copyright from "../sub-component/Copyright";
@@ -56,9 +56,8 @@ const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 export default function SignInSide() {
-  let navigate = useNavigate();
+  // let navigate = useNavigate();
 
-  const checklogin = getCookie("login");
   const [state, setState] = React.useState({
     open: false,
     isLogged: false,
@@ -75,9 +74,8 @@ export default function SignInSide() {
 
   const [remember, setRemember] = React.useState({
     rEmail: getCookie("username") ? getCookie("username") : "",
-    rPassword: "",
   });
-  const { rEmail, rPassword } = remember;
+  const { rEmail } = remember;
   const handleClickDialog = () => {
     setForget({
       isForget: false,

@@ -28,7 +28,6 @@ const useStyles = makeStyles(() => ({
     borderRadius: "10px",
     transition: "background 0.8s",
     overflow: "hidden",
-    background: "black",
     boxShadow: "0 70px 63px -60px #000000",
     display: "flex",
     justifyContent: "center",

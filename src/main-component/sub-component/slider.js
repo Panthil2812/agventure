@@ -1,7 +1,7 @@
 import React from "react";
 import { Fade } from "react-slideshow-image";
 import "react-slideshow-image/dist/styles.css";
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 
 const agri1 =
   "https://images.pexels.com/photos/5425893/pexels-photo-5425893.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940";
@@ -61,12 +61,12 @@ const slideImages = [
     captionTitle: caption[(Math.random() * caption.length) | 2],
   },
 ];
-const ImageText = styled.span`
-  text-align: center;
-  transform: translate(-50%, -50%);
-  color: white;
-  font-size: 25px;
-`;
+// const ImageText = styled.span`
+//   text-align: center;
+//   transform: translate(-50%, -50%);
+//   color: white;
+//   font-size: 25px;
+// `;
 const ImageTitle = styled.span`
   text-align: center;
   transform: translate(-50%, -50%);

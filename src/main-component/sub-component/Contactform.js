@@ -7,9 +7,9 @@ import organic from "../../assets/Images/contact2.png";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import Grid from "@mui/material/Grid";
-import { createTheme, ThemeProvider } from "@mui/material/styles";
+// import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { styled } from "@mui/material/styles";
-import FormControl from "@mui/material/FormControl";
+// import FormControl from "@mui/material/FormControl";
 import Snackbar from "@mui/material/Snackbar";
 import Alert from "@mui/material/Alert";
 import validator from "validator";
@@ -36,35 +36,35 @@ const CssTextField = styled(TextField)({
     },
   },
 });
-const CssFormControl = styled(FormControl)({
-  "& .MuiFormControlLabel-label": {
-    color: "#325240",
-  },
-  "::-webkit-scrollbar": {
-    display: "none",
-  },
-  "& label.Mui-focused": {
-    color: "#325240",
-  },
-  "& .MuiInput-underline:after": {
-    borderWidth: "2px",
-    borderBottomColor: "#325240",
-  },
-  "& .MuiOutlinedInput-root": {
-    "& fieldset": {
-      borderWidth: "2px",
-      borderColor: "#325240",
-    },
-    "&:hover fieldset": {
-      borderWidth: "2px",
-      borderColor: "#325240",
-    },
-    "&.Mui-focused fieldset": {
-      borderWidth: "2px",
-      borderColor: "#325240",
-    },
-  },
-});
+// const CssFormControl = styled(FormControl)({
+//   "& .MuiFormControlLabel-label": {
+//     color: "#325240",
+//   },
+//   "::-webkit-scrollbar": {
+//     display: "none",
+//   },
+//   "& label.Mui-focused": {
+//     color: "#325240",
+//   },
+//   "& .MuiInput-underline:after": {
+//     borderWidth: "2px",
+//     borderBottomColor: "#325240",
+//   },
+//   "& .MuiOutlinedInput-root": {
+//     "& fieldset": {
+//       borderWidth: "2px",
+//       borderColor: "#325240",
+//     },
+//     "&:hover fieldset": {
+//       borderWidth: "2px",
+//       borderColor: "#325240",
+//     },
+//     "&.Mui-focused fieldset": {
+//       borderWidth: "2px",
+//       borderColor: "#325240",
+//     },
+//   },
+// });
 
 const Contactform = () => {
   const [state, setState] = React.useState({

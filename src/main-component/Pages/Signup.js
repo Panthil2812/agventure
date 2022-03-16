@@ -1,4 +1,6 @@
 import * as React from "react";
+import axios from "axios";
+import qs from "query-string";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
@@ -23,6 +25,7 @@ import Snackbar from "@mui/material/Snackbar";
 import Alert from "@mui/material/Alert";
 import { useNavigate } from "react-router-dom";
 import validator from "validator";
+import { enCrypt } from "../Validator/crypto";
 import Backdrop from "@mui/material/Backdrop";
 import CircularProgress from "@mui/material/CircularProgress";
 
@@ -150,13 +153,15 @@ const StateName = [
   { label: "West Bengal" },
 ];
 export default function SignInSide() {
+  console.log(enCrypt("U2FsdGVkX1+CEJvYZDsZFAARLkhA/6fG6ZCx5pz90vs="));
+
   let navigate = useNavigate();
   const [state, setState] = React.useState({
     open: false,
     isLogged: false,
     message: "",
   });
-
+  const [flag, setFlag] = React.useState(false);
   const { isLogged, open, message } = state;
   const errorfunction = () => {
     if (isLogged) {
@@ -210,6 +215,19 @@ export default function SignInSide() {
       );
     }
   };
+  const backDrop = () => {
+    return (
+      <>
+        <Backdrop
+          sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
+          open={flag}
+          onClick={handleClose}
+        >
+          <CircularProgress sx={{ color: "#325240" }} />
+        </Backdrop>
+      </>
+    );
+  };
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
@@ -227,23 +245,80 @@ export default function SignInSide() {
       phone: validator.trim(data.get("phone")),
       checkbox: data.get("checkbox"),
     };
+
     const errorMessage = ValidatorSignup(info);
-    console.log(errorMessage);
+    //console.log(errorMessage);
     if (!errorMessage.flag) {
       setState({
         open: true,
         message: errorMessage.message,
       });
     } else {
-      setState({
-        isLogged: true,
-        open: true,
-        message: errorMessage.message,
-      });
+      const Data = {
+        user_name: info.firstname + " " + info.lastname,
+        first_name: info.firstname,
+        last_name: info.lastname,
+        email_id: info.emailid,
+        password: info.password,
+        gender: info.gender,
+        type: info.ctype,
+        city: info.city,
+        state: info.state,
+        address: info.address,
+        phone: info.phone,
+      };
+      setFlag(true);
       setTimeout(() => {
-        console.log("settimeout");
-        navigate("/signin");
+        // console.log(Data);
+        axios({
+          method: "post",
+          headers: { "content-type": "application/x-www-form-urlencoded" },
+          data: qs.stringify(Data),
+          url: "http://localhost:5050/users/create_user",
+        })
+          .then(function (response) {
+            // handle success
+            // const infomation = qs.stringify(response);
+            console.log(response.data);
+            if (response.data.status === 500) {
+              setState({
+                open: true,
+                message: "Email already exists.",
+              });
+              setFlag(false);
+            }
+            if (response.data.status === 200) {
+              setState({
+                isLogged: true,
+                open: true,
+                message: errorMessage.message,
+              });
+              setFlag(false);
+              setTimeout(() => {
+                navigate("/signin");
+              }, 1000);
+            }
+          })
+          .catch(function (error) {
+            console.log(error.response.headers);
+          });
+        // axios
+        //   .get("https://jsonplaceholder.typicode.com/posts")
+        //   .then(function (response) {
+        //     // handle success
+        //     console.log(response);
+        //   })
+        //   .catch(function (error) {
+        //     // handle error
+        //     console.log(error);
+        //   })
+        //   .then(function () {
+        //     // always executed
+        //   });
       }, 3000);
+      // if (isLogged) {
+      //   navigate("/signin");
+      // }
     }
   };
   const handleClose = () => {
@@ -269,6 +344,7 @@ export default function SignInSide() {
         Sign Up
       </Button>
       <div>{errorfunction()}</div>
+      <div>{backDrop()}</div>
     </React.Fragment>
   );
   return (
@@ -460,7 +536,7 @@ export default function SignInSide() {
                             label="City"
                             name="city"
                             id="city"
-                            autoComplete="City"
+                            autoComplete="off"
                           />
                         )}
                       />
@@ -488,7 +564,7 @@ export default function SignInSide() {
                             label="State"
                             id="state"
                             name="state"
-                            autoComplete="State"
+                            autoComplete="off"
                           />
                         )}
                       />

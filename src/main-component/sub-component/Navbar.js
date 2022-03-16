@@ -5,15 +5,12 @@ import { FaHome } from "react-icons/fa";
 import { RiAuctionFill } from "react-icons/ri";
 import { ImBlogger } from "react-icons/im";
 import { AiFillShopping } from "react-icons/ai";
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 import { BsInfoCircleFill, BsPersonFill } from "react-icons/bs";
 import { GoSignIn } from "react-icons/go";
 import { GiShop } from "react-icons/gi";
 
-import { CgProfile } from "react-icons/cg";
 import { MdContacts } from "react-icons/md";
-import AssignmentIcon from "@mui/icons-material/Assignment";
-import { green, pink } from "@mui/material/colors";
 import Avatar from "@mui/material/Avatar";
 import { getCookie } from "../Validator/CookieFunction";
 const NBar = styled.div`

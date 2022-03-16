@@ -1,6 +1,6 @@
 import React from "react";
 import "./IndiaContect.css";
-import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom";
 import organic from "../../assets/Images/india1.png";
 import organic1 from "../../assets/Images/india2.png";
 import organic2 from "../../assets/Images/india3.png";
@@ -10,7 +10,7 @@ export const IndiaContect = () => {
       <div className="projcard-container">
         <div className="projcard projcard-green">
           <div className="projcard-innerbox">
-            <img className="projcard-img" src={organic} />
+            <img className="projcard-img" src={organic} alt="first" />
             <div className="projcard-textbox">
               <div className="projcard-title">Indian Agriculture</div>
               <div className="projcard-bar"></div>
@@ -33,7 +33,7 @@ export const IndiaContect = () => {
 
         <div className="projcard projcard-green">
           <div className="projcard-innerbox">
-            <img className="projcard-img" src={organic1} />
+            <img className="projcard-img" src={organic1} alt="second" />
             <div className="projcard-textbox">
               <div className="projcard-title">
                 Indian Agriculture Market Size
@@ -61,7 +61,7 @@ export const IndiaContect = () => {
 
         <div className="projcard projcard-green">
           <div className="projcard-innerbox">
-            <img className="projcard-img" src={organic2} />
+            <img className="projcard-img" src={organic2} alt="third" />
             <div className="projcard-textbox">
               <div className="projcard-title">Achievements in the sector</div>
               <div className="projcard-bar"></div>

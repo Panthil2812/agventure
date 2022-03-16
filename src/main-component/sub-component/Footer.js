@@ -50,12 +50,6 @@ const useStyles = makeStyles(() => ({
     color: "#fff",
   },
 }));
-const blue = {
-  100: "#DAECFF",
-  200: "#80BFFF",
-  400: "#3399FF",
-  600: "#0072E5",
-};
 
 const grey = {
   50: "#F3F6F9",
@@ -131,7 +125,6 @@ const Footer = () => {
                 sx={{
                   textAlign: "center",
                   marginTop: "10px",
-                  marginTop: "19px",
                 }}
               >
                 <ColorButton

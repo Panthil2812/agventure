@@ -1,6 +1,6 @@
 import React, { Component } from "react";
-import photo from "../../assets/Images/india1.png";
-import { BsCart4, BsPersonBoundingBox, BsPersonFill } from "react-icons/bs";
+
+import { BsCart4, BsPersonFill } from "react-icons/bs";
 import { ImHammer2 } from "react-icons/im";
 import { MdOutlineAccountBox } from "react-icons/md";
 import Grid from "@mui/material/Grid";
@@ -60,7 +60,7 @@ export default class Crd extends Component {
                       </div>
                       <hr style={styles.border} />
 
-                      <a style={styles.title}>Auction</a>
+                      <p style={styles.title}>Auction</p>
                     </div>
                   </Grid>
                   <Grid
@@ -78,7 +78,7 @@ export default class Crd extends Component {
                       </div>
                       <hr style={styles.border} />
 
-                      <a style={styles.title}>Seller Acounts</a>
+                      <p style={styles.title}>Seller Acounts</p>
                     </div>
                   </Grid>
                   <Grid
@@ -96,7 +96,7 @@ export default class Crd extends Component {
                       </div>
                       <hr style={styles.border} />
 
-                      <a style={styles.title}>Products</a>
+                      <p style={styles.title}>Products</p>
                     </div>
                   </Grid>
                   <Grid
@@ -114,7 +114,7 @@ export default class Crd extends Component {
                       </div>
                       <hr style={styles.border} />
 
-                      <a style={styles.title}>Vendor Acounts</a>
+                      <p style={styles.title}>Vendor Acounts</p>
                     </div>
                   </Grid>
                 </Grid>
