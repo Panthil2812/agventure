@@ -153,7 +153,7 @@ const StateName = [
   { label: "West Bengal" },
 ];
 export default function SignInSide() {
-  console.log(enCrypt("U2FsdGVkX1+CEJvYZDsZFAARLkhA/6fG6ZCx5pz90vs="));
+  //console.log(enCrypt("U2FsdGVkX1+CEJvYZDsZFAARLkhA/6fG6ZCx5pz90vs="));
 
   let navigate = useNavigate();
   const [state, setState] = React.useState({
@@ -259,7 +259,7 @@ export default function SignInSide() {
         first_name: info.firstname,
         last_name: info.lastname,
         email_id: info.emailid,
-        password: info.password,
+        password: enCrypt(info.password),
         gender: info.gender,
         type: info.ctype,
         city: info.city,
