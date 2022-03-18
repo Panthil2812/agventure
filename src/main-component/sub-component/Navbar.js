@@ -83,7 +83,7 @@ const NAvatar = styled(NavLink)`
 
 const Navbar = (prop) => {
   const Loginckeck = () => {
-    if (getCookie("login") !== "") {
+    if (getCookie("account") !== "") {
       // console.log("user login");
       return true;
     } else {

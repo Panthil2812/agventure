@@ -28,17 +28,6 @@ const Router = () => {
             <Route path="/vendor" element={<Vendor />} />
             <Route path="/dashboard" element={<Dashboard />} />
           </Route>
-    
-          {/* <Route path="/Mydash/" element={<Navbar />}>
-            <Route index element={<Home />} />
-            <Route path="/auction" element={<Auction />} />
-            <Route path="/Shop" element={<Shop />} />
-            <Route path="/contact" element={<Contact />} />
-            <Route path="/about" element={<About />} />
-            <Route path="/blog" element={<Blog />} />
-            <Route path="/vendor" element={<Vendor />} />
-            <Route path="/dashboard" element={<Dashboard />} />
-          </Route> */}
           <Route path="/signin" element={<Signin />} />
           <Route path="/signup" element={<Signup />} />
         </Routes>

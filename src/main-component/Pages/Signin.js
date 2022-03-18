@@ -258,8 +258,9 @@ export default function SignInSide() {
                 if (info.checkbox) {
                   setCookie("username", info.email, 24);
                 }
-                setCookie("token", response.data.data, 1);
-                setCookie("login", JSON.stringify(Data), 1);
+                setCookie("token", response.data.token, 1);
+
+                setCookie("account", JSON.stringify(response.data.data), 1);
                 window.location.replace("/");
               }, 1000);
             }

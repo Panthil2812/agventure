@@ -11,6 +11,13 @@ import Backdrop from "@mui/material/Backdrop";
 import Snackbar from "@mui/material/Snackbar";
 import Alert from "@mui/material/Alert";
 import CircularProgress from "@mui/material/CircularProgress";
+import Account from "./Account";
+import Dashboard from "./VendorDashboard/Dashboard";
+import AuctionProducts from "./VendorDashboard/AuctionProducts";
+import NewProduct from "./VendorDashboard/NewProduct";
+import Products from "./VendorDashboard/Products";
+import Orders from "./VendorDashboard/Orders";
+
 const useStyles = makeStyles(() => ({
   active: {
     backgroundColor: "#f9f9f9",
@@ -80,28 +87,12 @@ const Vendor = () => {
     <>
       <Box
         sx={{
-          bgcolor: "#f9f9f9",
-          paddingLeft: "20px",
-          borderBottom: "2px outset #325240",
-        }}
-      >
-        <Breadcrumbs aria-label="breadcrumb" separator="›">
-          <Link underline="hover" color="inherit" href="/">
-            <h2>Home</h2>
-          </Link>
-          <Typography color="" sx={{ fontSize: "24px", fontWeight: "bold" }}>
-            My Dashbord
-          </Typography>
-        </Breadcrumbs>
-      </Box>
-      <Box
-        sx={{
           padding: "30px",
           bgcolor: "#f9f9f9",
         }}
       >
         <Grid container spacing={2}>
-          <Grid item xs={2} sx={{ bgcolor: "#f9f9f9", padding: "20px" }}>
+          <Grid item xs={3} sx={{ bgcolor: "#f9f9f9", padding: "20px" }}>
             <Box sx={{ boxShadow: "0 4px 16px 0 rgba(0, 0, 0, 0.2)" }}>
               <Grid
                 item
@@ -215,7 +206,8 @@ const Vendor = () => {
                   });
                   setProgress(true);
                   setTimeout(() => {
-                    deleteCookie("login");
+                    deleteCookie("token");
+                    deleteCookie("account");
                     window.location.replace("/");
                     setProgress(false);
                   }, 2000);
@@ -231,13 +223,13 @@ const Vendor = () => {
               </Grid>
             </Box>
           </Grid>
-          <Grid item xs={10} sx={{ bgcolor: "blue", padding: "20px" }}>
-            {state.dash && <h1>Dashbord</h1>}
-            {state.pro && <h1>Products</h1>}
-            {state.apro && <h1>Add New Product</h1>}
-            {state.auction && <h1>AUCTION</h1>}
-            {state.order && <h1>ORDERS</h1>}
-            {state.account && <h1>ACCOUNT DETAILS</h1>}
+          <Grid item xs={9} sx={{ bgcolor: "blue", padding: "20px" }}>
+            {state.dash && <Dashboard />}
+            {state.pro && <Products />}
+            {state.apro && <NewProduct />}
+            {state.auction && <AuctionProducts />}
+            {state.order && <Orders />}
+            {state.account && <Account />}
           </Grid>
         </Grid>
       </Box>
