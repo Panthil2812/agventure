@@ -9,8 +9,9 @@ import Signup from "./main-component/Pages/Signup";
 import Navbar from "./main-component/sub-component/Navbar";
 import Vendor from "./main-component/Pages/Vendor";
 
-import Dashboard from "./main-component/Pages/Dashbord";
+import Dashboard from "./main-component/Pages/Dashboard";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+import Copyright from "./main-component/sub-component/Copyright";
 
 const Router = () => {
   return (
@@ -25,8 +26,19 @@ const Router = () => {
             <Route path="/about" element={<About />} />
             <Route path="/blog" element={<Blog />} />
             <Route path="/vendor" element={<Vendor />} />
-            <Route path="/dashbord" element={<Dashboard />} />
+            <Route path="/dashboard" element={<Dashboard />} />
           </Route>
+    
+          {/* <Route path="/Mydash/" element={<Navbar />}>
+            <Route index element={<Home />} />
+            <Route path="/auction" element={<Auction />} />
+            <Route path="/Shop" element={<Shop />} />
+            <Route path="/contact" element={<Contact />} />
+            <Route path="/about" element={<About />} />
+            <Route path="/blog" element={<Blog />} />
+            <Route path="/vendor" element={<Vendor />} />
+            <Route path="/dashboard" element={<Dashboard />} />
+          </Route> */}
           <Route path="/signin" element={<Signin />} />
           <Route path="/signup" element={<Signup />} />
         </Routes>

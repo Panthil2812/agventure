@@ -145,19 +145,11 @@ export default function SignInSide() {
             <Alert
               variant="filled"
               onClose={handleClose}
-              severity="success"
               sx={{ width: "100%", bgcolor: "#325240" }}
             >
               {message}
             </Alert>
           </Snackbar>
-          {/* <Backdrop
-            sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
-            open={isForget}
-            onClick={handleClose}
-          >
-            <CircularProgress color="success" />
-          </Backdrop> */}
         </div>
       );
     } else if (isLogged) {
@@ -173,19 +165,11 @@ export default function SignInSide() {
             <Alert
               variant="filled"
               onClose={handleClose}
-              severity="success"
               sx={{ width: "100%", bgcolor: "#325240" }}
             >
               {message}
             </Alert>
           </Snackbar>
-          {/* <Backdrop
-            sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
-            open={isLogged}
-            onClick={handleClose}
-          >
-            <CircularProgress sx={{ color: "#325240" }} />
-          </Backdrop> */}
         </div>
       );
     } else {

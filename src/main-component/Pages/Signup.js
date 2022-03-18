@@ -23,7 +23,7 @@ import Copyright from "../sub-component/Copyright";
 import ValidatorSignup from "../Validator/ValidatorSignup";
 import Snackbar from "@mui/material/Snackbar";
 import Alert from "@mui/material/Alert";
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 import validator from "validator";
 import { enCrypt } from "../Validator/crypto";
 import Backdrop from "@mui/material/Backdrop";
@@ -177,19 +177,11 @@ export default function SignInSide() {
             <Alert
               variant="filled"
               onClose={handleClose}
-              severity="success"
               sx={{ width: "100%", bgcolor: "#325240" }}
             >
               {message}
             </Alert>
           </Snackbar>
-          {/* <Backdrop
-            sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
-            open={open}
-            onClick={handleClose}
-          >
-            <CircularProgress sx={{ color: "#325240" }} />
-          </Backdrop> */}
         </div>
       );
     } else {

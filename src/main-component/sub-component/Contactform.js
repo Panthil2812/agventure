@@ -167,7 +167,7 @@ const Contactform = () => {
         color="success"
         sx={{ mt: 3, mb: 2, bgcolor: "#325240" }}
       >
-        Submit
+        Send Message
       </Button>
       <div>{errorfunction()}</div>
     </React.Fragment>

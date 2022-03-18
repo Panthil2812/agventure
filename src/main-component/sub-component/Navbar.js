@@ -9,7 +9,6 @@ import styled from "styled-components";
 import { BsInfoCircleFill, BsPersonFill } from "react-icons/bs";
 import { GoSignIn } from "react-icons/go";
 import { GiShop } from "react-icons/gi";
-
 import { MdContacts } from "react-icons/md";
 import Avatar from "@mui/material/Avatar";
 import { getCookie } from "../Validator/CookieFunction";
@@ -37,8 +36,8 @@ const NBar = styled.div`
     }
   }
 `;
-const Image = styled.img`
-  width: 60px;
+const Image1 = styled.img`
+  width: 80px;
   float: left;
   padding: 15px;
   display: inline-block;
@@ -95,11 +94,11 @@ const Navbar = (prop) => {
     <>
       <NBar>
         <Link to="/">
-          <Image src={logo} alt="Example2" />
+          <Image1 src={logo} alt="Example2" />
         </Link>
 
         {Loginckeck() ? (
-          <NAvatar to="/dashbord">
+          <NAvatar to="/dashboard">
             <Avatar
               sx={{ m: 1, bgcolor: "#325240", height: "33px", width: "33px" }}
             >

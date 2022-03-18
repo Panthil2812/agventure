@@ -50,15 +50,15 @@ const caption = [
 const slideImages = [
   {
     url: agri1,
-    captionTitle: caption[(Math.random() * caption.length) | 5],
+    captionTitle: caption[(Math.random() * 2) | 5],
   },
   {
     url: agri2,
-    captionTitle: caption[(Math.random() * caption.length) | 8],
+    captionTitle: caption[(Math.random() * 3) | 8],
   },
   {
     url: agri3,
-    captionTitle: caption[(Math.random() * caption.length) | 2],
+    captionTitle: caption[(Math.random() * 4) | 2],
   },
 ];
 // const ImageText = styled.span`
