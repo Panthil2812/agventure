@@ -129,8 +129,15 @@ const Aboutcontent = () => {
           <div>
             <Button
               variant="contained"
-              color="success"
-              sx={{ mt: 3, mb: 2, bgcolor: "#325240", margin: "20px" }}
+              sx={{
+                mt: 3,
+                mb: 2,
+                bgcolor: "#325240",
+                margin: "20px",
+                "&:hover": {
+                  backgroundColor: "#325240",
+                },
+              }}
             >
               Read More
             </Button>

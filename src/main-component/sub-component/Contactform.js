@@ -164,8 +164,9 @@ const Contactform = () => {
         type="submit"
         fullWidth
         variant="contained"
-        color="success"
-        sx={{ mt: 3, mb: 2, bgcolor: "#325240" }}
+        sx={{ mt: 3, mb: 2, bgcolor: "#325240","&:hover": {
+          backgroundColor: "#325240",
+        }, }}
       >
         Send Message
       </Button>

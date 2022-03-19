@@ -25,7 +25,7 @@ export const IndiaContect = () => {
                 6.6%.
               </div>
               <div className="projcard-tagbox">
-                <span>Read More</span>
+                <span className="projcard-tag">Read More</span>
               </div>
             </div>
           </div>

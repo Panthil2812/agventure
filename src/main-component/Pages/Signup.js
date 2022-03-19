@@ -266,7 +266,7 @@ export default function SignInSide() {
           method: "post",
           headers: { "content-type": "application/x-www-form-urlencoded" },
           data: qs.stringify(Data),
-          url: "http://localhost:5050/users/create_user",
+          url: `${process.env.REACT_APP_BASEURL}users/create_user`,
         })
           .then(function (response) {
             // handle success
@@ -334,8 +334,14 @@ export default function SignInSide() {
         type="submit"
         fullWidth
         variant="contained"
-        color="success"
-        sx={{ mt: 3, mb: 2, bgcolor: "#325240" }}
+        sx={{
+          mt: 3,
+          mb: 2,
+          bgcolor: "#325240",
+          "&:hover": {
+            backgroundColor: "#325240",
+          },
+        }}
       >
         Sign Up
       </Button>
@@ -528,6 +534,7 @@ export default function SignInSide() {
                         options={CityName}
                         renderInput={(params) => (
                           <TextField
+                            required
                             {...params}
                             label="City"
                             name="city"
@@ -556,6 +563,7 @@ export default function SignInSide() {
                         options={StateName}
                         renderInput={(params) => (
                           <TextField
+                            required
                             {...params}
                             label="State"
                             id="state"

@@ -223,7 +223,14 @@ const Vendor = () => {
               </Grid>
             </Box>
           </Grid>
-          <Grid item xs={9} sx={{ bgcolor: "blue", padding: "20px" }}>
+          <Grid
+            item
+            xs={9}
+            sx={{
+              bgcolor: "#f9f9f9",
+              padding: "20px",
+            }}
+          >
             {state.dash && <Dashboard />}
             {state.pro && <Products />}
             {state.apro && <NewProduct />}
