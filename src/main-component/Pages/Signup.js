@@ -28,6 +28,8 @@ import validator from "validator";
 import { enCrypt } from "../Validator/crypto";
 import Backdrop from "@mui/material/Backdrop";
 import CircularProgress from "@mui/material/CircularProgress";
+import ToggleButton from "@mui/material/ToggleButton";
+import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
 
 const theme = createTheme();
 const CssTextField = styled(TextField)({
@@ -163,6 +165,11 @@ export default function SignInSide() {
   });
   const [flag, setFlag] = React.useState(false);
   const { isLogged, open, message } = state;
+  const [alignment, setAlignment] = React.useState("0");
+
+  const handleChange = (event, newAlignment) => {
+    setAlignment(newAlignment);
+  };
   const errorfunction = () => {
     if (isLogged) {
       return (
@@ -223,23 +230,37 @@ export default function SignInSide() {
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    const info = {
-      firstname: validator.trim(data.get("firstname")),
-      lastname: validator.trim(data.get("lastname")),
-      emailid: validator.trim(data.get("emailid")),
-      password: validator.trim(data.get("password")),
-      repassword: validator.trim(data.get("repassword")),
-      gender: Gender,
-      ctype: CType,
-      address: validator.trim(data.get("address")),
-      city: data.get("city"),
-      state: data.get("state"),
-      phone: validator.trim(data.get("phone")),
-      checkbox: data.get("checkbox"),
-    };
-
+    let info = "";
+    if (alignment === "1") {
+      info = {
+        fullname: validator.trim(data.get("vfullname")),
+        emailid: validator.trim(data.get("vemailid")),
+        password: validator.trim(data.get("vpassword")),
+        repassword: validator.trim(data.get("vrepassword")),
+        ctype: alignment,
+        address: validator.trim(data.get("vaddress")),
+        city: data.get("vcity"),
+        state: data.get("vstate"),
+        phone: validator.trim(data.get("vphone")),
+        checkbox: data.get("vcheckbox"),
+      };
+    } else if (alignment === "0") {
+      info = {
+        fullname: validator.trim(data.get("cfullname")),
+        emailid: validator.trim(data.get("cemailid")),
+        password: validator.trim(data.get("cpassword")),
+        repassword: validator.trim(data.get("crepassword")),
+        ctype: alignment,
+        address: "",
+        city: data.get("ccity"),
+        state: data.get("cstate"),
+        phone: validator.trim(data.get("cphone")),
+        checkbox: data.get("ccheckbox"),
+      };
+    }
+    console.log(info);
     const errorMessage = ValidatorSignup(info);
-    //console.log(errorMessage);
+    console.log(errorMessage);
     if (!errorMessage.flag) {
       setState({
         open: true,
@@ -247,13 +268,11 @@ export default function SignInSide() {
       });
     } else {
       const Data = {
-        user_name: info.firstname + " " + info.lastname,
-        first_name: info.firstname,
-        last_name: info.lastname,
+        user_name: info.fullname,
+        full_name: info.fullname,
         email_id: info.emailid,
         password: enCrypt(info.password),
-        gender: info.gender,
-        type: info.ctype,
+        type: alignment,
         city: info.city,
         state: info.state,
         address: info.address,
@@ -320,14 +339,7 @@ export default function SignInSide() {
   const handleClose = () => {
     setState({ ...state, open: false });
   };
-  const [Gender, setGender] = React.useState("");
-  const [CType, setCType] = React.useState("");
-  const handleGenderChange = (event) => {
-    setGender(event.target.value);
-  };
-  const handleCTypeChange = (event) => {
-    setCType(event.target.value);
-  };
+
   const buttons = (
     <React.Fragment>
       <Button
@@ -349,6 +361,320 @@ export default function SignInSide() {
       <div>{backDrop()}</div>
     </React.Fragment>
   );
+  const ToggleFunction = () => {
+    // vendor
+    if (alignment === "1") {
+      return (
+        <>
+          <Box
+            component="form"
+            noValidate
+            onSubmit={handleSubmit}
+            sx={{
+              my: 4,
+              mx: 4,
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+            }}
+          >
+            <Grid container spacing={2}>
+              <Grid item xs={12}>
+                <CssTextField
+                  name="vfullname"
+                  required
+                  fullWidth
+                  id="vfullname"
+                  label="Full Name"
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <CssTextField
+                  required
+                  fullWidth
+                  id="vemailid"
+                  label="Email Address"
+                  name="vemailid"
+                />
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <CssTextField
+                  required
+                  fullWidth
+                  name="vpassword"
+                  label="Password"
+                  type="password"
+                  id="vpassword"
+                />
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <CssTextField
+                  required
+                  fullWidth
+                  name="vrepassword"
+                  label="
+                    Re-Password"
+                  type="password"
+                  id="vrepassword"
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <CssTextField
+                  required
+                  fullWidth
+                  id="vaddress"
+                  label="Address"
+                  name="vaddress"
+                />
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <Box CssTextField sx={{ minWidth: 120 }}>
+                  <CssFormControl
+                    fullWidth
+                    required
+                    name="vcity"
+                    label="City"
+                    type="City"
+                    id="vcity"
+                  >
+                    <Autocomplete
+                      required
+                      id="combo-box-city"
+                      options={CityName}
+                      renderInput={(params) => (
+                        <TextField
+                          required
+                          {...params}
+                          label="City"
+                          name="vcity"
+                          id="vcity"
+                        />
+                      )}
+                    />
+                  </CssFormControl>
+                </Box>
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <Box CssTextField sx={{ minWidth: 120 }}>
+                  <CssFormControl
+                    fullWidth
+                    required
+                    name="vstate"
+                    label="State"
+                    type="State"
+                    id="vstate"
+                  >
+                    <Autocomplete
+                      required
+                      id="combo-box-state"
+                      options={StateName}
+                      renderInput={(params) => (
+                        <TextField
+                          required
+                          {...params}
+                          label="State"
+                          id="vstate"
+                          name="vstate"
+                        />
+                      )}
+                    />
+                  </CssFormControl>
+                </Box>
+              </Grid>
+              <Grid item xs={12}>
+                <CssTextField
+                  required
+                  fullWidth
+                  name="vphone"
+                  label="Phone"
+                  type="number"
+                  id="vphone"
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      value="true"
+                      name="vcheckbox"
+                      id="vcheckbox"
+                      color="success"
+                    />
+                  }
+                  sx={{ color: "#325240" }}
+                  label="I acknowledge that I have read and agree to the terms and Condition and Privacy Policy.*"
+                />
+              </Grid>
+            </Grid>
+            {buttons}
+            <Grid container justifyContent="flex-end">
+              <Grid item>
+                <Link
+                  href="/signin"
+                  variant="body2"
+                  sx={{ color: "#325240", fontWeight: "bold" }}
+                >
+                  Already have an account? Sign in
+                </Link>
+              </Grid>
+            </Grid>
+            <Copyright />
+          </Box>
+        </>
+      );
+      //customer
+    } else if (alignment === "0") {
+      return (
+        <>
+          <Box
+            component="form"
+            noValidate
+            onSubmit={handleSubmit}
+            sx={{
+              my: 4,
+              mx: 4,
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+            }}
+          >
+            <Grid container spacing={2}>
+              <Grid item xs={12}>
+                <CssTextField
+                  name="cfullname"
+                  required
+                  fullWidth
+                  id="cfullname"
+                  label="Full Name"
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <CssTextField
+                  required
+                  fullWidth
+                  id="cemailid"
+                  label="Email Address"
+                  name="cemailid"
+                />
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <CssTextField
+                  required
+                  fullWidth
+                  name="cpassword"
+                  label="Password"
+                  type="password"
+                  id="cpassword"
+                />
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <CssTextField
+                  required
+                  fullWidth
+                  name="crepassword"
+                  label="
+                  Re-Password"
+                  type="password"
+                  id="crepassword"
+                />
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <Box CssTextField sx={{ minWidth: 120 }}>
+                  <CssFormControl
+                    fullWidth
+                    required
+                    name="ccity"
+                    label="City"
+                    type="City"
+                    id="ccity"
+                  >
+                    <Autocomplete
+                      required
+                      id="combo-box-city"
+                      options={CityName}
+                      renderInput={(params) => (
+                        <TextField
+                          required
+                          {...params}
+                          label="City"
+                          name="ccity"
+                          id="ccity"
+                        />
+                      )}
+                    />
+                  </CssFormControl>
+                </Box>
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <Box CssTextField sx={{ minWidth: 120 }}>
+                  <CssFormControl
+                    fullWidth
+                    required
+                    name="cstate"
+                    label="State"
+                    type="State"
+                    id="cstate"
+                  >
+                    <Autocomplete
+                      required
+                      id="combo-box-state"
+                      options={StateName}
+                      renderInput={(params) => (
+                        <TextField
+                          required
+                          {...params}
+                          label="State"
+                          id="cstate"
+                          name="cstate"
+                        />
+                      )}
+                    />
+                  </CssFormControl>
+                </Box>
+              </Grid>
+              <Grid item xs={12}>
+                <CssTextField
+                  required
+                  fullWidth
+                  name="cphone"
+                  label="Phone"
+                  type="number"
+                  id="cphone"
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      value="true"
+                      name="ccheckbox"
+                      id="ccheckbox"
+                      color="success"
+                    />
+                  }
+                  sx={{ color: "#325240" }}
+                  label="I acknowledge that I have read and agree to the terms and Condition and Privacy Policy.*"
+                />
+              </Grid>
+            </Grid>
+            {buttons}
+            <Grid container justifyContent="flex-end">
+              <Grid item>
+                <Link
+                  href="/signin"
+                  variant="body2"
+                  sx={{ color: "#325240", fontWeight: "bold" }}
+                >
+                  Already have an account? Sign in
+                </Link>
+              </Grid>
+            </Grid>
+            <Copyright />
+          </Box>
+        </>
+      );
+    }
+  };
   return (
     <ThemeProvider theme={theme}>
       <Grid
@@ -364,11 +690,11 @@ export default function SignInSide() {
           component={Paper}
           elevation={6}
           square
-          sx={{ height: "100vh", overflow: "auto" }}
+          sx={{ height: "100vh", overflow: "auto", padding: "18px" }}
         >
           <Box
             sx={{
-              marginTop: 4,
+              marginTop: 2,
               display: "flex",
               flexDirection: "column",
               alignItems: "center",
@@ -384,237 +710,50 @@ export default function SignInSide() {
             >
               Sign Up
             </Typography>
-            <Box
-              component="form"
-              noValidate
-              onSubmit={handleSubmit}
+            <ToggleButtonGroup
+              value={alignment}
+              fullWidth
+              exclusive
+              onChange={handleChange}
               sx={{
-                my: 4,
-                mx: 4,
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
+                mt: "18px",
+                border: "2px solid #f9f9f9",
+                borderRadius: "25px",
+                boxShadow: "0 8px 8px 0 rgba(0, 0, 0, 0.2)",
               }}
             >
-              <Grid container spacing={2}>
-                <Grid item xs={12} sm={6}>
-                  <CssTextField
-                    autoComplete="given-name"
-                    name="firstname"
-                    required
-                    fullWidth
-                    id="firstname"
-                    label="First Name"
-                  />
-                </Grid>
-                <Grid item xs={12} sm={6}>
-                  <CssTextField
-                    required
-                    fullWidth
-                    id="lastname"
-                    label="Last Name"
-                    name="lastname"
-                    autoComplete="family-name"
-                  />
-                </Grid>
-                <Grid item xs={12}>
-                  <CssTextField
-                    required
-                    fullWidth
-                    id="emailid"
-                    label="Email Address"
-                    name="emailid"
-                    autoComplete="email"
-                  />
-                </Grid>
-                <Grid item xs={12} sm={6}>
-                  <CssTextField
-                    required
-                    fullWidth
-                    name="password"
-                    label="Password"
-                    type="password"
-                    id="password"
-                    autoComplete="new-password"
-                  />
-                </Grid>
-                <Grid item xs={12} sm={6}>
-                  <CssTextField
-                    required
-                    fullWidth
-                    name="repassword"
-                    label="
-                    Re-Password"
-                    type="password"
-                    id="repassword"
-                    autoComplete="new-password"
-                  />
-                </Grid>
-                <Grid item xs={12} sm={6}>
-                  <Box CssTextField sx={{ minWidth: 120 }}>
-                    <CssFormControl
-                      fullWidth
-                      required
-                      name="gender"
-                      label="Gender"
-                      type="Gender"
-                      id="gender"
-                      autoComplete="Gender"
-                    >
-                      <InputLabel id="demo-simple-select-label">
-                        Gender
-                      </InputLabel>
-                      <Select
-                        labelId="demo-simple-select-label"
-                        id="demo-simple-select"
-                        value={Gender}
-                        name="gender"
-                        label="gender"
-                        onChange={handleGenderChange}
-                      >
-                        <MenuItem value={0}>Male</MenuItem>
-                        <MenuItem value={1}>Female</MenuItem>
-                      </Select>
-                    </CssFormControl>
-                  </Box>
-                </Grid>
-                <Grid item xs={12} sm={6}>
-                  <Box CssTextField sx={{ minWidth: 120 }}>
-                    <CssFormControl
-                      fullWidth
-                      required
-                      name="ctype"
-                      label="Type"
-                      type="select"
-                      id="ctype"
-                      autoComplete="Type"
-                    >
-                      <InputLabel id="demo-simple-select-label">
-                        Type
-                      </InputLabel>
-                      <Select
-                        labelId="demo-simple-select-label"
-                        id="demo-simple-select"
-                        value={CType}
-                        label="Type"
-                        name="ctype"
-                        onChange={handleCTypeChange}
-                        className={theme.select}
-                      >
-                        <MenuItem value={0}>Vendor</MenuItem>
-                        <MenuItem value={1}>Customers</MenuItem>
-                      </Select>
-                    </CssFormControl>
-                  </Box>
-                </Grid>
-                <Grid item xs={12}>
-                  <CssTextField
-                    required
-                    fullWidth
-                    id="address"
-                    label="Address"
-                    name="address"
-                    autoComplete="address"
-                  />
-                </Grid>
-                <Grid item xs={12} sm={6}>
-                  <Box CssTextField sx={{ minWidth: 120 }}>
-                    <CssFormControl
-                      fullWidth
-                      required
-                      name="city"
-                      label="City"
-                      type="City"
-                      id="city"
-                      autoComplete="City"
-                    >
-                      <Autocomplete
-                        required
-                        id="combo-box-city"
-                        options={CityName}
-                        renderInput={(params) => (
-                          <TextField
-                            required
-                            {...params}
-                            label="City"
-                            name="city"
-                            id="city"
-                            autoComplete="off"
-                          />
-                        )}
-                      />
-                    </CssFormControl>
-                  </Box>
-                </Grid>
-                <Grid item xs={12} sm={6}>
-                  <Box CssTextField sx={{ minWidth: 120 }}>
-                    <CssFormControl
-                      fullWidth
-                      required
-                      name="state"
-                      label="State"
-                      type="State"
-                      id="state"
-                      autoComplete="State"
-                    >
-                      <Autocomplete
-                        required
-                        id="combo-box-state"
-                        options={StateName}
-                        renderInput={(params) => (
-                          <TextField
-                            required
-                            {...params}
-                            label="State"
-                            id="state"
-                            name="state"
-                            autoComplete="off"
-                          />
-                        )}
-                      />
-                    </CssFormControl>
-                  </Box>
-                </Grid>
-                <Grid item xs={12}>
-                  <CssTextField
-                    required
-                    fullWidth
-                    name="phone"
-                    label="Phone"
-                    type="number"
-                    id="phone"
-                    autoComplete="new-Phone"
-                  />
-                </Grid>
-                <Grid item xs={12}>
-                  <FormControlLabel
-                    control={
-                      <Checkbox
-                        value="true"
-                        name="checkbox"
-                        id="checkbox"
-                        color="success"
-                      />
-                    }
-                    sx={{ color: "#325240" }}
-                    label="I acknowledge that I have read and agree to the terms and Condition and Privacy Policy.*"
-                  />
-                </Grid>
-              </Grid>
-              {buttons}
-              <Grid container justifyContent="flex-end">
-                <Grid item>
-                  <Link
-                    href="/signin"
-                    variant="body2"
-                    sx={{ color: "#325240", fontWeight: "bold" }}
-                  >
-                    Already have an account? Sign in
-                  </Link>
-                </Grid>
-              </Grid>
-              <Copyright />
-            </Box>
+              <ToggleButton
+                value="0"
+                sx={{
+                  color: "#325240",
+                  fontWeight: "bold",
+                  borderRadius: "25px",
+                  borderLeft: "2px solid #f9f9f9",
+                  "&.Mui-selected, &.Mui-selected:hover,&:hover": {
+                    color: "#f9f9f9",
+                    backgroundColor: "#325240",
+                  },
+                }}
+              >
+                Customer
+              </ToggleButton>
+              <ToggleButton
+                value="1"
+                sx={{
+                  color: "#325240",
+                  fontWeight: "bold",
+                  borderRadius: "25px",
+                  borderRight: "2px solid #f9f9f9",
+                  "&.Mui-selected, &.Mui-selected:hover,&:hover": {
+                    color: "#f9f9f9",
+                    backgroundColor: "#325240",
+                  },
+                }}
+              >
+                Vendor
+              </ToggleButton>
+            </ToggleButtonGroup>
+            {ToggleFunction()}
           </Box>
         </ScrollDiv>
         <Grid

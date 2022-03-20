@@ -438,59 +438,6 @@ const Account = () => {
                   value={accountData.emailid}
                 />
               </Grid>
-              <Grid item xs={12} sm={6}>
-                <Box CssTextField sx={{ minWidth: 120 }}>
-                  <CssFormControl
-                    fullWidth
-                    required
-                    name="gender"
-                    label="Gender"
-                    type="Gender"
-                    id="gender"
-                  >
-                    <InputLabel id="demo-simple-select-label">
-                      Gender
-                    </InputLabel>
-                    <Select
-                      labelId="demo-simple-select-label"
-                      id="demo-simple-select"
-                      value={Gender}
-                      name="gender"
-                      label="gender"
-                      onChange={handleGenderChange}
-                    >
-                      <MenuItem value={0}>Male</MenuItem>
-                      <MenuItem value={1}>Female</MenuItem>
-                    </Select>
-                  </CssFormControl>
-                </Box>
-              </Grid>
-              <Grid item xs={12} sm={6}>
-                <Box CssTextField sx={{ minWidth: 120 }}>
-                  <CssFormControl
-                    fullWidth
-                    required
-                    name="ctype"
-                    label="Type"
-                    type="select"
-                    id="ctype"
-                  >
-                    <InputLabel id="demo-simple-select-label">Type</InputLabel>
-                    <Select
-                      labelId="demo-simple-select-label"
-                      id="demo-simple-select"
-                      value={CType}
-                      label="Type"
-                      name="ctype"
-                      onChange={handleCTypeChange}
-                      className={theme.select}
-                    >
-                      <MenuItem value={0}>Vendor</MenuItem>
-                      <MenuItem value={1}>Customers</MenuItem>
-                    </Select>
-                  </CssFormControl>
-                </Box>
-              </Grid>
               <Grid item xs={12}>
                 <CssTextField
                   required

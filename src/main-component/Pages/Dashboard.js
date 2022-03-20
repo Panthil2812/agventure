@@ -14,11 +14,11 @@ const dashboard = () => {
   const account = JSON.parse(getCookie("account"));
   const type = account.type;
   const whichDashboard = () => {
-    if (type === 1) {
-      return <Customer />;
-    } else if (type === 0) {
+    if (type === 0) {
       return <Vendor />;
-    } else if (type === 3) {
+    } else if (type === 1) {
+      return <Customer />;
+    } else if (type === 2) {
       return <Admin />;
     }
   };

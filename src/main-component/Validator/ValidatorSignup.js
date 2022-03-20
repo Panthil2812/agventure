@@ -1,25 +1,10 @@
 import validator from "validator";
 
 const ValidatorSignup = (info) => {
-  if (validator.isEmpty(info.firstname)) {
+  if (validator.isEmpty(info.fullname)) {
     return {
       flag: false,
-      message: "Please Enter a First name.",
-    };
-  } else if (!validator.isAlpha(info.firstname, ["en-IN"])) {
-    return {
-      flag: false,
-      message: "plase enter vaild first name",
-    };
-  } else if (validator.isEmpty(info.lastname)) {
-    return {
-      flag: false,
-      message: "Please Enter a Last name.",
-    };
-  } else if (!validator.isAlpha(info.lastname, ["en-IN"])) {
-    return {
-      flag: false,
-      message: "plase enter vaild last name",
+      message: "Please Enter a FullName.",
     };
   } else if (validator.isEmpty(info.emailid)) {
     return {
@@ -60,20 +45,10 @@ const ValidatorSignup = (info) => {
       flag: false,
       message: "Password don't Match.Try Again !.",
     };
-  } else if (info.gender === "") {
+  } else if (info.ctype === "1" && validator.isEmpty(info.address)) {
     return {
       flag: false,
-      message: "Please Select a Gender.",
-    };
-  } else if (info.ctype === "") {
-    return {
-      flag: false,
-      message: "Please Select a Type.",
-    };
-  } else if (validator.isEmpty(info.address)) {
-    return {
-      flag: false,
-      message: "Please Select a Address.",
+      message: "Please Enter a Address.",
     };
   } else if (validator.isEmpty(info.city)) {
     return {
