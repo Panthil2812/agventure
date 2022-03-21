@@ -6,26 +6,6 @@ const ValidatorSignup = (info) => {
       flag: false,
       message: "Please Enter a Username.",
     };
-  } else if (validator.isEmpty(info.firstname)) {
-    return {
-      flag: false,
-      message: "Please Enter a First name.",
-    };
-  } else if (!validator.isAlpha(info.firstname, ["en-IN"])) {
-    return {
-      flag: false,
-      message: "plase enter vaild first name",
-    };
-  } else if (validator.isEmpty(info.lastname)) {
-    return {
-      flag: false,
-      message: "Please Enter a Last name.",
-    };
-  } else if (!validator.isAlpha(info.lastname, ["en-IN"])) {
-    return {
-      flag: false,
-      message: "plase enter vaild last name",
-    };
   } else if (validator.isEmpty(info.emailid)) {
     return {
       flag: false,
@@ -35,21 +15,6 @@ const ValidatorSignup = (info) => {
     return {
       flag: false,
       message: "Please Enter a Valid Email-Id Address.",
-    };
-  } else if (info.gender === "") {
-    return {
-      flag: false,
-      message: "Please Select a Gender.",
-    };
-  } else if (info.ctype === "") {
-    return {
-      flag: false,
-      message: "Please Select a Type.",
-    };
-  } else if (validator.isEmpty(info.address)) {
-    return {
-      flag: false,
-      message: "Please Select a Address.",
     };
   } else if (validator.isEmpty(info.city)) {
     return {
@@ -74,8 +39,7 @@ const ValidatorSignup = (info) => {
   } else {
     return {
       flag: true,
-      message:
-        "Congratulation,Your account has been Successfully created, Redirecting....",
+      message: "Congratulation,Your account has been Successfully Updated.",
     };
   }
 };

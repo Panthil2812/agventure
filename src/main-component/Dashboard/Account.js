@@ -1,23 +1,15 @@
 import React from "react";
 import axios from "axios";
 import qs from "query-string";
-import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
-import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
-import Link from "@mui/material/Link";
-import Paper from "@mui/material/Paper";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
-import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { styled } from "@mui/material/styles";
-import InputLabel from "@mui/material/InputLabel";
-import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
-import Select from "@mui/material/Select";
 import Autocomplete from "@mui/material/Autocomplete";
 import ValidatorAccount from "../Validator/ValidatorAccount";
 import Snackbar from "@mui/material/Snackbar";
@@ -26,7 +18,11 @@ import validator from "validator";
 import { enCrypt, deCrypt } from "../Validator/crypto";
 import Backdrop from "@mui/material/Backdrop";
 import CircularProgress from "@mui/material/CircularProgress";
-import { setCookie, getCookie } from "../Validator/CookieFunction";
+import {
+  setCookie,
+  getCookie,
+  deleteCookie,
+} from "../Validator/CookieFunction";
 
 const theme = createTheme();
 const CssTextField = styled(TextField)({
@@ -79,11 +75,6 @@ const CssFormControl = styled(FormControl)({
       borderWidth: "2px",
       borderColor: "#325240",
     },
-  },
-});
-const ScrollDiv = styled(Grid)({
-  "::-webkit-scrollbar": {
-    display: "none",
   },
 });
 const CityName = [
@@ -154,13 +145,11 @@ const StateName = [
 
 const Account = () => {
   const account = JSON.parse(getCookie("account"));
+  const token = getCookie("token");
   const [accountData, setAccountData] = React.useState({
     username: account.user_name,
-    firstname: account.first_name,
-    lastname: account.last_name,
     emailid: account.email_id,
-    password: deCrypt(account.password),
-    gender: account.gender,
+    password: account.password,
     ctype: account.type,
     address: account.address,
     city: account.city,
@@ -236,19 +225,15 @@ const Account = () => {
     const data = new FormData(event.currentTarget);
     const info = {
       username: validator.trim(data.get("username")),
-      firstname: validator.trim(data.get("firstname")),
-      lastname: validator.trim(data.get("lastname")),
       emailid: validator.trim(data.get("emailid")),
-      gender: Gender,
-      ctype: CType,
       address: validator.trim(data.get("address")),
       city: data.get("city"),
       state: data.get("state"),
       phone: validator.trim(data.get("phone")),
     };
-
+    // console.log(info);
     const errorMessage = ValidatorAccount(info);
-    // console.log(errorMessage);
+
     if (!errorMessage.flag) {
       setState({
         open: true,
@@ -258,11 +243,8 @@ const Account = () => {
       const Data = {
         _id: account._id,
         user_name: info.username,
-        first_name: info.firstname,
-        last_name: info.lastname,
         email_id: info.emailid,
         password: enCrypt(info.password),
-        gender: info.gender,
         type: info.ctype,
         city: info.city,
         state: info.state,
@@ -276,6 +258,7 @@ const Account = () => {
           method: "post",
           headers: {
             "content-type": "application/x-www-form-urlencoded",
+            Authorization: `Bearer ${token}`,
           },
           data: qs.stringify(Data),
           url: `${process.env.REACT_APP_BASEURL}user/update_user`,
@@ -284,10 +267,10 @@ const Account = () => {
             // handle success
             // const infomation = qs.stringify(response);
             console.log(response.data);
-            if (response.data.status === 500) {
+            if (response.data.status === 504) {
               setState({
                 open: true,
-                message: "Email already exists.",
+                message: "User does not updated.",
               });
               setFlag(false);
             }
@@ -299,8 +282,8 @@ const Account = () => {
               });
               setFlag(false);
               setTimeout(() => {
+                setCookie("account", JSON.stringify(response.data.data), 1);
                 //navigate("/signin");
-                window.location.replace("/dashboard");
               }, 1000);
             }
           })
@@ -316,13 +299,139 @@ const Account = () => {
   const handleClose = () => {
     setState({ ...state, open: false });
   };
-  const [Gender, setGender] = React.useState(account.gender);
-  const [CType, setCType] = React.useState(account.type);
-  const handleGenderChange = (event) => {
-    setGender(event.target.value);
+  const handleSubmitPassword = (event) => {
+    event.preventDefault();
+    const data = new FormData(event.currentTarget);
+    const info = {
+      password: validator.trim(data.get("password")),
+      newpassword: validator.trim(data.get("newpassword")),
+      crpassword: validator.trim(data.get("crpassword")),
+    };
+    if (validator.isEmpty(info.password)) {
+      setState({
+        open: true,
+        message: "Please Enter a Password.",
+      });
+    } else if (validator.isEmpty(info.newpassword)) {
+      setState({
+        open: true,
+        message: "Please Enter a New password.",
+      });
+    } else if (validator.isEmpty(info.crpassword)) {
+      setState({
+        open: true,
+        message: "Please Enter a confirm new Password.",
+      });
+    } else if (
+      !validator.isStrongPassword(info.newpassword, {
+        minLength: 8,
+        minLowercase: 1,
+        minUppercase: 0,
+        minNumbers: 1,
+        minSymbols: 1,
+      })
+    ) {
+      setState({
+        open: true,
+        message:
+          "Please password must be at least 8 characters long and at least one Symbols,Number.",
+      });
+    } else if (!validator.equals(info.crpassword, info.newpassword)) {
+      setState({
+        open: true,
+        message: "Password don't Match.Try Again !.",
+      });
+    } else {
+      // setState({
+      //   isLogged: true,
+      //   open: true,
+      //   message: "Password",
+      // });
+      const Data = {
+        _id: account._id,
+        email_id: accountData.emailid,
+        password: enCrypt(info.newpassword),
+      };
+      setFlag(true);
+      setTimeout(() => {
+        axios({
+          method: "post",
+          headers: {
+            "content-type": "application/x-www-form-urlencoded",
+            Authorization: `Bearer ${token}`,
+          },
+          data: qs.stringify(Data),
+          url: `${process.env.REACT_APP_BASEURL}user/update_user`,
+        })
+          .then(function (response) {
+            if (response.data.status === 504) {
+              setState({
+                open: true,
+                message: "User does not updated.",
+              });
+              setFlag(false);
+            }
+            if (response.data.status === 200) {
+              setState({
+                isLogged: true,
+                open: true,
+                message: "Congratulation,You have Successfully Update Password",
+              });
+
+              setTimeout(() => {
+                setFlag(false);
+              }, 1000);
+            }
+          })
+          .catch(function (error) {
+            setState({
+              open: true,
+              message: "Please Try again!",
+            });
+          });
+      }, 3000);
+    }
   };
-  const handleCTypeChange = (event) => {
-    setCType(event.target.value);
+  const handleDeleteEvent = () => {
+    setFlag(true);
+    setTimeout(() => {
+      axios({
+        method: "get",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        url: `${process.env.REACT_APP_BASEURL}users/deleteUser/${account._id}`,
+      })
+        .then(function (response) {
+          // handle success
+          // const infomation = qs.stringify(response);
+          console.log(response.data);
+          if (response.data.status === 500) {
+            setState({
+              open: true,
+              message: "User does not deleted.",
+            });
+            setFlag(false);
+          }
+          if (response.data.status === 200) {
+            setState({
+              isLogged: true,
+              open: true,
+              message:
+                "Congratulation,You have Successfully logged out,Redirecting....",
+            });
+            deleteCookie("token");
+            deleteCookie("account");
+            window.location.replace("/");
+          }
+        })
+        .catch(function (error) {
+          setState({
+            open: true,
+            message: "Please Try again!",
+          });
+        });
+    }, 3000);
   };
   const buttons = (
     <React.Fragment>
@@ -345,6 +454,74 @@ const Account = () => {
       <div>{backDrop()}</div>
     </React.Fragment>
   );
+  const passwordChangeButtons = (
+    <React.Fragment>
+      <Button
+        type="submit"
+        fullWidth
+        variant="contained"
+        sx={{
+          mt: 3,
+          mb: 2,
+          backgroundColor: "#325240",
+          "&:hover": {
+            backgroundColor: "#325240",
+          },
+        }}
+      >
+        Save Password
+      </Button>
+      <div>{errorfunction()}</div>
+      <div>{backDrop()}</div>
+    </React.Fragment>
+  );
+
+  const DeleteButtons = (
+    <React.Fragment>
+      <Typography
+        component="h1"
+        variant="h5"
+        sx={{
+          color: "#325240",
+          fontWeight: "bold",
+          borderBottom: "2px outset #325240",
+        }}
+      >
+        DELETE ACCOUNT
+      </Typography>
+      <Typography
+        component="h2"
+        variant="h5"
+        sx={{
+          color: "#325240",
+          fontSize: "18px",
+        }}
+      >
+        <br />
+        Delete this Account
+        <br />
+        Once you delete a Account, there is no going back. Please be certain.
+      </Typography>
+      <Button
+        type="submit"
+        variant="contained"
+        onClick={handleDeleteEvent}
+        sx={{
+          mt: 3,
+          mb: 2,
+          color: "error",
+          backgroundColor: "#B10000",
+          "&:hover": {
+            backgroundColor: "red",
+          },
+        }}
+      >
+        Delete Account
+      </Button>
+      <div>{errorfunction()}</div>
+      <div>{backDrop()}</div>
+    </React.Fragment>
+  );
   return (
     <>
       <ThemeProvider theme={theme}>
@@ -353,7 +530,6 @@ const Account = () => {
             marginTop: 4,
             display: "flex",
             flexDirection: "column",
-            alignItems: "center",
           }}
         >
           <Typography
@@ -392,38 +568,6 @@ const Account = () => {
                     setAccountData({
                       ...accountData,
                       username: e.target.value,
-                    });
-                  }}
-                />
-              </Grid>
-              <Grid item xs={12} sm={6}>
-                <CssTextField
-                  name="firstname"
-                  required
-                  fullWidth
-                  value={accountData.firstname}
-                  onChange={(e) => {
-                    setAccountData({
-                      ...accountData,
-                      firstname: e.target.value,
-                    });
-                  }}
-                  id="firstname"
-                  label="First Name"
-                />
-              </Grid>
-              <Grid item xs={12} sm={6}>
-                <CssTextField
-                  required
-                  fullWidth
-                  id="lastname"
-                  label="Last Name"
-                  name="lastname"
-                  value={accountData.lastname}
-                  onChange={(e) => {
-                    setAccountData({
-                      ...accountData,
-                      lastname: e.target.value,
                     });
                   }}
                 />
@@ -468,7 +612,13 @@ const Account = () => {
                       required
                       id="combo-box-city"
                       options={CityName}
-                      value={account.city}
+                      value={accountData.city}
+                      onChange={(event, value) => {
+                        setAccountData({
+                          ...accountData,
+                          city: value,
+                        });
+                      }}
                       renderInput={(params) => (
                         <TextField
                           required
@@ -496,7 +646,13 @@ const Account = () => {
                       required
                       id="combo-box-state"
                       options={StateName}
-                      value={account.state}
+                      value={accountData.state}
+                      onChange={(event, value) => {
+                        setAccountData({
+                          ...accountData,
+                          state: value,
+                        });
+                      }}
                       renderInput={(params) => (
                         <TextField
                           required
@@ -531,6 +687,72 @@ const Account = () => {
             {buttons}
           </Box>
         </Box>
+        <Box
+          sx={{
+            marginTop: 4,
+            display: "flex",
+            flexDirection: "column",
+          }}
+        >
+          <Typography
+            component="h1"
+            variant="h5"
+            sx={{
+              color: "#325240",
+              fontWeight: "bold",
+              borderBottom: "2px outset #325240",
+            }}
+          >
+            PASSWORD CHANGE
+          </Typography>
+          <Box
+            component="form"
+            noValidate
+            onSubmit={handleSubmitPassword}
+            sx={{
+              my: 4,
+              mx: 4,
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+            }}
+          >
+            <Grid container spacing={3}>
+              <Grid item xs={12}>
+                <CssTextField
+                  required
+                  fullWidth
+                  id="password"
+                  type="password"
+                  label="Current Password"
+                  name="password"
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <CssTextField
+                  required
+                  fullWidth
+                  type="password"
+                  id="newpassword"
+                  label="New password"
+                  name="newpassword"
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <CssTextField
+                  required
+                  fullWidth
+                  type="password"
+                  id="crpassword"
+                  label="Confirm new password"
+                  name="crpassword"
+                />
+              </Grid>
+            </Grid>
+            {passwordChangeButtons}
+          </Box>
+        </Box>
+        {DeleteButtons}
       </ThemeProvider>
     </>
   );

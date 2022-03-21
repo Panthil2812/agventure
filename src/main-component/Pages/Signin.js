@@ -98,12 +98,6 @@ export default function SignInSide() {
         open: true,
         message: "Please Enter a Valid Email-Id Address.",
       });
-    } else if (fEmail !== "pmalaviya356@rku.ac.in") {
-      setState({
-        open: true,
-        message:
-          "The user ID you entered does not exist.Please check that you have typed your ID correctly.",
-      });
     } else if (
       !isStrongPassword(fPassword, {
         minLength: 8,
@@ -119,16 +113,53 @@ export default function SignInSide() {
           "Please password must be at least 8 characters long and at least one Symbols,Number.",
       });
     } else {
-      console.log(fEmail);
-      console.log(fPassword);
-      setForget({
-        isForget: true,
-      });
-      setDialog(false);
-      setState({
-        open: true,
-        message: "Your Password has been changed Successfully.",
-      });
+      // authorise/forgot_password
+      const Data = {
+        email_id: fEmail,
+        password: enCrypt(fPassword),
+      };
+      setFlag(true);
+      setTimeout(() => {
+        // console.log(Data);
+        axios({
+          method: "post",
+          headers: {
+            "content-type": "application/x-www-form-urlencoded",
+          },
+          data: qs.stringify(Data),
+          url: `${process.env.REACT_APP_BASEURL}authorise/forgot_password`,
+        })
+          .then(function (response) {
+            // handle success
+            // const infomation = qs.stringify(response);
+            console.log(response.data);
+            if (response.data.status === 500) {
+              setState({
+                open: true,
+                message:
+                  "The user ID you entered does not exist.Please check that you have typed your ID correctly.",
+              });
+              setFlag(false);
+            }
+            if (response.data.status === 200) {
+              setForget({
+                isForget: true,
+              });
+              setDialog(false);
+              setState({
+                open: true,
+                message: "Your Password has been changed Successfully.",
+              });
+              setFlag(false);
+            }
+          })
+          .catch(function (error) {
+            setState({
+              open: true,
+              message: "Please Try again!",
+            });
+          });
+      }, 3000);
     }
   };
   const errorfunction = () => {
@@ -321,9 +352,6 @@ export default function SignInSide() {
       <div>{backDrop()}</div>
     </React.Fragment>
   );
-
-  console.log(process.env.REACT_APP_BASEURL + "authorise/login/");
-
   return (
     <>
       <ThemeProvider theme={theme}>
@@ -508,7 +536,10 @@ export default function SignInSide() {
                           >
                             Submit
                           </Button>
-                          <div>{errorfunction()}</div>
+                          <div>
+                            {errorfunction()}
+                            {backDrop()}
+                          </div>
                         </DialogActions>
                       </Dialog>
                     </div>

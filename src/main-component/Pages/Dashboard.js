@@ -15,9 +15,9 @@ const dashboard = () => {
   const type = account.type;
   const whichDashboard = () => {
     if (type === 0) {
-      return <Vendor />;
-    } else if (type === 1) {
       return <Customer />;
+    } else if (type === 1) {
+      return <Vendor />;
     } else if (type === 2) {
       return <Admin />;
     }
