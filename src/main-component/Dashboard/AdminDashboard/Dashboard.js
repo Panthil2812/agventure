@@ -2,7 +2,7 @@ import React from "react";
 import { makeStyles } from "@mui/styles";
 import { GrEdit } from "react-icons/gr";
 import { Box, Button } from "@mui/material";
-
+import { storage } from "../../../Firebase/index";
 const useStyles = makeStyles(() => ({
   avatarUpload: {
     position: "relative",
@@ -66,10 +66,25 @@ const useStyles = makeStyles(() => ({
   },
 }));
 const Dashboard = () => {
-  const [imageUrl, setImageUrl] = React.useState(
-    "http://i.pravatar.cc/500?img=7"
-  );
+  const [imagefile, setImagefile] = React.useState(null);
+  const [imageUrl, setImageUrl] = React.useState("");
   const classes = useStyles();
+  const handleupload = async () => {
+    ///  console.log(imagefile);
+    const uploadTask = storage.ref(`image/${imagefile.name}`).put(imagefile);
+    // console.log(uploadTask._ref("images").getDownloadURL());
+    uploadTask.on(
+      "state_changed",
+      (snapshot) => {},
+      (error) => {
+        console.log(error);
+      }
+    );
+    const imagdf = await storage
+      .ref("images")
+      .child(imagefile.name)
+      .getDownloadURL();
+  };
   return (
     <>
       <Box sx={{ alignContent: "center", alignItems: "center" }}>
@@ -80,15 +95,16 @@ const Dashboard = () => {
               type="file"
               id="imageUpload"
               accept=".png, .jpg, .jpeg"
-              onChange={(e) => {
-                const imgur = URL.createObjectURL(e.target.files[0]);
-                console.log(e.target.files[0]);
-                console.log(imgur);
-                var image = document.getElementById("output");
-                image.src = URL.createObjectURL(e.target.files[0]);
-                setImageUrl({
-                  imageUrl: imgur,
-                });
+              onInput={(e) => {
+                if (e.target.files[0]) {
+                  var image = document.getElementById("output");
+                  image.src = URL.createObjectURL(e.target.files[0]);
+                  const file = e.target.files[0];
+                  setImagefile(file);
+                  console.log(imagefile);
+                } else {
+                  console.log("panthil");
+                }
               }}
             />
 
@@ -110,6 +126,7 @@ const Dashboard = () => {
         <Button
           type="submit"
           variant="contained"
+          onClick={handleupload}
           sx={{
             mt: 3,
             mb: 2,
@@ -122,6 +139,7 @@ const Dashboard = () => {
         >
           Upload Image
         </Button>
+        <div>{imageUrl}</div>
       </Box>
     </>
   );
