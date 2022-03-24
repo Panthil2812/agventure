@@ -18,6 +18,8 @@ import validator from "validator";
 import { enCrypt, deCrypt } from "../Validator/crypto";
 import Backdrop from "@mui/material/Backdrop";
 import CircularProgress from "@mui/material/CircularProgress";
+import ProfilePic from "./ProfilePic";
+
 import {
   setCookie,
   getCookie,
@@ -155,6 +157,7 @@ const Account = () => {
     city: account.city,
     state: account.state,
     phone: account.phone,
+    
   });
   const [state, setState] = React.useState({
     open: false,
@@ -543,6 +546,7 @@ const Account = () => {
           >
             ACCOUNT DETAILS
           </Typography>
+          <ProfilePic />
           <Box
             component="form"
             noValidate

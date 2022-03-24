@@ -26,6 +26,11 @@ const useStyles = makeStyles(() => ({
     backgroundColor: "#325240",
     color: "#f9f9f9",
     padding: "10px",
+    "&:hover": {
+      backgroundColor: "#f9f9f9",
+      color: "#325240",
+      padding: "10px",
+    },
   },
 }));
 const StyledTypography = styled(Typography)({
