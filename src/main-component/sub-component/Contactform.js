@@ -1,17 +1,17 @@
 import * as React from "react";
-import Box from "@mui/material/Box";
+import {
+  Box,
+  Alert,
+  Snackbar,
+  Grid,
+  TextField,
+  Button,
+} from "@mui/material/Box";
 import { FaPhoneAlt } from "react-icons/fa";
 import { ImLocation2 } from "react-icons/im";
 import { MdEmail } from "react-icons/md";
 import organic from "../../assets/Images/contact2.png";
-import Button from "@mui/material/Button";
-import TextField from "@mui/material/TextField";
-import Grid from "@mui/material/Grid";
-// import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { styled } from "@mui/material/styles";
-// import FormControl from "@mui/material/FormControl";
-import Snackbar from "@mui/material/Snackbar";
-import Alert from "@mui/material/Alert";
 import validator from "validator";
 const CssTextField = styled(TextField)({
   "& label.Mui-focused": {
@@ -164,9 +164,14 @@ const Contactform = () => {
         type="submit"
         fullWidth
         variant="contained"
-        sx={{ mt: 3, mb: 2, bgcolor: "#325240","&:hover": {
-          backgroundColor: "#325240",
-        }, }}
+        sx={{
+          mt: 3,
+          mb: 2,
+          bgcolor: "#325240",
+          "&:hover": {
+            backgroundColor: "#325240",
+          },
+        }}
       >
         Send Message
       </Button>

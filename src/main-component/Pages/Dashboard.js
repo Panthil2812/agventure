@@ -6,9 +6,7 @@ import Customer from "../Dashboard/Customer";
 import Admin from "../Dashboard/Admin";
 import Footer from "../sub-component/Footer";
 import { setCookie, getCookie } from "../Validator/CookieFunction";
-import Typography from "@mui/material/Typography";
-import Breadcrumbs from "@mui/material/Breadcrumbs";
-import Link from "@mui/material/Link";
+import {Link,Breadcrumbs,Typography} from "@mui/material";
 
 const dashboard = () => {
   const account = JSON.parse(getCookie("account"));

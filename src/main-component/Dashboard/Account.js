@@ -1,23 +1,26 @@
 import React from "react";
+import {
+  CircularProgress,
+  Backdrop,
+  Alert,
+  Snackbar,
+  Autocomplete,
+  FormControl,
+  Button,
+  TextField,
+  Checkbox,
+  Box,
+  Grid,
+  Typography,
+  createTheme,
+  ThemeProvider,
+  styled,
+} from "@mui/material";
 import axios from "axios";
 import qs from "query-string";
-import Button from "@mui/material/Button";
-import TextField from "@mui/material/TextField";
-import Checkbox from "@mui/material/Checkbox";
-import Box from "@mui/material/Box";
-import Grid from "@mui/material/Grid";
-import Typography from "@mui/material/Typography";
-import { createTheme, ThemeProvider } from "@mui/material/styles";
-import { styled } from "@mui/material/styles";
-import FormControl from "@mui/material/FormControl";
-import Autocomplete from "@mui/material/Autocomplete";
 import ValidatorAccount from "../Validator/ValidatorAccount";
-import Snackbar from "@mui/material/Snackbar";
-import Alert from "@mui/material/Alert";
 import validator from "validator";
 import { enCrypt, deCrypt } from "../Validator/crypto";
-import Backdrop from "@mui/material/Backdrop";
-import CircularProgress from "@mui/material/CircularProgress";
 import ProfilePic from "./ProfilePic";
 
 import {
@@ -157,7 +160,6 @@ const Account = () => {
     city: account.city,
     state: account.state,
     phone: account.phone,
-    
   });
   const [state, setState] = React.useState({
     open: false,
@@ -487,40 +489,49 @@ const Account = () => {
         sx={{
           color: "#325240",
           fontWeight: "bold",
+          marginBottom: 1,
           borderBottom: "2px outset #325240",
+          textAlign: "center",
         }}
       >
         DELETE ACCOUNT
       </Typography>
-      <Typography
-        component="h2"
-        variant="h5"
+      <Box
         sx={{
-          color: "#325240",
-          fontSize: "18px",
+          my: 2,
+          mx: 4,
         }}
       >
-        <br />
-        Delete this Account
-        <br />
-        Once you delete a Account, there is no going back. Please be certain.
-      </Typography>
-      <Button
-        type="submit"
-        variant="contained"
-        onClick={handleDeleteEvent}
-        sx={{
-          mt: 3,
-          mb: 2,
-          color: "error",
-          backgroundColor: "#B10000",
-          "&:hover": {
-            backgroundColor: "red",
-          },
-        }}
-      >
-        Delete Account
-      </Button>
+        <Typography
+          component="h2"
+          variant="h5"
+          sx={{
+            color: "#325240",
+            fontSize: "18px",
+          }}
+        >
+          <br />
+          Delete this Account
+          <br />
+          Once you delete a Account, there is no going back. Please be certain.
+        </Typography>
+        <Button
+          type="submit"
+          variant="contained"
+          onClick={handleDeleteEvent}
+          sx={{
+            mt: 3,
+            mb: 2,
+            color: "error",
+            backgroundColor: "#B10000",
+            "&:hover": {
+              backgroundColor: "red",
+            },
+          }}
+        >
+          Delete Account
+        </Button>
+      </Box>
       <div>{errorfunction()}</div>
       <div>{backDrop()}</div>
     </React.Fragment>
@@ -530,7 +541,7 @@ const Account = () => {
       <ThemeProvider theme={theme}>
         <Box
           sx={{
-            marginTop: 4,
+            marginTop: 3,
             display: "flex",
             flexDirection: "column",
           }}
@@ -541,7 +552,11 @@ const Account = () => {
             sx={{
               color: "#325240",
               fontWeight: "bold",
+              marginBottom: 1,
+              display: "inline-block",
               borderBottom: "2px outset #325240",
+              justifyContent: "center",
+              textAlign: "center",
             }}
           >
             ACCOUNT DETAILS
@@ -552,7 +567,7 @@ const Account = () => {
             noValidate
             onSubmit={handleSubmit}
             sx={{
-              my: 4,
+              my: 2,
               mx: 4,
               display: "flex",
               flexDirection: "column",
@@ -704,7 +719,9 @@ const Account = () => {
             sx={{
               color: "#325240",
               fontWeight: "bold",
+              marginBottom: 1,
               borderBottom: "2px outset #325240",
+              textAlign: "center",
             }}
           >
             PASSWORD CHANGE

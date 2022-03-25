@@ -2,7 +2,9 @@ import React from "react";
 import { Fade } from "react-slideshow-image";
 import "react-slideshow-image/dist/styles.css";
 import styled from "styled-components";
-
+import side1 from "../../assets/Images/side0.png";
+import side2 from "../../assets/Images/side3.png";
+import side3 from "../../assets/Images/side2.png";
 const agri1 =
   "https://images.pexels.com/photos/5425893/pexels-photo-5425893.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940";
 const agri2 =
@@ -49,15 +51,15 @@ const caption = [
 ];
 const slideImages = [
   {
-    url: agri1,
+    url: side1,
     captionTitle: caption[(Math.random() * 2) | 5],
   },
   {
-    url: agri2,
+    url: side2,
     captionTitle: caption[(Math.random() * 3) | 8],
   },
   {
-    url: agri3,
+    url: side3,
     captionTitle: caption[(Math.random() * 4) | 2],
   },
 ];

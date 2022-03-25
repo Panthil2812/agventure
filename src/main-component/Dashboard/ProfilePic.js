@@ -3,12 +3,15 @@ import { makeStyles } from "@mui/styles";
 import { GrEdit } from "react-icons/gr";
 import axios from "axios";
 import qs from "query-string";
-import { Box, Button } from "@mui/material";
+import {
+  Backdrop,
+  Alert,
+  Snackbar,
+  Box,
+  Button,
+  CircularProgress,
+} from "@mui/material";
 import { storage } from "../../Firebase/index";
-import Backdrop from "@mui/material/Backdrop";
-import CircularProgress from "@mui/material/CircularProgress";
-import Snackbar from "@mui/material/Snackbar";
-import Alert from "@mui/material/Alert";
 import profile from "../../assets/Images/profile.png";
 import {
   setCookie,
@@ -84,7 +87,7 @@ const ProfilePic = () => {
   const token = getCookie("token");
   const [imagefile, setImagefile] = React.useState();
   const [imageurl, setImageurl] = React.useState(
-    account.profile_pic ? account.profile_pic : ""
+    account.profile_pic ? account.profile_pic : profile
   );
   const [state, setState] = React.useState({
     open: false,
@@ -284,7 +287,7 @@ const ProfilePic = () => {
               className={classes.cdiv}
               id="output"
               alt="dfvifv"
-              src={account.profile_pic}
+              src={imageurl}
             />
           </div>
           {buttonuploadImage()}

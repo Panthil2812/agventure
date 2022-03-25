@@ -1,16 +1,18 @@
 import * as React from "react";
-import Box from "@mui/material/Box";
-import Typography from "@mui/material/Typography";
-import Link from "@mui/material/Link";
-import Breadcrumbs from "@mui/material/Breadcrumbs";
-import Grid from "@mui/material/Grid";
-import { styled } from "@mui/material/styles";
+import {
+  CircularProgress,
+  Alert,
+  Snackbar,
+  Backdrop,
+  styled,
+  Grid,
+  Breadcrumbs,
+  Link,
+  Typography,
+  Box,
+} from "@mui/material";
 import { makeStyles } from "@mui/styles";
 import { getCookie, deleteCookie } from "../Validator/CookieFunction";
-import Backdrop from "@mui/material/Backdrop";
-import Snackbar from "@mui/material/Snackbar";
-import Alert from "@mui/material/Alert";
-import CircularProgress from "@mui/material/CircularProgress";
 import Account from "./Account";
 import Dashboard from "./VendorDashboard/Dashboard";
 import AuctionProducts from "./VendorDashboard/AuctionProducts";

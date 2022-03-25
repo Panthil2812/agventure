@@ -2,33 +2,36 @@ import * as React from "react";
 import axios from "axios";
 import { enCrypt } from "../Validator/crypto";
 import qs from "query-string";
-import Avatar from "@mui/material/Avatar";
-import Button from "@mui/material/Button";
-import CssBaseline from "@mui/material/CssBaseline";
-import TextField from "@mui/material/TextField";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
-import Link from "@mui/material/Link";
-import Paper from "@mui/material/Paper";
-import Box from "@mui/material/Box";
-import Grid from "@mui/material/Grid";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
-import Typography from "@mui/material/Typography";
-import { createTheme, ThemeProvider } from "@mui/material/styles";
-import { styled } from "@mui/material/styles";
-import Snackbar from "@mui/material/Snackbar";
-import Alert from "@mui/material/Alert";
+import {
+  CircularProgress,
+  Backdrop,
+  Slide,
+  Button,
+  DialogContent,
+  DialogTitle,
+  DialogActions,
+  Dialog,
+  Alert,
+  Snackbar,
+  styled,
+  ThemeProvider,
+  createTheme,
+  Typography,
+  Grid,
+  Box,
+  Paper,
+  Link,
+  Checkbox,
+  FormControlLabel,
+  TextField,
+  CssBaseline,
+  Avatar,
+} from "@mui/material";
 // import { useNavigate } from "react-router-dom";
 import isEmail from "validator/lib/isEmail";
 import isStrongPassword from "validator/lib/isStrongPassword";
 import Copyright from "../sub-component/Copyright";
-import Dialog from "@mui/material/Dialog";
-import DialogActions from "@mui/material/DialogActions";
-import DialogContent from "@mui/material/DialogContent";
-import DialogTitle from "@mui/material/DialogTitle";
-import Slide from "@mui/material/Slide";
-import Backdrop from "@mui/material/Backdrop";
-import CircularProgress from "@mui/material/CircularProgress";
 import { setCookie, getCookie } from "../Validator/CookieFunction";
 
 const theme = createTheme();
@@ -521,16 +524,19 @@ export default function SignInSide() {
                         <DialogActions>
                           <Button
                             variant="contained"
-                            color="success"
                             align="right"
                             onClick={handleCloseDialog}
-                            sx={{ bgcolor: "#325240" }}
+                            sx={{
+                              color: "#325240",
+                            }}
                           >
                             Cancel
                           </Button>
                           <Button
                             variant="contained"
-                            sx={{ bgcolor: "#325240" }}
+                            sx={{
+                              color: "#325240",
+                            }}
                             align="center"
                             onClick={handleSubmitDialog}
                           >
