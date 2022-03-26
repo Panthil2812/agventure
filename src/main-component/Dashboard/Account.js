@@ -489,9 +489,10 @@ const Account = () => {
         sx={{
           color: "#325240",
           fontWeight: "bold",
-          marginBottom: 1,
           borderBottom: "2px outset #325240",
           textAlign: "center",
+          margin: "0 auto 32px auto",
+          width: "fit-content",
         }}
       >
         DELETE ACCOUNT
@@ -510,10 +511,17 @@ const Account = () => {
             fontSize: "18px",
           }}
         >
-          <br />
-          Delete this Account
-          <br />
-          Once you delete a Account, there is no going back. Please be certain.
+          <span
+            style={{
+              display: "block",
+            }}
+          >
+            Delete this Account
+          </span>
+          <span>
+            Once you delete a Account, there is no going back. Please be
+            certain.
+          </span>
         </Typography>
         <Button
           type="submit"
@@ -552,7 +560,8 @@ const Account = () => {
             sx={{
               color: "#325240",
               fontWeight: "bold",
-              marginBottom: 1,
+              margin: "0 auto 32px auto",
+              width: "fit-content",
               display: "inline-block",
               borderBottom: "2px outset #325240",
               justifyContent: "center",
@@ -719,7 +728,8 @@ const Account = () => {
             sx={{
               color: "#325240",
               fontWeight: "bold",
-              marginBottom: 1,
+              margin: "0 auto 32px auto",
+            width: "fit-content",
               borderBottom: "2px outset #325240",
               textAlign: "center",
             }}

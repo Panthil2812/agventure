@@ -123,6 +123,7 @@ const UsersAccount = () => {
                   boxShadow: "0 8px 8px 0 rgba(0, 0, 0, 0.2)",
                   "&:hover": {
                     bgcolor: "#f1f1f1",
+                    boxShadow: "0 16px 16px 4px rgba(0, 0, 0, 0.2)",
                   },
                 }}
               >

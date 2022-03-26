@@ -1,5 +1,5 @@
 import React from "react";
-import {Typography} from "@mui/material";
+import { Typography } from "@mui/material";
 const Newadmin = () => {
   return (
     <>
@@ -9,12 +9,13 @@ const Newadmin = () => {
         sx={{
           color: "#325240",
           fontWeight: "bold",
-          marginBottom: 1,
+          margin: "0 auto 32px auto",
+            width: "fit-content",
           borderBottom: "2px outset #325240",
           textAlign: "center",
         }}
       >
-        DELETE ACCOUNT
+        ADD NEW ADMIN
       </Typography>
     </>
   );

@@ -11,12 +11,13 @@ const Dashboard = () => {
           sx={{
             color: "#325240",
             fontWeight: "bold",
-            marginBottom: 4,
+            margin: "0 auto 32px auto",
+            width: "fit-content",
             borderBottom: "2px outset #325240",
             textAlign: "center",
           }}
         >
-          DASHBORD
+          DASHBOARD
         </Typography>
       </Box>
     </>

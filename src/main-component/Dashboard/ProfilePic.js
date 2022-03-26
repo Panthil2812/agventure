@@ -44,7 +44,7 @@ const useStyles = makeStyles(() => ({
     textAlign: "center",
     borderRadius: "100%",
     border: "1px solid transparent",
-    boxShadow: "0px 2px 4px 0px rgba(0, 0, 0, 0.12)",
+    boxShadow: "0px 8px 8px 0px rgba(0, 0, 0, 0.12)",
     cursor: "pointer",
     fontWeight: "normal",
     transition: " all .2s ease-in-out",

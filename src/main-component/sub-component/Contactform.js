@@ -6,7 +6,7 @@ import {
   Grid,
   TextField,
   Button,
-} from "@mui/material/Box";
+} from "@mui/material";
 import { FaPhoneAlt } from "react-icons/fa";
 import { ImLocation2 } from "react-icons/im";
 import { MdEmail } from "react-icons/md";
