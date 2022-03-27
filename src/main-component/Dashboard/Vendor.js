@@ -1,4 +1,5 @@
 import * as React from "react";
+import { useParams } from "react-router-dom";
 import {
   CircularProgress,
   Alert,
@@ -19,6 +20,7 @@ import AuctionProducts from "./VendorDashboard/AuctionProducts";
 import NewProduct from "./VendorDashboard/NewProduct";
 import Products from "./VendorDashboard/Products";
 import Orders from "./VendorDashboard/Orders";
+import Footer from "../sub-component/Footer";
 
 const useStyles = makeStyles(() => ({
   active: {
@@ -43,16 +45,17 @@ const StyledTypography = styled(Typography)({
 });
 
 const Vendor = () => {
+  let { vid } = useParams();
   const classes = useStyles();
   const [Progress, setProgress] = React.useState(false);
   const [state, setState] = React.useState({
-    dash: true,
-    pro: false,
-    apro: false,
-    auction: false,
-    order: false,
-    account: false,
-    logout: false,
+    dash: vid === "1" ? true : false,
+    pro: vid === "2" ? true : false,
+    apro: vid === "3" ? true : false,
+    auction: vid === "4" ? true : false,
+    order: vid === "5" ? true : false,
+    account: vid === "6" ? true : false,
+    logout: vid === false,
   });
   const handleClose = () => {
     setProgress(false);
@@ -90,8 +93,25 @@ const Vendor = () => {
       </>
     );
   };
+
   return (
     <>
+      <Box
+        sx={{
+          bgcolor: "#f9f9f9",
+          paddingLeft: "20px",
+          borderBottom: "2px outset #325240",
+        }}
+      >
+        <Breadcrumbs aria-label="breadcrumb" separator="›">
+          <Link underline="hover" color="inherit" href="/">
+            <h2>Home</h2>
+          </Link>
+          <Typography color="" sx={{ fontSize: "24px", fontWeight: "bold" }}>
+            My Dashbord
+          </Typography>
+        </Breadcrumbs>
+      </Box>
       <Box
         sx={{
           padding: "30px",
@@ -247,6 +267,7 @@ const Vendor = () => {
           </Grid>
         </Grid>
       </Box>
+      <Footer />
     </>
   );
 };

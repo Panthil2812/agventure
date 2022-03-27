@@ -1,11 +1,24 @@
 import * as React from "react";
-import {CircularProgress,Alert,Snackbar,Backdrop,styled,Grid,Breadcrumbs,Link,Typography,Box} from "@mui/material";
+import { useParams } from "react-router-dom";
+import {
+  CircularProgress,
+  Alert,
+  Snackbar,
+  Backdrop,
+  styled,
+  Grid,
+  Breadcrumbs,
+  Link,
+  Typography,
+  Box,
+} from "@mui/material";
 import { getCookie, deleteCookie } from "../Validator/CookieFunction";
 import { makeStyles } from "@mui/styles";
 import Account from "./Account";
 import Dashboard from "./CustomerDashboard/Dashboard";
 import MyBids from "./CustomerDashboard/MyBids";
 import Orders from "./CustomerDashboard/Orders";
+import Footer from "../sub-component/Footer";
 
 const useStyles = makeStyles(() => ({
   active: {
@@ -28,17 +41,19 @@ const StyledTypography = styled(Typography)({
   fontSize: "18px",
   margin: "8px",
 });
-const Customer = () => {
+const Customer = () =>
+{
+  let { cid } = useParams();
   const classes = useStyles();
   const [Progress, setProgress] = React.useState(false);
   const [state, setState] = React.useState({
-    dash: true,
-    pro: false,
-    apro: false,
-    auction: false,
-    order: false,
-    account: false,
-    logout: false,
+    dash: cid === "1" ? true : false,
+    pro: cid === "2" ? true : false,
+    apro: cid === "3" ? true : false,
+    auction: cid === "4" ? true : false,
+    order: cid === "5" ? true : false,
+    account: cid === "6" ? true : false,
+    logout: cid === false,
   });
   const handleClose = () => {
     setProgress(false);
@@ -78,6 +93,22 @@ const Customer = () => {
   };
   return (
     <>
+      <Box
+        sx={{
+          bgcolor: "#f9f9f9",
+          paddingLeft: "20px",
+          borderBottom: "2px outset #325240",
+        }}
+      >
+        <Breadcrumbs aria-label="breadcrumb" separator="›">
+          <Link underline="hover" color="inherit" href="/">
+            <h2>Home</h2>
+          </Link>
+          <Typography color="" sx={{ fontSize: "24px", fontWeight: "bold" }}>
+            My Dashbord
+          </Typography>
+        </Breadcrumbs>
+      </Box>
       <Box
         sx={{
           padding: "30px",
@@ -185,6 +216,7 @@ const Customer = () => {
           </Grid>
         </Grid>
       </Box>
+      <Footer />
     </>
   );
 };

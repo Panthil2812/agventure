@@ -355,6 +355,96 @@ export default function SignInSide() {
       <div>{backDrop()}</div>
     </React.Fragment>
   );
+  const DialogBox = (
+    <React.Fragment>
+      <Dialog
+        open={dialog}
+        TransitionComponent={Transition}
+        keepMounted
+        aria-describedby="alert-dialog-slide-description"
+      >
+        <DialogTitle
+          align="center"
+          sx={{
+            color: "#325240",
+            fontWeight: "bold",
+            fontSize: "20px",
+          }}
+        >
+          Forgot password?
+        </DialogTitle>
+        <DialogContent>
+          <CssTextField
+            margin="normal"
+            required
+            fullWidth
+            name="username"
+            label="UserName"
+            type="email"
+            id="username"
+            value={fEmail}
+            onChange={(e) => {
+              setForget({
+                ...Forget,
+                fEmail: e.target.value,
+              });
+              // console.log("email: " + fEmail);
+            }}
+          />
+          <CssTextField
+            margin="normal"
+            required
+            fullWidth
+            name="fpassword"
+            label="New Password"
+            type="password"
+            id="fpassword"
+            value={fPassword}
+            onChange={(e) => {
+              setForget({
+                ...Forget,
+                fPassword: e.target.value,
+              });
+              // console.log("password: " + fPassword);
+            }}
+          />
+        </DialogContent>
+        <DialogActions>
+          <Button
+            variant="contained"
+            align="right"
+            onClick={handleCloseDialog}
+            sx={{
+              bgcolor: "#B10000",
+              color: "#fff",
+              "&:hover": {
+                bgcolor: "#B10000",
+                color: "#fff",
+              },
+            }}
+          >
+            Cancel
+          </Button>
+          <Button
+            variant="contained"
+            sx={{
+              bgcolor: "#325240",
+              color: "#fff",
+              "&:hover": { bgcolor: "#325240", color: "#fff" },
+            }}
+            align="center"
+            onClick={handleSubmitDialog}
+          >
+            Submit
+          </Button>
+          <div>
+            {errorfunction()}
+            {backDrop()}
+          </div>
+        </DialogActions>
+      </Dialog>
+    </React.Fragment>
+  );
   return (
     <>
       <ThemeProvider theme={theme}>
@@ -469,85 +559,7 @@ export default function SignInSide() {
                       >
                         <u> Forgot password?</u>
                       </Typography>
-                      <Dialog
-                        open={dialog}
-                        TransitionComponent={Transition}
-                        keepMounted
-                        aria-describedby="alert-dialog-slide-description"
-                      >
-                        <DialogTitle
-                          align="center"
-                          sx={{
-                            color: "#325240",
-                            fontWeight: "bold",
-                            fontSize: "20px",
-                          }}
-                        >
-                          Forgot password?
-                        </DialogTitle>
-                        <DialogContent>
-                          <CssTextField
-                            margin="normal"
-                            required
-                            fullWidth
-                            name="username"
-                            label="UserName"
-                            type="email"
-                            id="username"
-                            value={fEmail}
-                            onChange={(e) => {
-                              setForget({
-                                ...Forget,
-                                fEmail: e.target.value,
-                              });
-                              // console.log("email: " + fEmail);
-                            }}
-                          />
-                          <CssTextField
-                            margin="normal"
-                            required
-                            fullWidth
-                            name="fpassword"
-                            label="New Password"
-                            type="password"
-                            id="fpassword"
-                            value={fPassword}
-                            onChange={(e) => {
-                              setForget({
-                                ...Forget,
-                                fPassword: e.target.value,
-                              });
-                              // console.log("password: " + fPassword);
-                            }}
-                          />
-                        </DialogContent>
-                        <DialogActions>
-                          <Button
-                            variant="contained"
-                            align="right"
-                            onClick={handleCloseDialog}
-                            sx={{
-                              color: "#325240",
-                            }}
-                          >
-                            Cancel
-                          </Button>
-                          <Button
-                            variant="contained"
-                            sx={{
-                              color: "#325240",
-                            }}
-                            align="center"
-                            onClick={handleSubmitDialog}
-                          >
-                            Submit
-                          </Button>
-                          <div>
-                            {errorfunction()}
-                            {backDrop()}
-                          </div>
-                        </DialogActions>
-                      </Dialog>
+                      {DialogBox}
                     </div>
                   </Grid>
                   <Grid item>

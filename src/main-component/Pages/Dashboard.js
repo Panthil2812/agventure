@@ -6,18 +6,22 @@ import Customer from "../Dashboard/Customer";
 import Admin from "../Dashboard/Admin";
 import Footer from "../sub-component/Footer";
 import { setCookie, getCookie } from "../Validator/CookieFunction";
-import {Link,Breadcrumbs,Typography} from "@mui/material";
+import { Link, Breadcrumbs, Typography } from "@mui/material";
 
 const dashboard = () => {
-  const account = JSON.parse(getCookie("account"));
-  const type = account.type;
   const whichDashboard = () => {
-    if (type === 0) {
-      return <Customer />;
-    } else if (type === 1) {
-      return <Vendor />;
-    } else if (type === 2) {
-      return <Admin />;
+    if (getCookie("account")) {
+      const account = JSON.parse(getCookie("account"));
+      const type = account.type;
+      if (type === 0) {
+        return <Customer />;
+      } else if (type === 1) {
+        window.location.replace("/dashboard/admin");
+      } else if (type === 2) {
+        return <Admin />;
+      }
+    } else {
+      window.location.replace("/");
     }
   };
   return (

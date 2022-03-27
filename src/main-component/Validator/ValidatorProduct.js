@@ -2,9 +2,9 @@ import validator from "validator";
 
 const ValidatorProduct = (info) => {
   console.log(
-    info.pro_mrp,
-    info.pro_sell_price,
-    info.pro_mrp < info.pro_sell_price
+    typeof parseInt(info.pro_mrp),
+    typeof parseInt(info.pro_sell_price),
+    parseInt(info.pro_mrp) < parseInt(info.pro_sell_price)
   );
   if (info.pro_image === null) {
     return {
@@ -41,7 +41,7 @@ const ValidatorProduct = (info) => {
       flag: false,
       message: "Please Enter a Product Selling price.",
     };
-  } else if (info.pro_mrp < info.pro_sell_price) {
+  } else if (parseInt(info.pro_mrp) < parseInt(info.pro_sell_price)) {
     return {
       flag: false,
       message: "Please Enter a Product Selling price less than Product MRP.",

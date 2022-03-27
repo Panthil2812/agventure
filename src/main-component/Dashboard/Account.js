@@ -161,6 +161,7 @@ const Account = () => {
     state: account.state,
     phone: account.phone,
   });
+
   const [state, setState] = React.useState({
     open: false,
     isLogged: false,
@@ -224,6 +225,9 @@ const Account = () => {
         </Backdrop>
       </>
     );
+  };
+  const handleClose = () => {
+    setState({ ...state, open: false });
   };
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -301,9 +305,7 @@ const Account = () => {
       }, 3000);
     }
   };
-  const handleClose = () => {
-    setState({ ...state, open: false });
-  };
+
   const handleSubmitPassword = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
@@ -399,44 +401,44 @@ const Account = () => {
   };
   const handleDeleteEvent = () => {
     setFlag(true);
-    setTimeout(() => {
-      axios({
-        method: "get",
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-        url: `${process.env.REACT_APP_BASEURL}users/deleteUser/${account._id}`,
-      })
-        .then(function (response) {
-          // handle success
-          // const infomation = qs.stringify(response);
-          console.log(response.data);
-          if (response.data.status === 500) {
-            setState({
-              open: true,
-              message: "User does not deleted.",
-            });
-            setFlag(false);
-          }
-          if (response.data.status === 200) {
-            setState({
-              isLogged: true,
-              open: true,
-              message:
-                "Congratulation,You have Successfully logged out,Redirecting....",
-            });
-            deleteCookie("token");
-            deleteCookie("account");
-            window.location.replace("/");
-          }
-        })
-        .catch(function (error) {
+    axios({
+      method: "get",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      url: `${process.env.REACT_APP_BASEURL}users/deleteUser/${account._id}`,
+    })
+      .then(function (response) {
+        // handle success
+        // const infomation = qs.stringify(response);
+        console.log(response.data);
+        if (response.data.status === 500) {
           setState({
             open: true,
-            message: "Please Try again!",
+            message: "User does not found.",
           });
+          setFlag(false);
+        }
+        if (response.data.status === 200) {
+          setState({
+            isLogged: true,
+            open: true,
+            message:
+              "Congratulation,You have Successfully Delete Account,Redirecting....",
+          });
+          deleteCookie("token");
+          deleteCookie("account");
+          // deleteCookie("username");
+          setFlag(false);
+          window.location.replace("/");
+        }
+      })
+      .catch(function (error) {
+        setState({
+          open: true,
+          message: "Please Try again!",
         });
-    }, 3000);
+      });
   };
   const buttons = (
     <React.Fragment>
@@ -729,7 +731,7 @@ const Account = () => {
               color: "#325240",
               fontWeight: "bold",
               margin: "0 auto 32px auto",
-            width: "fit-content",
+              width: "fit-content",
               borderBottom: "2px outset #325240",
               textAlign: "center",
             }}

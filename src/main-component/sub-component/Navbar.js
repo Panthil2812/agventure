@@ -90,6 +90,21 @@ const Navbar = (prop) => {
       return false;
     }
   };
+  const whichDashboard = () => {
+    if (getCookie("account")) {
+      const account = JSON.parse(getCookie("account"));
+      const type = account.type;
+      if (type === 0) {
+        return "/dashboard/CustomerDashboard/1";
+      } else if (type === 1) {
+        return "/dashboard/VendorDashboard/1";
+      } else if (type === 2) {
+        return "/dashboard/AdminDashboard/1";
+      }
+    } else {
+      return "/";
+    }
+  };
   return (
     <>
       <NBar>
@@ -98,7 +113,7 @@ const Navbar = (prop) => {
         </Link>
 
         {Loginckeck() ? (
-          <NAvatar to="/dashboard">
+          <NAvatar to={whichDashboard()}>
             <Avatar
               sx={{ m: 1, bgcolor: "#325240", height: "33px", width: "33px" }}
             >

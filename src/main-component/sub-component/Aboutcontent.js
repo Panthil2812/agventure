@@ -90,7 +90,7 @@ const Aboutcontent = () => {
         <Box
           sx={{
             bgcolor: "#f9f9f9",
-            height: "70%",
+            height: "auto",
             width: "35%",
             position: "absolute",
             float: "right",
@@ -144,34 +144,6 @@ const Aboutcontent = () => {
           </div>
         </Box>
       </Box>
-
-      {/* <Box
-        sx={{ flexGrow: 1, bgcolor: "#f9f9f9", padding: "50px 70px 0px 70px" }}
-      >
-        <Grid container spacing={2}>
-          <Grid item xs={6} md={2}>
-            <Box sx={{ height: "200px" }}>
-              <Img src={logo} alt="organic1" />
-            </Box>
-          </Grid>
-          <Grid item xs={6} md={10}>
-            <Box sx={{ height: "200px" }}>
-              <Box sx={{ height: "170px", padding: "10px 70px 10px 70px" }}>
-                <div>
-                  <Content>
-                    <CgMonday /> Completely synergize resource taxing
-                    relationships via premier niche markets. Professionally
-                    cultivate one-to-one customer service with robust ideas.
-                    Dynamically innovate resource-leveling customer service for
-                    state of the art customer service. Objectively innovate
-                    empowered manufactured products whereas parallel platforms.
-                  </Content>
-                </div>
-              </Box>
-            </Box>
-          </Grid>
-        </Grid>
-      </Box> */}
       <Box sx={{ p: 2, bgcolor: "#f9f9f9" }}>
         <Typography
           variant="body2"

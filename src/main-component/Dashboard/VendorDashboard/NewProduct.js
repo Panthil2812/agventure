@@ -241,8 +241,8 @@ const NewProduct = () => {
       pro_name: validator.trim(data.get("pro_name")),
       pro_category: data.get("pro_category"),
       pro_unit: data.get("pro_unit"),
-      pro_mrp: validator.trim(data.get("pro_mrp")),
-      pro_sell_price: validator.trim(data.get("pro_sell_price")),
+      pro_mrp: data.get("pro_mrp"),
+      pro_sell_price: data.get("pro_sell_price"),
       pro_stock: data.get("pro_stock"),
       pro_hsn: validator.trim(data.get("pro_hsn")),
       sdescription: validator.trim(data.get("sdescription")),
@@ -311,7 +311,7 @@ const NewProduct = () => {
                       message: "You have Successfully Added New Products",
                     });
                     setFlag(false);
-                    window.location.replace("/dashboard");
+                    window.location.replace("/dashboard/1");
                   }
                 })
                 .catch(function (error) {

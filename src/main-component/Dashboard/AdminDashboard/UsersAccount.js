@@ -7,6 +7,8 @@ import {
   DialogActions,
   IconButton,
   Dialog,
+  Snackbar,
+  Alert,
   Button,
   Grid,
   Chip,
@@ -27,13 +29,62 @@ import qs from "query-string";
 import { getCookie } from "../../Validator/CookieFunction";
 const UsersAccount = () => {
   const [userData, setUserData] = React.useState([]);
+  const [state, setState] = React.useState({
+    open1: false,
+    isLogged: false,
+    message: "",
+  });
+  const { isLogged, open1, message } = state;
   const [flag, setFlag] = React.useState(false);
   const token = getCookie("token");
   const [open, setOpen] = React.useState(false);
   const [Did, setDid] = React.useState();
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down("md"));
-
+  const errorFunction = () => {
+    if (isLogged) {
+      return (
+        <div>
+          <Snackbar
+            open={open1}
+            sx={{ width: "50%" }}
+            anchorOrigin={{ vertical: "top", horizontal: "center" }}
+            autoHideDuration={3000}
+            onClose={handleClose}
+          >
+            <Alert
+              variant="filled"
+              onClose={handleClose}
+              sx={{ width: "100%", bgcolor: "#325240" }}
+            >
+              {message}
+            </Alert>
+          </Snackbar>
+        </div>
+      );
+    } else {
+      return (
+        <div>
+          <Snackbar
+            open={open1}
+            sx={{ width: "50%" }}
+            anchorOrigin={{ vertical: "top", horizontal: "center" }}
+            autoHideDuration={3000}
+            onClose={handleClose}
+          >
+            <Alert
+              variant="filled"
+              onClose={handleClose}
+              severity="error"
+              sx={{ width: "100%" }}
+            >
+              {message}
+            </Alert>
+          </Snackbar>
+        </div>
+      );
+    }
+  };
   const handleClickOpen = (name) => {
     setDid(name);
     setOpen(true);
@@ -41,6 +92,44 @@ const UsersAccount = () => {
   const handleDialogClose = () => {
     setOpen(false);
     setDid("");
+  };
+  const handleDialogSubmit = () => {
+    setFlag(true);
+    axios({
+      method: "get",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      url: `${process.env.REACT_APP_BASEURL}users/deleteUser/${Did}`,
+    })
+      .then(function (response) {
+        // handle success
+        // const infomation = qs.stringify(response);
+        console.log(response.data);
+        if (response.data.status === 500) {
+          setState({
+            open1: true,
+            message: "User does not found",
+          });
+          setFlag(false);
+        }
+        if (response.data.status === 200) {
+          setState({
+            isLogged: true,
+            open1: true,
+            message:
+              "Congratulation,You have Successfully logged out,Redirecting....",
+          });
+          setFlag(false);
+          window.location.replace("/dashboard");
+        }
+      })
+      .catch(function (error) {
+        setState({
+          open1: true,
+          message: "Please Try again!",
+        });
+      });
   };
   const handleClose = () => {
     setFlag(false);
@@ -93,7 +182,57 @@ const UsersAccount = () => {
   React.useEffect(() => {
     userAccount();
   }, []);
-
+  const dialogBox = (
+    <React.Fragment>
+        <Dialog
+          fullScreen={fullScreen}
+          open={open}
+          aria-labelledby="responsive-dialog-title"
+        >
+          <DialogTitle id="responsive-dialog-title" sx={{ color: "#325240" }}>
+            {"Delete User Account"}
+          </DialogTitle>
+          <DialogContent>
+            <DialogContentText sx={{ color: "#325240" }}>
+              Once you delete a Account, there is no going back. Please be
+              certain.
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button
+              variant="contained"
+              align="right"
+              sx={{
+                color: "#f9f9f9",
+                backgroundColor: "#325240",
+                "&:hover": {
+                  backgroundColor: "#325240",
+                },
+              }}
+              onClick={handleDialogClose}
+            >
+              Cancel
+            </Button>
+            <Button
+              autoFocus
+              variant="contained"
+              color="success"
+              align="right"
+              sx={{
+                color: "#f9f9f9",
+                backgroundColor: "#B10000",
+                "&:hover": {
+                  backgroundColor: "#B10000",
+                },
+              }}
+              onClick={handleDialogSubmit}
+            >
+              Delete Account
+            </Button>
+          </DialogActions>
+        </Dialog>
+    </React.Fragment>
+  );
   return (
     <>
       <Box sx={{ marginTop: 4 }}>
@@ -235,55 +374,9 @@ const UsersAccount = () => {
           </Box>
         </Card> */}
 
-        <Dialog
-          fullScreen={fullScreen}
-          open={open}
-          aria-labelledby="responsive-dialog-title"
-        >
-          <DialogTitle id="responsive-dialog-title" sx={{ color: "#325240" }}>
-            {"Delete User Account"}
-          </DialogTitle>
-          <DialogContent>
-            <DialogContentText sx={{ color: "#325240" }}>
-              Once you delete a Account, there is no going back. Please be
-              certain.{Did}
-            </DialogContentText>
-          </DialogContent>
-          <DialogActions>
-            <Button
-              variant="contained"
-              align="right"
-              sx={{
-                color: "#f9f9f9",
-                backgroundColor: "#325240",
-                "&:hover": {
-                  backgroundColor: "#325240",
-                },
-              }}
-              onClick={handleDialogClose}
-            >
-              Cancel
-            </Button>
-            <Button
-              autoFocus
-              variant="contained"
-              color="success"
-              align="right"
-              sx={{
-                color: "#f9f9f9",
-                backgroundColor: "#B10000",
-                "&:hover": {
-                  backgroundColor: "#B10000",
-                },
-              }}
-              onClick={handleClose}
-              autoFocus
-            >
-              Delete Account
-            </Button>
-          </DialogActions>
-        </Dialog>
+        {dialogBox}
         {backDrop()}
+        {errorFunction()}
       </Box>
     </>
   );

@@ -1,12 +1,5 @@
 import * as React from "react";
-import {
-  Box,
-  Alert,
-  Snackbar,
-  Grid,
-  TextField,
-  Button,
-} from "@mui/material";
+import { Box, Alert, Snackbar, Grid, TextField, Button } from "@mui/material";
 import { FaPhoneAlt } from "react-icons/fa";
 import { ImLocation2 } from "react-icons/im";
 import { MdEmail } from "react-icons/md";
@@ -205,9 +198,9 @@ const Contactform = () => {
           <Box
             sx={{
               bgcolor: "#f9f9f9",
-              height: "70vh",
+              height: "auto",
               position: "absolute",
-              width: "120vh",
+              width: "auto",
               top: "40%",
               left: "30%",
               padding: "10px",
