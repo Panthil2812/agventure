@@ -311,7 +311,7 @@ const NewProduct = () => {
                       message: "You have Successfully Added New Products",
                     });
                     setFlag(false);
-                    window.location.replace("/dashboard/1");
+                    window.location.replace("/dashboard/VendorDashboard/2");
                   }
                 })
                 .catch(function (error) {

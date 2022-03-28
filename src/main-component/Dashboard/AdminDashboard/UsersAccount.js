@@ -26,9 +26,14 @@ import profile from "../../../assets/Images/profile.png";
 import DeleteIcon from "@mui/icons-material/Delete";
 import axios from "axios";
 import qs from "query-string";
+import nofound from "../../../assets/Images/nofound.png";
+
+import { ReactSearchAutocomplete } from "react-search-autocomplete";
 import { getCookie } from "../../Validator/CookieFunction";
 const UsersAccount = () => {
   const [userData, setUserData] = React.useState([]);
+  const [searchitem, setSearchItem] = React.useState("");
+
   const [state, setState] = React.useState({
     open1: false,
     isLogged: false,
@@ -118,10 +123,10 @@ const UsersAccount = () => {
             isLogged: true,
             open1: true,
             message:
-              "Congratulation,You have Successfully logged out,Redirecting....",
+              "You have Successfully Delete user account,Redirecting....",
           });
           setFlag(false);
-          window.location.replace("/dashboard");
+          window.location.replace("/dashboard/AdminDashboard/3");
         }
       })
       .catch(function (error) {
@@ -171,6 +176,7 @@ const UsersAccount = () => {
             typeof response.data.data
           );
           setUserData(response.data.data);
+          console.log("userdata : ", userData);
           setFlag(false);
           return 0;
         }
@@ -179,58 +185,94 @@ const UsersAccount = () => {
         setFlag(false);
       });
   };
+  const handleOnSearch = (string, results) => {
+    console.log(string, results);
+    setSearchItem("");
+  };
+  const handleOnSelect = (item) => {
+    setSearchItem(item);
+  };
+
   React.useEffect(() => {
     userAccount();
   }, []);
   const dialogBox = (
     <React.Fragment>
-        <Dialog
-          fullScreen={fullScreen}
-          open={open}
-          aria-labelledby="responsive-dialog-title"
-        >
-          <DialogTitle id="responsive-dialog-title" sx={{ color: "#325240" }}>
-            {"Delete User Account"}
-          </DialogTitle>
-          <DialogContent>
-            <DialogContentText sx={{ color: "#325240" }}>
-              Once you delete a Account, there is no going back. Please be
-              certain.
-            </DialogContentText>
-          </DialogContent>
-          <DialogActions>
-            <Button
-              variant="contained"
-              align="right"
-              sx={{
-                color: "#f9f9f9",
+      <Dialog
+        fullScreen={fullScreen}
+        open={open}
+        aria-labelledby="responsive-dialog-title"
+      >
+        <DialogTitle id="responsive-dialog-title" sx={{ color: "#325240" }}>
+          {"Delete User Account"}
+        </DialogTitle>
+        <DialogContent>
+          <DialogContentText sx={{ color: "#325240" }}>
+            Once you delete a Account, there is no going back. Please be
+            certain.
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button
+            variant="contained"
+            align="right"
+            sx={{
+              color: "#f9f9f9",
+              backgroundColor: "#325240",
+              "&:hover": {
                 backgroundColor: "#325240",
-                "&:hover": {
-                  backgroundColor: "#325240",
-                },
-              }}
-              onClick={handleDialogClose}
-            >
-              Cancel
-            </Button>
-            <Button
-              autoFocus
-              variant="contained"
-              color="success"
-              align="right"
-              sx={{
-                color: "#f9f9f9",
+              },
+            }}
+            onClick={handleDialogClose}
+          >
+            Cancel
+          </Button>
+          <Button
+            autoFocus
+            variant="contained"
+            color="success"
+            align="right"
+            sx={{
+              color: "#f9f9f9",
+              backgroundColor: "#B10000",
+              "&:hover": {
                 backgroundColor: "#B10000",
-                "&:hover": {
-                  backgroundColor: "#B10000",
-                },
-              }}
-              onClick={handleDialogSubmit}
-            >
-              Delete Account
-            </Button>
-          </DialogActions>
-        </Dialog>
+              },
+            }}
+            onClick={handleDialogSubmit}
+          >
+            Delete Account
+          </Button>
+        </DialogActions>
+      </Dialog>
+    </React.Fragment>
+  );
+  const SearchBar = (
+    <React.Fragment>
+      <ReactSearchAutocomplete
+        items={userData}
+        maxResults={6}
+        onSearch={handleOnSearch}
+        onSelect={handleOnSelect}
+        placeholder="Search User account"
+        // onClear={handleOnClear}
+        resultStringKeyName="user_name"
+        fuseOptions={{
+          keys: ["user_name", "email_id", "phone"],
+        }}
+        styling={{
+          zIndex: "50",
+          borderRadius: "9px",
+          boxShadow: "0 8px 8px 0 rgba(0, 0, 0, 0.2)",
+          border: "3px solid #325240",
+          height: "7vh",
+          marginBottom: "7vh",
+          placeholderFontSize: "2.5vh",
+          fontSize: "2.5vh",
+          color: "#325240",
+          backgroundColor: "#f9f9f9",
+        }}
+      />
     </React.Fragment>
   );
   return (
@@ -249,29 +291,142 @@ const UsersAccount = () => {
         >
           USER ACCOUNT
         </Typography>
-        {userData.length &&
-          userData.map((data) => {
-            return (
+        <Box>
+          <Box
+            sx={{
+              boxShadow: "0 4px 4px 0 rgba(0, 0, 0, 0.2)",
+              marginLeft: "25%",
+              marginRight: "25%",
+            }}
+          >
+            {SearchBar}
+          </Box>
+          <Box sx={{ mt: 7 }}>
+            {!userData.length && (
+              <Box sx={{ textAlign: "center" }}>
+                <img alt="image" src={nofound} />
+                <Typography
+                  component="h1"
+                  variant="h5"
+                  sx={{
+                    color: "#325240",
+                    fontWeight: "bold",
+                    margin: "0 auto 32px auto",
+                    width: "fit-content",
+                    textAlign: "center",
+                  }}
+                >
+                  <span
+                    style={{
+                      display: "block",
+                    }}
+                  >
+                    No Products Found!
+                  </span>
+                  <span>Ready to start selling something awesome?</span>
+                </Typography>
+              </Box>
+            )}
+            {!searchitem &&
+              userData.length &&
+              userData.map((data) => {
+                return (
+                  <Card
+                    sx={{
+                      bgcolor: "#f9f9f9",
+                      margin: "8px",
+                      padding: "10px",
+                      alignItem: "center",
+                      border: "1.5px solid #325240",
+                      boxShadow: "0 4px 4px 0 rgba(0, 0, 0, 0.2)",
+                      "&:hover": {
+                        bgcolor: "#f1f1f1",
+                        boxShadow: "0 16px 16px 4px rgba(0, 0, 0, 0.2)",
+                      },
+                    }}
+                  >
+                    <Box sx={{ flexGrow: 1 }} key={data._id}>
+                      <Grid container spacing={3}>
+                        <Grid item xs={1}>
+                          <Avatar
+                            alt="Remy Sharp"
+                            src={data.profile_pic ? data.profile_pic : profile}
+                            sx={{ height: "50px", width: "50px" }}
+                          />
+                        </Grid>
+                        <Grid item xs={7}>
+                          <Typography
+                            sx={{
+                              color: "#325240",
+                              fontSize: "15px",
+                              fontWeight: "bold",
+                            }}
+                          >
+                            {data.user_name}
+                            <br />
+                            <Typography>{data.email_id}</Typography>
+                          </Typography>
+                        </Grid>
+                        <Grid item xs={3} sx={{ marginTop: "8px" }}>
+                          {data.type ? (
+                            <Chip
+                              label="Vendor"
+                              color="warning"
+                              sx={{ width: "100px" }}
+                            />
+                          ) : (
+                            <Chip
+                              label="Customer"
+                              sx={{
+                                width: "100px",
+                                bgcolor: "#325240",
+                                color: "#fff",
+                              }}
+                            />
+                          )}
+                          {/* <Chip label="Vendor" color="warning" />
+                           */}
+                        </Grid>
+                        <Grid item xs={1} sx={{ marginTop: "5px" }}>
+                          <IconButton
+                            color="error"
+                            onClick={() => {
+                              handleClickOpen(data._id);
+                            }}
+                          >
+                            <DeleteIcon />
+                          </IconButton>
+                        </Grid>
+                      </Grid>
+                    </Box>
+                  </Card>
+                );
+              })}
+            {searchitem && (
               <Card
                 sx={{
                   bgcolor: "#f9f9f9",
                   margin: "8px",
                   padding: "10px",
                   alignItem: "center",
-                  border: "0.5px solid #325240",
-                  boxShadow: "0 8px 8px 0 rgba(0, 0, 0, 0.2)",
+                  border: "1.5px solid #325240",
+                  boxShadow: "0 4px 4px 0 rgba(0, 0, 0, 0.2)",
                   "&:hover": {
                     bgcolor: "#f1f1f1",
                     boxShadow: "0 16px 16px 4px rgba(0, 0, 0, 0.2)",
                   },
                 }}
               >
-                <Box sx={{ flexGrow: 1 }} key={data._id}>
+                <Box sx={{ flexGrow: 1 }} key={searchitem._id}>
                   <Grid container spacing={3}>
                     <Grid item xs={1}>
                       <Avatar
                         alt="Remy Sharp"
-                        src={data.profile_pic ? data.profile_pic : profile}
+                        src={
+                          searchitem.profile_pic
+                            ? searchitem.profile_pic
+                            : profile
+                        }
                         sx={{ height: "50px", width: "50px" }}
                       />
                     </Grid>
@@ -283,13 +438,13 @@ const UsersAccount = () => {
                           fontWeight: "bold",
                         }}
                       >
-                        {data.user_name}
+                        {searchitem.user_name}
                         <br />
-                        <Typography>{data.email_id}</Typography>
+                        <Typography>{searchitem.email_id}</Typography>
                       </Typography>
                     </Grid>
                     <Grid item xs={3} sx={{ marginTop: "8px" }}>
-                      {data.type ? (
+                      {searchitem.type ? (
                         <Chip
                           label="Vendor"
                           color="warning"
@@ -312,7 +467,7 @@ const UsersAccount = () => {
                       <IconButton
                         color="error"
                         onClick={() => {
-                          handleClickOpen(data._id);
+                          handleClickOpen(searchitem._id);
                         }}
                       >
                         <DeleteIcon />
@@ -321,58 +476,9 @@ const UsersAccount = () => {
                   </Grid>
                 </Box>
               </Card>
-            );
-          })}
-        {/* <Card
-          sx={{
-            bgcolor: "#f9f9f9",
-            margin: "8px",
-            padding: "10px",
-            alignItem: "center",
-          }}
-        >
-          <Box sx={{ flexGrow: 1 }}>
-            <Grid container spacing={2}>
-              <Grid item xs={1}>
-                <Avatar
-                  alt="Remy Sharp"
-                  src={profile}
-                  sx={{ height: "50px", width: "50px" }}
-                />
-              </Grid>
-              <Grid item xs={7}>
-                <Typography
-                  sx={{
-                    color: "#325240",
-                    fontSize: "15px",
-                    fontWeight: "bold",
-                  }}
-                >
-                  USER ACCOUNT
-                  <br />
-                  <Typography>pmalaviya356@rku.ac.in</Typography>
-                </Typography>
-              </Grid>
-              <Grid item xs={3} sx={{ marginTop: "8px" }}>
-                <Chip label="Vendor" color="warning" />
-                <Chip
-                  label="Customer"
-                  sx={{ bgcolor: "#325240", color: "#fff" }}
-                />
-              </Grid>
-              <Grid item xs={1} sx={{ marginTop: "5px" }}>
-                <IconButton
-                  color="error"
-                  onClick={() => {
-                    handleClickOpen("panthil");
-                  }}
-                >
-                  <DeleteIcon />
-                </IconButton>
-              </Grid>
-            </Grid>
+            )}
           </Box>
-        </Card> */}
+        </Box>
 
         {dialogBox}
         {backDrop()}
