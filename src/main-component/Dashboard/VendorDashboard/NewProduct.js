@@ -233,6 +233,9 @@ const NewProduct = () => {
       </>
     );
   };
+  const capitalizeFirstLetter = (string) => {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+  };
   const handleSubmit = async (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
@@ -279,11 +282,12 @@ const NewProduct = () => {
               console.log("main : ", url);
               const Data = {
                 vendor_id: account._id,
+                vendor_name: capitalizeFirstLetter(account.full_name),
                 vendor_email_id: account.email_id,
                 vendor_city: account.city,
                 vendor_state: account.state,
                 vendor_phone: account.phone,
-                pro_name: info.pro_name,
+                pro_name: capitalizeFirstLetter(info.pro_name),
                 pro_category: info.pro_category,
                 sdescription: info.sdescription,
                 ldescription: info.ldescription,

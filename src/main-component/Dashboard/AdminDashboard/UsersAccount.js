@@ -33,7 +33,6 @@ import { getCookie } from "../../Validator/CookieFunction";
 const UsersAccount = () => {
   const [userData, setUserData] = React.useState([]);
   const [searchitem, setSearchItem] = React.useState("");
-
   const [state, setState] = React.useState({
     open1: false,
     isLogged: false,
@@ -321,7 +320,7 @@ const UsersAccount = () => {
                       display: "block",
                     }}
                   >
-                    No Products Found!
+                    No User Account Found!
                   </span>
                   <span>Ready to start selling something awesome?</span>
                 </Typography>

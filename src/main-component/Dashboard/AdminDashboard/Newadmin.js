@@ -1,5 +1,7 @@
 import React from "react";
 import { enCrypt } from "../../Validator/crypto";
+import profile from "../../../assets/Images/profile.png";
+import nofound from "../../../assets/Images/nofound.png";
 import {
   CircularProgress,
   Backdrop,
@@ -18,6 +20,8 @@ import {
   Typography,
   Grid,
   Box,
+  Card,
+  Chip,
   Paper,
   Link,
   FormControl,
@@ -33,7 +37,7 @@ import isEmail from "validator/lib/isEmail";
 import isStrongPassword from "validator/lib/isStrongPassword";
 import validator from "validator";
 // import { enCrypt, deCrypt } from "../Validator/crypto";
-
+import { getCookie } from "../../Validator/CookieFunction";
 const theme = createTheme();
 const CssTextField = styled(TextField)({
   "& label.Mui-focused": {
@@ -90,6 +94,7 @@ const CssFormControl = styled(FormControl)({
 
 const Newadmin = () => {
   const themedialog = useTheme();
+  const token = getCookie("token");
   const fullScreen = useMediaQuery(themedialog.breakpoints.down("md"));
   const [state, setState] = React.useState({
     open: false,
@@ -105,7 +110,7 @@ const Newadmin = () => {
     adminPassword: "",
   });
   const { adminName, adminEmailid, adminPassword } = addAdmin;
-
+  const [AdminData, setAdminData] = React.useState([]);
   const handleClickDialog = () => {
     setaddAdmin({
       adminName: "",
@@ -117,6 +122,9 @@ const Newadmin = () => {
 
   const handleCloseDialog = () => {
     setDialog(false);
+  };
+  const capitalizeFirstLetter = (string) => {
+    return string.charAt(0).toUpperCase() + string.slice(1);
   };
   const handleSubmitDialog = () => {
     if (validator.isEmpty(adminName)) {
@@ -155,8 +163,8 @@ const Newadmin = () => {
       });
     } else {
       const Data = {
-        user_name: adminName,
-        full_name: adminName,
+        user_name: capitalizeFirstLetter(adminName),
+        full_name: capitalizeFirstLetter(adminName),
         email_id: adminEmailid,
         password: enCrypt(adminPassword),
         type: 2,
@@ -192,6 +200,7 @@ const Newadmin = () => {
                 open: true,
                 message: "You have Successfully added new Admin. ",
               });
+              allAdmin();
               setFlag(false);
               setTimeout(() => {
                 setDialog(false);
@@ -332,7 +341,7 @@ const Newadmin = () => {
     // } else {
     //   const Data = {
     //     _id: account._id,
-    //     user_name: info.username,
+    //     user_name: capitalizeFirstLetter(info.username),
     //     email_id: info.emailid,
     //     password: enCrypt(info.password),
     //     type: info.ctype,
@@ -493,7 +502,116 @@ const Newadmin = () => {
       </Dialog>
     </React.Fragment>
   );
+  const allAdmin = () => {
+    setFlag(true);
+    axios({
+      method: "get",
+      headers: {
+        "content-type": "application/x-www-form-urlencoded",
+        Authorization: `Bearer ${token}`,
+      },
+      url: `${process.env.REACT_APP_BASEURL}admin/fetch_admin`,
+    })
+      .then(function (response) {
+        if (response.data.status === 504) {
+          console.log("error");
+          setFlag(false);
+        }
+        if (response.data.status === 200) {
+          const ff = response.data.data;
+          setAdminData(response.data.data);
+          console.log("AdminData : ", AdminData);
+          setFlag(false);
+          return 0;
+        }
+      })
+      .catch(function (error) {
+        setFlag(false);
+      });
+  };
+  React.useEffect(() => {
+    allAdmin();
+  }, []);
+  const displayAdmin = () => {
+    if (AdminData.length === 0) {
+      return (
+        <Box sx={{ textAlign: "center" }}>
+          <img alt="image" src={nofound} />
+          <Typography
+            component="h1"
+            variant="h5"
+            sx={{
+              color: "#325240",
+              fontWeight: "bold",
+              margin: "0 auto 32px auto",
+              width: "fit-content",
+              textAlign: "center",
+            }}
+          >
+            <span
+              style={{
+                display: "block",
+              }}
+            >
+              No Products Found!
+            </span>
+            <span>Ready to start selling something awesome?</span>
+          </Typography>
+        </Box>
+      );
+    } else {
+      return AdminData.map((data) => {
+        return (
+          <Card
+            sx={{
+              bgcolor: "#f9f9f9",
+              margin: "8px",
+              padding: "10px",
+              alignItem: "center",
+              border: "0.5px solid #325240",
+              boxShadow: "0 4px 4px 0 rgba(0, 0, 0, 0.2)",
+              "&:hover": {
+                bgcolor: "#f1f1f1",
+                boxShadow: "0 16px 16px 4px rgba(0, 0, 0, 0.2)",
+              },
+            }}
+          >
+            <Box sx={{ flexGrow: 1 }}>
+              <Grid container spacing={3}>
+                <Grid item xs={1}>
+                  <Avatar
+                    alt="Remy Sharp"
+                    src={data.profile_pic ? data.profile_pic : profile}
+                  />
+                </Grid>
+                <Grid item xs={7} sx={{ textAlign: "center" }}>
+                  <Typography
+                    sx={{
+                      color: "#325240",
+                      fontSize: "18px",
+                      fontWeight: "bold",
+                      float: "left",
+                      marginTop: "8px",
+                    }}
+                  >
+                    {data.full_name}
+                  </Typography>
+                </Grid>
 
+                <Grid item xs={3} sx={{ marginTop: "5px" }}>
+                  <Chip
+                    label={data.email_id}
+                    sx={{ bgcolor: "#325240", color: "#fff" }}
+                    variant="outlined"
+                  />
+                </Grid>
+              </Grid>
+            </Box>
+          </Card>
+        );
+      });
+    }
+  };
   return (
     <>
       <Box sx={{ display: "flex", flexDirection: "column" }}>
@@ -531,6 +649,7 @@ const Newadmin = () => {
           </Typography>
         </Box>
       </Box>
+      {displayAdmin()}
       {DialogBox}
       {errorfunction()}
       {backDrop()}

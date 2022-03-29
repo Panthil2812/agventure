@@ -6,6 +6,7 @@ import Shop from "./main-component/Pages/Shop";
 import Signin from "./main-component/Pages/Signin";
 import Blog from "./main-component/Pages/Blog";
 import Signup from "./main-component/Pages/Signup";
+import Selectcity from "./main-component/Pages/Selectcity";
 import ErrorPage from "./main-component/Pages/Errorpage";
 import Navbar from "./main-component/sub-component/Navbar";
 import Vendor from "./main-component/Pages/Vendor";
@@ -21,6 +22,7 @@ const Router = () => {
     <>
       <BrowserRouter>
         <Routes>
+          <Route path="/selectcity" element={<Selectcity />} />
           <Route path="/" element={<Navbar />}>
             <Route index element={<Home />} />
             <Route path="/auction" element={<Auction />} />

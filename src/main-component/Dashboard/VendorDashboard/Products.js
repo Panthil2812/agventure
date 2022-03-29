@@ -231,7 +231,8 @@ const Products = () => {
     </React.Fragment>
   );
   const displayProducts = () => {
-    if (productData.length === 0) {
+    if (productData.length === 0)
+    {
       return (
         <Box sx={{ textAlign: "center" }}>
           <img alt="image" src={nofound} />
@@ -257,140 +258,117 @@ const Products = () => {
           </Typography>
         </Box>
       );
-    } else {
-      return productData.map((data) => {
-        if (productData.length === 0) {
-          return (
-            <Box sx={{ textAlign: "center" }}>
-              <img alt="image" src={nofound} />
-              <Typography
-                component="h1"
-                variant="h5"
-                sx={{
-                  color: "#325240",
-                  fontWeight: "bold",
-                  margin: "0 auto 32px auto",
-                  width: "fit-content",
-                  textAlign: "center",
-                }}
-              >
-                <span
-                  style={{
-                    display: "block",
-                  }}
-                >
-                  No Products Found!
-                </span>
-                <span>Ready to start selling something awesome?</span>
-              </Typography>
-            </Box>
-          );
-        } else {
-          return (
-            <Card
-              sx={{
-                bgcolor: "#f9f9f9",
-                margin: "8px",
-                padding: "10px",
-                alignItem: "center",
-                border: "0.5px solid #325240",
-                boxShadow: "0 4px 4px 0 rgba(0, 0, 0, 0.2)",
-                "&:hover": {
-                  bgcolor: "#f1f1f1",
-                  boxShadow: "0 16px 16px 4px rgba(0, 0, 0, 0.2)",
-                },
-              }}
-            >
-              <Box sx={{ flexGrow: 1 }}>
-                <Grid container spacing={2}>
-                  <Grid item xs={1}>
-                    <Avatar
-                      alt="Remy Sharp"
-                      src={data.pro_image ? data.pro_image : profile}
-                      sx={{ height: "56px", width: "56px" }}
-                    />
-                  </Grid>
-                  <Grid item xs={5}>
-                    <Typography
-                      sx={{
-                        color: "#325240",
-                        fontSize: "18px",
-                        fontWeight: "bold",
-                      }}
-                    >
-                      {data.pro_name}
-                      <br />
-                      <Typography>
-                        ₹ {data.pro_sell_price} /{data.pro_unit}
-                      </Typography>
-                    </Typography>
-                  </Grid>
-                  <Grid item xs={2} sx={{ marginTop: "8px" }}>
-                    {data.pro_category === "Vegetables" && (
-                      <Chip
-                        label={data.pro_category}
-                        sx={{ bgcolor: "#D4AC0D", color: "#fff" }}
-                      />
-                    )}
-                    {data.pro_category === "Dairy Products" && (
-                      <Chip
-                        label={data.pro_category}
-                        sx={{ bgcolor: "#B9770E", color: "#fff" }}
-                      />
-                    )}
-                    {data.pro_category === "Fruits" && (
-                      <Chip
-                        label={data.pro_category}
-                        sx={{ bgcolor: "#2874A6", color: "#fff" }}
-                      />
-                    )}
-                    {data.pro_category === "Grocery" && (
-                      <Chip
-                        label={data.pro_category}
-                        sx={{ bgcolor: "#A04000", color: "#fff" }}
-                      />
-                    )}
-                  </Grid>
-                  <Grid item xs={2} sx={{ marginTop: "8px" }}>
-                    {data.pro_stock === "In Stock" && (
-                      <Chip
-                        label={data.pro_stock}
-                        sx={{ bgcolor: "#325240", color: "#fff" }}
-                      />
-                    )}
-                    {data.pro_stock === "Out of Stock" && (
-                      <Chip
-                        label={data.pro_stock}
-                        sx={{ bgcolor: "#B10000", color: "#fff" }}
-                      />
-                    )}
-                  </Grid>
-                  <Grid item xs={1} sx={{ marginTop: "5px" }}>
-                    <IconButton
-                      sx={{ color: "blue" }}
-                      onClick={() => {
-                        // handleClickOpen("q2q2q");
-                      }}
-                    >
-                      <ModeEditIcon />
-                    </IconButton>
-                  </Grid>
-                  <Grid item xs={1} sx={{ marginTop: "5px" }}>
-                    <IconButton
-                      color="error"
-                      onClick={() => {
-                        handleClickOpen(data._id);
-                      }}
-                    >
-                      <DeleteIcon />
-                    </IconButton>
-                  </Grid>
+    } else
+    {
+      return productData.map((data) =>
+      {
+        return (
+          <Card
+            sx={{
+              bgcolor: "#f9f9f9",
+              margin: "8px",
+              padding: "10px",
+              alignItem: "center",
+              border: "0.5px solid #325240",
+              boxShadow: "0 4px 4px 0 rgba(0, 0, 0, 0.2)",
+              "&:hover": {
+                bgcolor: "#f1f1f1",
+                boxShadow: "0 16px 16px 4px rgba(0, 0, 0, 0.2)",
+              },
+            }}
+          >
+            <Box sx={{ flexGrow: 1 }}>
+              <Grid container spacing={2}>
+                <Grid item xs={1}>
+                  <Avatar
+                    alt="Remy Sharp"
+                    src={data.pro_image ? data.pro_image : profile}
+                    sx={{ height: "56px", width: "56px" }}
+                  />
                 </Grid>
-              </Box>
-            </Card>
-          );
-        }
-      });
+                <Grid item xs={5}>
+                  <Typography
+                    sx={{
+                      color: "#325240",
+                      fontSize: "18px",
+                      fontWeight: "bold",
+                    }}
+                  >
+                    {data.pro_name}
+                    <br />
+                    <Typography>
+                      ₹ {data.pro_sell_price} /{data.pro_unit}
+                    </Typography>
+                  </Typography>
+                </Grid>
+                <Grid item xs={2} sx={{ marginTop: "8px" }}>
+                  {data.pro_category === "Vegetables" && (
+                    <Chip
+                      label={data.pro_category}
+                      sx={{ bgcolor: "#D4AC0D", color: "#fff" }}
+                    />
+                  )}
+                  {data.pro_category === "Dairy Products" && (
+                    <Chip
+                      label={data.pro_category}
+                      sx={{ bgcolor: "#B9770E", color: "#fff" }}
+                    />
+                  )}
+                  {data.pro_category === "Fruits" && (
+                    <Chip
+                      label={data.pro_category}
+                      sx={{ bgcolor: "#2874A6", color: "#fff" }}
+                    />
+                  )}
+                  {data.pro_category === "Grocery" && (
+                    <Chip
+                      label={data.pro_category}
+                      sx={{ bgcolor: "#A04000", color: "#fff" }}
+                    />
+                  )}
+                </Grid>
+                <Grid item xs={2} sx={{ marginTop: "8px" }}>
+                  {data.pro_stock === "In Stock" && (
+                    <Chip
+                      label={data.pro_stock}
+                      sx={{ bgcolor: "#325240", color: "#fff" }}
+                    />
+                  )}
+                  {data.pro_stock === "Out of Stock" && (
+                    <Chip
+                      label={data.pro_stock}
+                      sx={{ bgcolor: "#B10000", color: "#fff" }}
+                    />
+                  )}
+                </Grid>
+                <Grid item xs={1} sx={{ marginTop: "5px" }}>
+                  <IconButton
+                    sx={{ color: "blue" }}
+                    onClick={() =>
+                    {
+                      // handleClickOpen("q2q2q");
+                    }}
+                  >
+                    <ModeEditIcon />
+                  </IconButton>
+                </Grid>
+                <Grid item xs={1} sx={{ marginTop: "5px" }}>
+                  <IconButton
+                    color="error"
+                    onClick={() =>
+                    {
+                      handleClickOpen(data._id);
+                    }}
+                  >
+                    <DeleteIcon />
+                  </IconButton>
+                </Grid>
+              </Grid>
+            </Box>
+          </Card>
+        );
+      }
+      );
     }
   };
   return (

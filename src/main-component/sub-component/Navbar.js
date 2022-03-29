@@ -82,99 +82,103 @@ const NAvatar = styled(NavLink)`
 `;
 
 const Navbar = (prop) => {
-  const Loginckeck = () => {
-    if (getCookie("account") !== "") {
-      // console.log("user login");
-      return true;
-    } else {
-      return false;
-    }
-  };
-  const whichDashboard = () => {
-    if (getCookie("account")) {
-      const account = JSON.parse(getCookie("account"));
-      const type = account.type;
-      if (type === 0) {
-        return "/dashboard/CustomerDashboard/1";
-      } else if (type === 1) {
-        return "/dashboard/VendorDashboard/1";
-      } else if (type === 2) {
-        return "/dashboard/AdminDashboard/1";
+  if (getCookie("city")) {
+    const Loginckeck = () => {
+      if (getCookie("account") !== "") {
+        // console.log("user login");
+        return true;
+      } else {
+        return false;
       }
-    } else {
-      return "/";
-    }
-  };
-  return (
-    <>
-      <NBar>
-        <Link to="/">
-          <Image1 src={logo} alt="Example2" />
-        </Link>
+    };
+    const whichDashboard = () => {
+      if (getCookie("account")) {
+        const account = JSON.parse(getCookie("account"));
+        const type = account.type;
+        if (type === 0) {
+          return "/dashboard/CustomerDashboard/1";
+        } else if (type === 1) {
+          return "/dashboard/VendorDashboard/1";
+        } else if (type === 2) {
+          return "/dashboard/AdminDashboard/1";
+        }
+      } else {
+        return "/";
+      }
+    };
+    return (
+      <>
+        <NBar>
+          <Link to="/">
+            <Image1 src={logo} alt="Example2" />
+          </Link>
 
-        {Loginckeck() ? (
-          <NAvatar to={whichDashboard()}>
-            <Avatar
-              sx={{ m: 1, bgcolor: "#325240", height: "33px", width: "33px" }}
-            >
-              <BsPersonFill />
-            </Avatar>
-          </NAvatar>
-        ) : (
-          <NLink to="/signin">
+          {Loginckeck() ? (
+            <NAvatar to={whichDashboard()}>
+              <Avatar
+                sx={{ m: 1, bgcolor: "#325240", height: "33px", width: "33px" }}
+              >
+                <BsPersonFill />
+              </Avatar>
+            </NAvatar>
+          ) : (
+            <NLink to="/signin">
+              <strong>
+                <GoSignIn />
+              </strong>
+              Sign In
+            </NLink>
+          )}
+
+          <NLink to="/contact">
             <strong>
-              <GoSignIn />
+              <MdContacts />
             </strong>
-            Sign In
+            Contact
           </NLink>
-        )}
-
-        <NLink to="/contact">
-          <strong>
-            <MdContacts />
-          </strong>
-          Contact
-        </NLink>
-        <NLink to="/about">
-          <strong>
-            <BsInfoCircleFill />
-          </strong>
-          About
-        </NLink>
-        <NLink to="/blog">
-          <strong>
-            <ImBlogger />
-          </strong>
-          Blog
-        </NLink>
-        <NLink to="/vendor">
-          <strong>
-            <GiShop />
-          </strong>
-          Vendor
-        </NLink>
-        <NLink to="/shop">
-          <strong>
-            <AiFillShopping />
-          </strong>
-          Shop
-        </NLink>
-        <NLink to="/auction">
-          <strong>
-            <RiAuctionFill />
-          </strong>
-          Auction
-        </NLink>
-        <NLink to="/">
-          <strong>
-            <FaHome />
-          </strong>
-          Home
-        </NLink>
-      </NBar>
-      <Outlet />
-    </>
-  );
+          <NLink to="/about">
+            <strong>
+              <BsInfoCircleFill />
+            </strong>
+            About
+          </NLink>
+          <NLink to="/blog">
+            <strong>
+              <ImBlogger />
+            </strong>
+            Blog
+          </NLink>
+          <NLink to="/vendor">
+            <strong>
+              <GiShop />
+            </strong>
+            Vendor
+          </NLink>
+          <NLink to="/shop">
+            <strong>
+              <AiFillShopping />
+            </strong>
+            Shop
+          </NLink>
+          <NLink to="/auction">
+            <strong>
+              <RiAuctionFill />
+            </strong>
+            Auction
+          </NLink>
+          <NLink to="/">
+            <strong>
+              <FaHome />
+            </strong>
+            Home
+          </NLink>
+        </NBar>
+        <Outlet />
+      </>
+    );
+  } else {
+    window.location.replace("/selectcity");
+  }
 };
 
 export default Navbar;

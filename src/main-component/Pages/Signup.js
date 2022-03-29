@@ -177,6 +177,9 @@ export default function SignInSide() {
   const handleChange = (event, newAlignment) => {
     setAlignment(newAlignment);
   };
+  const capitalizeFirstLetter = (string) => {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+  };
   const errorfunction = () => {
     if (isLogged) {
       return (
@@ -275,8 +278,8 @@ export default function SignInSide() {
       });
     } else {
       const Data = {
-        user_name: info.fullname,
-        full_name: info.fullname,
+        user_name: capitalizeFirstLetter(info.fullname),
+        full_name: capitalizeFirstLetter(info.fullname),
         email_id: info.emailid,
         password: enCrypt(info.password),
         type: alignment,
