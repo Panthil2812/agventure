@@ -235,6 +235,7 @@ const Admin = () => {
                   setTimeout(() => {
                     deleteCookie("token");
                     deleteCookie("account");
+                    // deleteCookie("city");
                     window.location.replace("/");
                     setProgress(false);
                   }, 2000);

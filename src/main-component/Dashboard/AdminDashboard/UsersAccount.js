@@ -10,6 +10,7 @@ import {
   Snackbar,
   Alert,
   Button,
+  Pagination,
   Grid,
   Chip,
   Card,
@@ -31,7 +32,12 @@ import nofound from "../../../assets/Images/nofound.png";
 import { ReactSearchAutocomplete } from "react-search-autocomplete";
 import { getCookie } from "../../Validator/CookieFunction";
 const UsersAccount = () => {
+  const token = getCookie("token");
+  const theme = useTheme();
   const [userData, setUserData] = React.useState([]);
+  const [currentpageData, setcurrentpageDate] = React.useState([]);
+  const [page, setPage] = React.useState(0);
+  const [DataperPage, setDataperPage] = React.useState(10);
   const [searchitem, setSearchItem] = React.useState("");
   const [state, setState] = React.useState({
     open1: false,
@@ -40,11 +46,14 @@ const UsersAccount = () => {
   });
   const { isLogged, open1, message } = state;
   const [flag, setFlag] = React.useState(false);
-  const token = getCookie("token");
   const [open, setOpen] = React.useState(false);
   const [Did, setDid] = React.useState();
-  const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down("md"));
+
+  const handleChangePage = (event, value) => {
+    console.log(value);
+    setPage(value);
+  };
   const errorFunction = () => {
     if (isLogged) {
       return (
@@ -177,6 +186,7 @@ const UsersAccount = () => {
           setUserData(response.data.data);
           console.log("userdata : ", userData);
           setFlag(false);
+          setPage(1);
           return 0;
         }
       })
@@ -186,15 +196,30 @@ const UsersAccount = () => {
   };
   const handleOnSearch = (string, results) => {
     console.log(string, results);
-    setSearchItem("");
+    setSearchItem(string);
   };
   const handleOnSelect = (item) => {
-    setSearchItem(item);
+    // setSearchItem(item);
   };
-
   React.useEffect(() => {
     userAccount();
   }, []);
+  React.useEffect(() => {
+    setcurrentpageDate(
+      userData.filter(
+        (e) =>
+          e.full_name.toLowerCase().includes(searchitem.toLowerCase()) ||
+          e.user_name.toLowerCase().includes(searchitem.toLowerCase()) ||
+          e.email_id.toLowerCase().includes(searchitem.toLowerCase())
+      )
+    );
+  }, [page, searchitem]);
+
+  const DisplayProducts = React.useMemo(() => {
+    const indexOfLastPost = page * DataperPage;
+    const indexOfFirstPost = indexOfLastPost - DataperPage;
+    return currentpageData.slice(indexOfFirstPost, indexOfLastPost);
+  }, [page, currentpageData]);
   const dialogBox = (
     <React.Fragment>
       <Dialog
@@ -249,7 +274,7 @@ const UsersAccount = () => {
   const SearchBar = (
     <React.Fragment>
       <ReactSearchAutocomplete
-        items={userData}
+        items={[{ user_name: searchitem }, ...userData]}
         maxResults={6}
         onSearch={handleOnSearch}
         onSelect={handleOnSelect}
@@ -257,7 +282,7 @@ const UsersAccount = () => {
         // onClear={handleOnClear}
         resultStringKeyName="user_name"
         fuseOptions={{
-          keys: ["user_name", "email_id", "phone"],
+          keys: ["user_name", "full_name", "email_id"],
         }}
         styling={{
           zIndex: "50",
@@ -274,6 +299,133 @@ const UsersAccount = () => {
       />
     </React.Fragment>
   );
+  const showUserAccount = () => {
+    if (currentpageData.length === 0) {
+      return (
+        <Box sx={{ textAlign: "center" }}>
+          <img alt="image" src={nofound} />
+          <Typography
+            component="h1"
+            variant="h5"
+            sx={{
+              color: "#325240",
+              fontWeight: "bold",
+              margin: "0 auto 32px auto",
+              width: "fit-content",
+              textAlign: "center",
+            }}
+          >
+            <span
+              style={{
+                display: "block",
+              }}
+            >
+              No User Account Found!
+            </span>
+            <span>Ready to start selling something awesome?</span>
+          </Typography>
+        </Box>
+      );
+    } else {
+      return (
+        <Box>
+          {DisplayProducts.map((data) => {
+            return (
+              <Card
+                sx={{
+                  bgcolor: "#f9f9f9",
+                  margin: "8px",
+                  padding: "10px",
+                  alignItem: "center",
+                  border: "1.5px solid #325240",
+                  boxShadow: "0 4px 4px 0 rgba(0, 0, 0, 0.2)",
+                  "&:hover": {
+                    bgcolor: "#f1f1f1",
+                    boxShadow: "0 16px 16px 4px rgba(0, 0, 0, 0.2)",
+                  },
+                }}
+              >
+                <Box sx={{ flexGrow: 1 }} key={data._id}>
+                  <Grid container spacing={3}>
+                    <Grid item xs={1}>
+                      <Avatar
+                        alt="Remy Sharp"
+                        src={data.profile_pic ? data.profile_pic : profile}
+                        sx={{ height: "50px", width: "50px" }}
+                      />
+                    </Grid>
+                    <Grid item xs={7}>
+                      <Typography
+                        sx={{
+                          color: "#325240",
+                          fontSize: "15px",
+                          fontWeight: "bold",
+                        }}
+                      >
+                        {data.user_name}
+                        <br />
+                        <Typography>{data.email_id}</Typography>
+                      </Typography>
+                    </Grid>
+                    <Grid item xs={3} sx={{ marginTop: "8px" }}>
+                      {data.type ? (
+                        <Chip
+                          label="Vendor"
+                          color="warning"
+                          sx={{ width: "100px" }}
+                        />
+                      ) : (
+                        <Chip
+                          label="Customer"
+                          sx={{
+                            width: "100px",
+                            bgcolor: "#325240",
+                            color: "#fff",
+                          }}
+                        />
+                      )}
+                      {/* <Chip label="Vendor" color="warning" />
+                       */}
+                    </Grid>
+                    <Grid item xs={1} sx={{ marginTop: "5px" }}>
+                      <IconButton
+                        color="error"
+                        onClick={() => {
+                          handleClickOpen(data._id);
+                        }}
+                      >
+                        <DeleteIcon />
+                      </IconButton>
+                    </Grid>
+                  </Grid>
+                </Box>
+              </Card>
+            );
+          })}
+          <Box sx={{ mt: 7, display: "flex", justifyContent: "center" }}>
+            <Pagination
+              count={Math.ceil(currentpageData.length / DataperPage)}
+              variant="outlined"
+              sx={{
+                "& .css-lqq3n7-MuiButtonBase-root-MuiPaginationItem-root.Mui-selected":
+                  {
+                    backgroundColor: "#325240",
+                    color: "#fff",
+                  },
+                "& .css-lqq3n7-MuiButtonBase-root-MuiPaginationItem-root": {
+                  backgroundColor: "#f9f9f9",
+                  color: "#325240",
+                  border: "1px solid #325240",
+                },
+              }}
+              page={page}
+              onChange={handleChangePage}
+            />
+          </Box>
+        </Box>
+      );
+    }
+  };
   return (
     <>
       <Box sx={{ marginTop: 4 }}>
@@ -300,183 +452,7 @@ const UsersAccount = () => {
           >
             {SearchBar}
           </Box>
-          <Box sx={{ mt: 7 }}>
-            {!userData.length && (
-              <Box sx={{ textAlign: "center" }}>
-                <img alt="image" src={nofound} />
-                <Typography
-                  component="h1"
-                  variant="h5"
-                  sx={{
-                    color: "#325240",
-                    fontWeight: "bold",
-                    margin: "0 auto 32px auto",
-                    width: "fit-content",
-                    textAlign: "center",
-                  }}
-                >
-                  <span
-                    style={{
-                      display: "block",
-                    }}
-                  >
-                    No User Account Found!
-                  </span>
-                  <span>Ready to start selling something awesome?</span>
-                </Typography>
-              </Box>
-            )}
-            {!searchitem &&
-              userData.length &&
-              userData.map((data) => {
-                return (
-                  <Card
-                    sx={{
-                      bgcolor: "#f9f9f9",
-                      margin: "8px",
-                      padding: "10px",
-                      alignItem: "center",
-                      border: "1.5px solid #325240",
-                      boxShadow: "0 4px 4px 0 rgba(0, 0, 0, 0.2)",
-                      "&:hover": {
-                        bgcolor: "#f1f1f1",
-                        boxShadow: "0 16px 16px 4px rgba(0, 0, 0, 0.2)",
-                      },
-                    }}
-                  >
-                    <Box sx={{ flexGrow: 1 }} key={data._id}>
-                      <Grid container spacing={3}>
-                        <Grid item xs={1}>
-                          <Avatar
-                            alt="Remy Sharp"
-                            src={data.profile_pic ? data.profile_pic : profile}
-                            sx={{ height: "50px", width: "50px" }}
-                          />
-                        </Grid>
-                        <Grid item xs={7}>
-                          <Typography
-                            sx={{
-                              color: "#325240",
-                              fontSize: "15px",
-                              fontWeight: "bold",
-                            }}
-                          >
-                            {data.user_name}
-                            <br />
-                            <Typography>{data.email_id}</Typography>
-                          </Typography>
-                        </Grid>
-                        <Grid item xs={3} sx={{ marginTop: "8px" }}>
-                          {data.type ? (
-                            <Chip
-                              label="Vendor"
-                              color="warning"
-                              sx={{ width: "100px" }}
-                            />
-                          ) : (
-                            <Chip
-                              label="Customer"
-                              sx={{
-                                width: "100px",
-                                bgcolor: "#325240",
-                                color: "#fff",
-                              }}
-                            />
-                          )}
-                          {/* <Chip label="Vendor" color="warning" />
-                           */}
-                        </Grid>
-                        <Grid item xs={1} sx={{ marginTop: "5px" }}>
-                          <IconButton
-                            color="error"
-                            onClick={() => {
-                              handleClickOpen(data._id);
-                            }}
-                          >
-                            <DeleteIcon />
-                          </IconButton>
-                        </Grid>
-                      </Grid>
-                    </Box>
-                  </Card>
-                );
-              })}
-            {searchitem && (
-              <Card
-                sx={{
-                  bgcolor: "#f9f9f9",
-                  margin: "8px",
-                  padding: "10px",
-                  alignItem: "center",
-                  border: "1.5px solid #325240",
-                  boxShadow: "0 4px 4px 0 rgba(0, 0, 0, 0.2)",
-                  "&:hover": {
-                    bgcolor: "#f1f1f1",
-                    boxShadow: "0 16px 16px 4px rgba(0, 0, 0, 0.2)",
-                  },
-                }}
-              >
-                <Box sx={{ flexGrow: 1 }} key={searchitem._id}>
-                  <Grid container spacing={3}>
-                    <Grid item xs={1}>
-                      <Avatar
-                        alt="Remy Sharp"
-                        src={
-                          searchitem.profile_pic
-                            ? searchitem.profile_pic
-                            : profile
-                        }
-                        sx={{ height: "50px", width: "50px" }}
-                      />
-                    </Grid>
-                    <Grid item xs={7}>
-                      <Typography
-                        sx={{
-                          color: "#325240",
-                          fontSize: "15px",
-                          fontWeight: "bold",
-                        }}
-                      >
-                        {searchitem.user_name}
-                        <br />
-                        <Typography>{searchitem.email_id}</Typography>
-                      </Typography>
-                    </Grid>
-                    <Grid item xs={3} sx={{ marginTop: "8px" }}>
-                      {searchitem.type ? (
-                        <Chip
-                          label="Vendor"
-                          color="warning"
-                          sx={{ width: "100px" }}
-                        />
-                      ) : (
-                        <Chip
-                          label="Customer"
-                          sx={{
-                            width: "100px",
-                            bgcolor: "#325240",
-                            color: "#fff",
-                          }}
-                        />
-                      )}
-                      {/* <Chip label="Vendor" color="warning" />
-                       */}
-                    </Grid>
-                    <Grid item xs={1} sx={{ marginTop: "5px" }}>
-                      <IconButton
-                        color="error"
-                        onClick={() => {
-                          handleClickOpen(searchitem._id);
-                        }}
-                      >
-                        <DeleteIcon />
-                      </IconButton>
-                    </Grid>
-                  </Grid>
-                </Box>
-              </Card>
-            )}
-          </Box>
+          <Box sx={{ mt: 7 }}>{showUserAccount()}</Box>
         </Box>
 
         {dialogBox}
