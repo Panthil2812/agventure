@@ -149,7 +149,7 @@ const Auction = () => {
 
               <div className={classes.productBottomDetails}>
                 <div className={classes.productPrice}>
-                  PRICE : ₹230.99<small>₹96.00</small>
+                  PRICE :-₹230.99<small>₹96.00</small>
                 </div>
                 <div className={classes.productLinks}>Kg</div>
               </div>

@@ -1,10 +1,10 @@
-@import url("https://fonts.googleapis.com/css?family=Roboto:400,500,700");
+/* @import url("https://fonts.googleapis.com/css?family=Roboto:400,500,700");
 * {
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
   margin: 0;
   padding: 0;
-}
+} */
 
 /* body {
   font-family: "Roboto", sans-serif;
@@ -48,7 +48,7 @@ a {
   border: 3px solid #325240;
   transform: scale(1.01);
    box-shadow: 0 8px 8px 0 rgba(0, 0, 0, 0.2); 
-} */
+} 
 .product-tumb {
   width: 100%;
   height: 270px;
@@ -61,17 +61,17 @@ a {
 .product-tumb img {
   width: 100%;
   height: 100%;
-  /* transform: scale(1);
-  transition: all 0.3s ease-in-out; */
+  transform: scale(1);
+  transition: all 0.3s ease-in-out; 
 }
 /* .product-tumb img:hover {
   transform: scale(1.5);
 } */
-
+/* 
 .product-details {
   padding: 10px;
-}
-.product-details h3 {
+} */
+/* .product-details h3 {
   font-weight: 500;
   display: block;
   margin-bottom: 18px;
@@ -80,13 +80,13 @@ a {
   color: #325240;
   text-decoration: none;
   transition: 0.3s;
-}
+} */
 
-.product-details h4 a:hover {
+/* .product-details h4 a:hover {
   color: #777267;
-}
+} */
 
-.product-details p {
+/* .product-details p {
   font-size: 15px;
   line-height: 22px;
   margin-bottom: 18px;
@@ -132,4 +132,4 @@ a {
 
 .product-links a:hover {
   color: #fbb72c;
-}
+} */
