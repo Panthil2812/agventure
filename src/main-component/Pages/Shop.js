@@ -36,35 +36,10 @@ import {
   useTheme,
 } from "@mui/material";
 import { makeStyles } from "@mui/styles";
-import { ImCross } from "react-icons/im";
-import { BsCurrencyPound } from "react-icons/bs";
 import { getCookie } from "../Validator/CookieFunction";
-
 import { ReactSearchAutocomplete } from "react-search-autocomplete";
-const CssTextField = styled(TextField)({
-  "& label.Mui-focused": {
-    color: "#325240",
-  },
-  // MuiFormLabel-root-MuiInputLabel-root
-  "& .MuiInput-underline:after": {
-    // borderWidth: "2px",
-    // borderBottomColor: "#325240",
-  },
-  "& .MuiOutlinedInput-root": {
-    "& fieldset": {
-      // borderWidth: "2px",
-      // borderColor: "#325240",
-    },
-    "&:hover fieldset": {
-      borderWidth: "2px",
-      borderColor: "#325240",
-    },
-    "&.Mui-focused fieldset": {
-      // borderWidth: "2px",
-      // borderColor: "#325240",
-    },
-  },
-});
+import ShopProducts from "../sub-component/ShopProducts";
+import Footer from "../sub-component/Footer";
 const CssFormControl = styled(FormControl)({
   "& .MuiFormLabel-root": {
     color: "#fff",
@@ -105,8 +80,6 @@ const meunName = [
   { label: "Indore" },
   { label: "Thane" },
   { label: "Bhopal" },
-  { label: "Visakhapatnam" },
-  { label: "Pimpri and Chinchwad" },
   { label: "Patna" },
   { label: "Vadodara" },
   { label: "Ghaziabad" },
@@ -141,17 +114,20 @@ const Shop = () => {
   };
   return (
     <>
+      {/* searchbar in top */}
       <Box
         sx={{
           padding: "10px 0px 5px 0px",
           bgcolor: "#325240",
           width: "100%",
+          boxShadow: "0 16px 16px 0 rgba(0, 0, 0, 0.2)",
           position: "fixed",
           zIndex: 39,
+          borderBottom: "2px outset #fff",
         }}
       >
         <Grid container spacing={3}>
-          <Grid item xs={2} sx={{ mt: "8px" }}>
+          <Grid item xs={2.1} sx={{ mt: "8px" }}>
             <Box
               sx={{
                 marginLeft: "10px",
@@ -169,6 +145,10 @@ const Shop = () => {
                   required
                   id="combo-box-city"
                   options={meunName}
+                  value={cityname}
+                  onChange={(event, value) => {
+                    setCityName(value.label);
+                  }}
                   renderInput={(params) => (
                     <TextField
                       required
@@ -182,14 +162,14 @@ const Shop = () => {
               </CssFormControl>
             </Box>
           </Grid>
-          <Grid item xs={7}>
+          <Grid item xs={6.9}>
             <Box
               sx={{
-                marginTop: "8px",
+                marginTop: "4px",
                 borderRadius: "18px",
                 boxShadow: "0 16px 16px 0 rgba(0, 0, 0, 0.2)",
-                marginLeft: "15%",
-                marginRight: "10%",
+                marginLeft: "10%",
+                marginRight: "15%",
               }}
             >
               <ReactSearchAutocomplete
@@ -245,73 +225,17 @@ const Shop = () => {
           </Grid>
         </Grid>
       </Box>
+      {/* shop in page products diaplay */}
       <Box
         sx={{
           bgcolor: "#f9f9f9",
           position: "relative",
           width: "100%",
           top: "71px",
-          paddingLeft: "20px",
-          borderBottom: "2px outset #325240",
         }}
       >
-        <Breadcrumbs aria-label="breadcrumb" separator="›">
-          <Link underline="hover" color="inherit" href="/">
-            <h2>Home</h2>
-          </Link>
-          <Typography sx={{ fontSize: "24px", fontWeight: "bold" }}>
-            Shop
-          </Typography>
-        </Breadcrumbs>
-      </Box>
-
-      <Box>
-        <h1>panthil malaviya</h1>
-        <h1>panthil malaviya</h1>
-        <h1>panthil malaviya</h1>
-        <h1>panthil malaviya</h1>
-        <h1>panthil malaviya</h1>
-        <h1>panthil malaviya</h1>
-        <h1>panthil malaviya</h1>
-        <h1>panthil malaviya</h1>
-        <h1>panthil malaviya</h1>
-        <h1>panthil malaviya</h1>
-        <h1>panthil malaviya</h1>
-        <h1>panthil malaviya</h1>
-        <h1>panthil malaviya</h1>
-        <h1>panthil malaviya</h1>
-        <h1>panthil malaviya</h1>
-        <h1>panthil malaviya</h1>
-        <h1>panthil malaviya</h1>
-        <h1>panthil malaviya</h1>
-        <h1>panthil malaviya</h1>
-        <h1>panthil malaviya</h1>
-        <h1>panthil malaviya</h1>
-        <h1>panthil malaviya</h1>
-        <h1>panthil malaviya</h1>
-        <h1>panthil malaviya</h1>
-        <h1>panthil malaviya</h1>
-        <h1>panthil malaviya</h1>
-        <h1>panthil malaviya</h1>
-        <h1>panthil malaviya</h1>
-        <h1>panthil malaviya</h1>
-        <h1>panthil malaviya</h1>
-        <h1>panthil malaviya</h1>
-        <h1>panthil malaviya</h1>
-        <h1>panthil malaviya</h1>
-        <h1>panthil malaviya</h1>
-        <h1>panthil malaviya</h1>
-        <h1>panthil malaviya</h1>
-        <h1>panthil malaviya</h1>
-        <h1>panthil malaviya</h1>
-        <h1>panthil malaviya</h1>
-        <h1>panthil malaviya</h1>
-        <h1>panthil malaviya</h1>
-        <h1>panthil malaviya</h1>
-        <h1>panthil malaviya</h1>
-        <h1>panthil malaviya</h1>
-        <h1>panthil malaviya</h1>
-        <h1>panthil malaviya</h1>
+        <ShopProducts city={cityname} />
+        <Footer />
       </Box>
     </>
   );
