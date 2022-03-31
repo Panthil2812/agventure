@@ -120,10 +120,9 @@ const Shop = () => {
           padding: "10px 0px 5px 0px",
           bgcolor: "#325240",
           width: "100%",
-          boxShadow: "0 16px 16px 0 rgba(0, 0, 0, 0.2)",
           position: "fixed",
           zIndex: 39,
-          borderBottom: "2px outset #fff",
+          borderBottom: "2px outset #f9f9f9",
         }}
       >
         <Grid container spacing={3}>

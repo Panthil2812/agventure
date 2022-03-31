@@ -107,7 +107,12 @@ const ShopProducts = (props) => {
   console.log(props.cityname);
   return (
     <div>
-      <Box sx={{ paddingLeft: "20px", borderBottom: "2px outset #325240" }}>
+      <Box
+        sx={{
+          paddingLeft: "20px",
+          borderBottom: "2px outset #f9f9f9",
+        }}
+      >
         <Breadcrumbs aria-label="breadcrumb" separator="›">
           <Link underline="hover" sx={{ color: "#325240" }} href="/">
             <h2>Home</h2>
@@ -124,7 +129,7 @@ const ShopProducts = (props) => {
           sx={{
             bgcolor: "#f0f0f0",
             boxShadow: "0px 16px 16px 0px rgba(0, 0, 0, 0.2)",
-            // border: "2px solid #325240",
+            border: "1px solid #325240",
             borderRadius: "8px",
           }}
         >
@@ -184,8 +189,8 @@ const ShopProducts = (props) => {
                   renderInput={(params) => (
                     <TextField
                       {...params}
-                      label="Sorting"
-                      name="Sorting"
+                      label="Sort By"
+                      name="Sort By"
                       id="Sorting"
                     />
                   )}
