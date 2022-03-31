@@ -216,47 +216,7 @@ const Newadmin = () => {
             setDialog(false);
           });
       }, 3000);
-      // setTimeout(() => {
-      //   // console.log(Data);
-      //   axios({
-      //     method: "post",
-      //     headers: {
-      //       "content-type": "application/x-www-form-urlencoded",
-      //     },
-      //     data: qs.stringify(Data),
-      //     url: `${process.env.REACT_APP_BASEURL}authorise/forgot_password`,
-      //   })
-      //     .then(function (response) {
-      //       // handle success
-      //       // const infomation = qs.stringify(response);
-      //       console.log(response.data);
-      //       if (response.data.status === 500) {
-      //         setState({
-      //           open: true,
-      //           message:
-      //             "The user ID you entered does not exist.Please check that you have typed your ID correctly.",
-      //         });
-      //         setFlag(false);
-      //       }
-      //       if (response.data.status === 200) {
-      //         setForget({
-      //           isForget: true,
-      //         });
-      //         setDialog(false);
-      //         setState({
-      //           open: true,
-      //           message: "Your Password has been changed Successfully.",
-      //         });
-      //         setFlag(false);
-      //       }
-      //     })
-      //     .catch(function (error) {
-      //       setState({
-      //         open: true,
-      //         message: "Please Try again!",
-      //       });
-      //     });
-      // }, 3000);
+    
     }
   };
   const errorfunction = () => {
@@ -319,82 +279,7 @@ const Newadmin = () => {
   const handleClose = () => {
     setState({ ...state, open: false });
   };
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    // const info = {
-    //   username: validator.trim(data.get("username")),
-    //   emailid: validator.trim(data.get("emailid")),
-    //   address: validator.trim(data.get("address")),
-    //   city: data.get("city"),
-    //   state: data.get("state"),
-    //   phone: validator.trim(data.get("phone")),
-    // };
-    // // console.log(info);
-    // const errorMessage = ValidatorAccount(info);
 
-    // if (!errorMessage.flag) {
-    //   setState({
-    //     open: true,
-    //     message: errorMessage.message,
-    //   });
-    // } else {
-    //   const Data = {
-    //     _id: account._id,
-    //     user_name: capitalizeFirstLetter(info.username),
-    //     email_id: info.emailid,
-    //     password: enCrypt(info.password),
-    //     type: info.ctype,
-    //     city: info.city,
-    //     state: info.state,
-    //     address: info.address,
-    //     phone: info.phone,
-    //   };
-    //   setFlag(true);
-    //   setTimeout(() => {
-    //     // console.log(Data);
-    //     axios({
-    //       method: "post",
-    //       headers: {
-    //         "content-type": "application/x-www-form-urlencoded",
-    //         Authorization: `Bearer ${token}`,
-    //       },
-    //       data: qs.stringify(Data),
-    //       url: `${process.env.REACT_APP_BASEURL}user/update_user`,
-    //     })
-    //       .then(function (response) {
-    //         // handle success
-    //         // const infomation = qs.stringify(response);
-    //         console.log(response.data);
-    //         if (response.data.status === 504) {
-    //           setState({
-    //             open: true,
-    //             message: "User does not updated.",
-    //           });
-    //           setFlag(false);
-    //         }
-    //         if (response.data.status === 200) {
-    //           setState({
-    //             isLogged: true,
-    //             open: true,
-    //             message: errorMessage.message,
-    //           });
-    //           setFlag(false);
-    //           setTimeout(() => {
-    //             setCookie("account", JSON.stringify(response.data.data), 1);
-    //             //navigate("/signin");
-    //           }, 1000);
-    //         }
-    //       })
-    //       .catch(function (error) {
-    //         setState({
-    //           open: true,
-    //           message: "Please Try again!",
-    //         });
-    //       });
-    //   }, 3000);
-    // }
-  };
   const DialogBox = (
     <React.Fragment>
       <Dialog

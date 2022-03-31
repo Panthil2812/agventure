@@ -1,20 +1,21 @@
 import validator from "validator";
 
 const ValidatorProduct = (info) => {
-  console.log(
-    typeof parseInt(info.pro_mrp),
-    typeof parseInt(info.pro_sell_price),
-    parseInt(info.pro_mrp) < parseInt(info.pro_sell_price)
-  );
+  // console.log(
+  //   "image size : ",
+  //   info.pro_image.size,
+  //   info.pro_image.size && info.pro_image.size > 2000001
+  // );
   if (info.pro_image === null) {
     return {
       open: true,
       message: "First product image is required",
     };
-  } else if (!info.pro_image && info.pro_image.size > 10001) {
+  } else if (info.pro_image.size && info.pro_image.size > 3000001) {
+    console.log("sdiufb");
     return {
       flag: false,
-      message: "Fist Product image is too large,Allowed maximum size is 1MP.",
+      message: "Fist Product image is too large,Allowed maximum size is 2MP.",
     };
   } else if (validator.isEmpty(info.pro_name)) {
     return {
@@ -31,12 +32,12 @@ const ValidatorProduct = (info) => {
       flag: false,
       message: "Please Select a Product Unit. ",
     };
-  } else if (validator.isEmpty(info.pro_mrp)) {
+  } else if (validator.isEmpty(info.pro_mrp.toString())) {
     return {
       flag: false,
       message: "Please Enter a Product MRP.",
     };
-  } else if (validator.isEmpty(info.pro_sell_price)) {
+  } else if (validator.isEmpty(info.pro_sell_price.toString())) {
     return {
       flag: false,
       message: "Please Enter a Product Selling price.",

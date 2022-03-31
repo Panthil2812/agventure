@@ -104,7 +104,7 @@ const Customer = () =>
           <Link underline="hover" color="inherit" href="/">
             <h2>Home</h2>
           </Link>
-          <Typography color="" sx={{ fontSize: "24px", fontWeight: "bold" }}>
+          <Typography sx={{ fontSize: "24px", fontWeight: "bold" }}>
             My Dashbord
           </Typography>
         </Breadcrumbs>

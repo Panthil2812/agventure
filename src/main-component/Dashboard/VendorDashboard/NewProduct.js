@@ -37,6 +37,7 @@ import { storage } from "../../../Firebase/index";
 import Products from "./Products";
 import { makeStyles } from "@mui/styles";
 import ValidatorProduct from "../../Validator/ValidatorProduct";
+import capitalizeFirstLetter from "../../Validator/capitalizeFirstLetter";
 import {
   setCookie,
   getCookie,
@@ -233,9 +234,7 @@ const NewProduct = () => {
       </>
     );
   };
-  const capitalizeFirstLetter = (string) => {
-    return string.charAt(0).toUpperCase() + string.slice(1);
-  };
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);

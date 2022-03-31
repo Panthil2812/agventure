@@ -369,11 +369,17 @@ export default function SignInSide() {
             color: "#325240",
             fontWeight: "bold",
             fontSize: "20px",
+            bgcolor: "#f9f9f9",
           }}
         >
           Forgot password?
         </DialogTitle>
-        <DialogContent>
+        <DialogContent
+          sx={{
+            color: "#325240",
+            bgcolor: "#f9f9f9",
+          }}
+        >
           <CssTextField
             margin="normal"
             required
@@ -409,7 +415,12 @@ export default function SignInSide() {
             }}
           />
         </DialogContent>
-        <DialogActions>
+        <DialogActions
+          sx={{
+            color: "#325240",
+            bgcolor: "#f9f9f9",
+          }}
+        >
           <Button
             variant="contained"
             align="right"
