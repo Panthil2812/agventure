@@ -20,7 +20,7 @@ const ScrollBox = styled(Box)({
   },
 
   "::-webkit-scrollbar-thumb": {
-    background: "#f0f0f0",
+    background: "#325240",
   },
 
   "::-webkit-scrollbar-thumb:hover": {
@@ -39,64 +39,48 @@ export default function MouseOverPopover() {
   };
   const cratFlag = Boolean(anchorEl);
   const popover_id = cratFlag ? "simple-popover" : undefined;
-  // const handlePopoverOpen = () => {
-  //   setAnchorEl(true);
-  // };
+  const DisplayCartPopover = () => {
+    const paa = true;
+    if (paa) {
+      return (
+        <React.Fragment>
+          <Box sx={{ padding: "20px" }}>
+            <Typography
+              var
+              sx={{
+                color: "#325240",
+                textAlign: "center",
+                fontSize: "24px",
+                fontWeight: "bold",
+                borderBottom: "2px solid #325240",
+              }}
+            >
+              CART
+            </Typography>
 
-  // const handlePopoverClose = () => {
-  //   setAnchorEl(false);
-  // };
+            <Box
+              sx={{
+                color: "#325240",
+                padding: "8px",
+                textAlign: "center",
+              }}
+            >
+              <Typography
+                sx={{
+                  fontSize: "18px",
 
-  return (
-    <div>
-      <Box
-        aria-describedby={popover_id}
-        // onClick={handleClick}
-        onMouseEnter={handleClick}
-        sx={{
-          marginRight: "30px",
-          float: "right",
-          padding: "5px",
-          color: "#ddf6e4",
-          bgcolor: "#325240",
-          display: "flex",
-          alignItems: "center",
-        }}
-      >
-        <Typography
-          sx={{
-            textAlign: "right",
-            marginRight: "10px",
-          }}
-        >
-          My Cart
-          <br />0 items - ₹0.00
-        </Typography>
-        <BsBasketFill size="25" />
-      </Box>
-      <Popover
-        id={popover_id}
-        open={cratFlag}
-        anchorEl={anchorEl}
-        onClose={handleClose}
-        cratFlag={anchorEl}
-        anchorOrigin={{
-          vertical: "bottom",
-          horizontal: "right",
-        }}
-        transformOrigin={{
-          vertical: "top",
-          horizontal: "right",
-        }}
-      >
-        <Box
-          sx={{
-            height: "auto",
-            width: "60vh",
-            bgcolor: "#F9F9F9",
-            border: "2px solid #325240",
-          }}
-        >
+                  fontWeight: "550",
+                }}
+              >
+                No products in the cart.
+              </Typography>
+            </Box>
+          </Box>
+        </React.Fragment>
+      );
+    } else {
+      return (
+        <React.Fragment>
           <Box sx={{ padding: "20px" }}>
             <Typography
               var
@@ -223,6 +207,61 @@ export default function MouseOverPopover() {
               </Button>
             </Box>
           </Box>
+        </React.Fragment>
+      );
+    }
+  };
+  return (
+    <div>
+      <Box
+        aria-describedby={popover_id}
+        // onClick={handleClick}
+        onMouseEnter={handleClick}
+        sx={{
+          marginRight: "30px",
+          float: "right",
+          padding: "5px",
+          color: "#ddf6e4",
+          bgcolor: "#325240",
+          display: "flex",
+          alignItems: "center",
+        }}
+      >
+        <Typography
+          sx={{
+            textAlign: "right",
+            marginRight: "10px",
+          }}
+        >
+          My Cart
+          <br />0 items - ₹0.00
+        </Typography>
+        <BsBasketFill size="25" />
+      </Box>
+      <Popover
+        id={popover_id}
+        open={cratFlag}
+        anchorEl={anchorEl}
+        onClose={handleClose}
+        cratFlag={anchorEl}
+        anchorOrigin={{
+          vertical: "bottom",
+          horizontal: "right",
+        }}
+        transformOrigin={{
+          vertical: "top",
+          horizontal: "right",
+        }}
+      >
+        <Box
+          sx={{
+            height: "auto",
+            width: "60vh",
+            bgcolor: "#F9F9F9",
+            border: "2px solid #325240",
+          }}
+        >
+          {DisplayCartPopover()}
         </Box>
       </Popover>
     </div>
