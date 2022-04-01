@@ -521,11 +521,7 @@ const Shop = () => {
       >
         <Grid container spacing={3}>
           <Grid item xs={2.1} sx={{ mt: "8px" }}>
-            <Box
-              sx={{
-                marginLeft: "10px",
-              }}
-            >
+            <Box sx={{ marginLeft: "20px" }}>
               <CssFormControl
                 fullWidth
                 required
@@ -659,7 +655,7 @@ const Shop = () => {
                 <h3 style={{ color: "#325240" }}>
                   {/* Showing {productNumPerpage.numstart}–
                   {productNumPerpage.numend} of  */}
-                  Showing {currentpageData.length} results
+                  Showing {currentpageData.length} Results
                 </h3>
                 <Box sx={{ display: "flex", justifyContent: "space-around" }}>
                   <Box sx={{ minWidth: 220, marginRight: "20px" }}>
