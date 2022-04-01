@@ -1,5 +1,6 @@
 import React from "react";
 import { BsBasketFill } from "react-icons/bs";
+import { IoMdArrowDropup } from "react-icons/io";
 import { styled, alpha } from "@mui/material/styles";
 import {
   Popover,
@@ -41,7 +42,8 @@ import { ReactSearchAutocomplete } from "react-search-autocomplete";
 // import ShopProducts from "../sub-component/ShopProducts";
 import profile from "../../assets/Images/apples.png";
 import Footer from "../sub-component/Footer";
-
+import axios from "axios";
+import nofound from "../../assets/Images/nofound.png";
 const CssFormControl = styled(FormControl)({
   "& .MuiFormLabel-root": {
     color: "#fff",
@@ -95,41 +97,8 @@ const meunName = [
   { label: "Vasai" },
   { label: "Varanasi" },
 ];
-const data = [
-  { id: 1, name: "John Doe" },
-  { id: 2, name: "Victor Wayne" },
-  { id: 3, name: "Jane Doe" },
-  { id: 4, name: "Jane Doe" },
-  { id: 5, name: "John Doe" },
-  { id: 6, name: "Victor Wayne" },
-  { id: 7, name: "Jane Doe" },
-  { id: 8, name: "John Doe" },
-  { id: 9, name: "Victor Wayne" },
-  { id: 10, name: "Jane Doe" },
-  { id: 11, name: "John Doe" },
-  { id: 12, name: "Victor Wayne" },
-  { id: 13, name: "Jane Doe" },
-  { id: 14, name: "Jane Doe" },
-  { id: 15, name: "John Doe" },
-  { id: 16, name: "Victor Wayne" },
-  { id: 17, name: "Jane Doe" },
-  { id: 18, name: "John Doe" },
-  { id: 19, name: "Victor Wayne" },
-  { id: 20, name: "Jane Doe" },
-  { id: 21, name: "John Doe" },
-  { id: 22, name: "Victor Wayne" },
-  { id: 23, name: "Jane Doe" },
-  { id: 24, name: "Jane Doe" },
-  { id: 25, name: "John Doe" },
-  { id: 26, name: "Victor Wayne" },
-  { id: 27, name: "Jane Doe" },
-  { id: 28, name: "John Doe" },
-  { id: 29, name: "Victor Wayne" },
-  { id: 30, name: "Jane Doe" },
-];
 const SortName = [
   { label: "Default Sorting" },
-  { label: "Sort by Popularity" },
   { label: "Sort by Latest" },
   { label: "Sort by Price: Low to High" },
   { label: "Sort by Price: High to Low" },
@@ -290,17 +259,253 @@ const Css2FormControl = styled(FormControl)({
 const Shop = () => {
   const classes = useStyles();
 
+  const [ProductData, setProductData] = React.useState([]);
   const [searchCategory, setSearchCategory] = React.useState("All Products");
   const [searchSorting, setSearchSorting] = React.useState("Default Sorting");
   const [cityname, setCityName] = React.useState(getCookie("city"));
-  const [searchItem, setSearchItem] = React.useState("");
+  const [searchitem, setSearchItem] = React.useState("");
+  const [currentpageData, setcurrentpageDate] = React.useState([]);
+  const [page, setPage] = React.useState(0);
+  const [flag, setFlag] = React.useState(false);
+  const [productNumPerpage, setProductNumPage] = React.useState({
+    numstart: 0,
+    numend: 0,
+  });
+  const [DataperPage, setDataperPage] = React.useState(4);
+  const backDrop = () => {
+    return (
+      <>
+        <Backdrop
+          sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
+          open={flag}
+          onClick={handleClose}
+        >
+          <CircularProgress sx={{ color: "#325240" }} />
+        </Backdrop>
+      </>
+    );
+  };
+  const handleClose = () => {
+    setFlag(false);
+  };
+  const allProducts = () => {
+    setFlag(true);
+    axios({
+      method: "get",
+      headers: {
+        "content-type": "application/x-www-form-urlencoded",
+        // Authorization: `Bearer ${token}`,
+      },
+      url: `${process.env.REACT_APP_BASEURL}products/fetch_all_products_without_token`,
+    })
+      .then(function (response) {
+        if (response.data.status === 504) {
+          console.log("error");
+          setFlag(false);
+        }
+        if (response.data.status === 200) {
+          setProductData(response.data.data);
+          setFlag(false);
+          setPage(1);
+          return 0;
+        }
+      })
+      .catch(function (error) {
+        setFlag(false);
+      });
+  };
+  const handleChangePage = (event, value) => {
+    console.log(value);
+    setPage(value);
+  };
   const handleOnSearch = (string, results) => {
-    console.log(string, results);
+    setSearchCategory("All Products");
+    setSearchSorting("Default Sorting");
     setSearchItem(string);
   };
   const handleOnSelect = (item) => {
-    // setSearchItem(item);
+    setSearchCategory("All Products");
+    setSearchSorting("Default Sorting");
+    setSearchItem(item.pro_name);
   };
+  React.useEffect(() => {
+    allProducts();
+  }, []);
+  React.useEffect(() => {
+    // console.log(cityname);
+
+    const getSortKey = {
+      "Default Sorting": { key: "_id", order: "asc" },
+      "Sort by Latest": { key: "create_date", order: "asc" },
+      "Sort by Price: Low to High": { key: "pro_sell_price", order: "desc" },
+      "Sort by Price: High to Low": { key: "pro_sell_price", order: "asc" },
+    };
+    setcurrentpageDate(
+      ProductData.filter(
+        (e) =>
+          searchCategory === "All Products" || e.pro_category === searchCategory
+      )
+        // .filter(
+        //   (e) =>
+        //     searchSorting === "Default Sorting" ||
+        //     (searchSorting === "Sort by Latest" &&
+        //       e.pro_sell_price
+        //         .sort((d1, d2) => {
+        //           return d1 - d2;
+        //         })
+        //         .reverse())
+        // )
+        .filter((e) => e.vendor_city === cityname)
+        .filter(
+          (e) =>
+            e.pro_name.toLowerCase().includes(searchitem.toLowerCase()) ||
+            e.vendor_email_id.toLowerCase().includes(searchitem.toLowerCase())
+        )
+        .sort((a, b) =>
+          getSortKey[searchSorting].order === "asc"
+            ? b[getSortKey[searchSorting].key] -
+              a[getSortKey[searchSorting].key]
+            : a[getSortKey[searchSorting].key] -
+              b[getSortKey[searchSorting].key]
+        )
+    );
+  }, [page, searchitem, cityname, searchCategory, searchSorting]);
+  const DisplayProducts = React.useMemo(() => {
+    console.log(currentpageData);
+    const indexOfLastPost = page * DataperPage;
+    const indexOfFirstPost = indexOfLastPost - DataperPage;
+    setProductNumPage({
+      numstart: indexOfFirstPost + 1,
+      numend: indexOfLastPost,
+    });
+    return currentpageData.slice(indexOfFirstPost, indexOfLastPost);
+  }, [page, currentpageData]);
+  const displayProductsInShop = () => {
+    if (currentpageData.length === 0) {
+      return (
+        <Box sx={{ textAlign: "center" }}>
+          <img alt="image" src={nofound} />
+          <Typography
+            component="h1"
+            variant="h5"
+            sx={{
+              color: "#325240",
+              fontWeight: "bold",
+              margin: "0 auto 32px auto",
+              width: "fit-content",
+              textAlign: "center",
+            }}
+          >
+            <span
+              style={{
+                display: "block",
+              }}
+            >
+              No Products Found!
+            </span>
+            <span>Ready to start selling something awesome?</span>
+          </Typography>
+        </Box>
+      );
+    } else {
+      return (
+        <Box>
+          <div
+            style={{
+              boxSizing: "border-box",
+              display: "flex",
+              alignItems: "center",
+              flexWrap: "wrap",
+            }}
+          >
+            {DisplayProducts.map((data) => (
+              <Box
+                className={classes.productCard}
+                key={data.id}
+                onClick={() => {
+                  console.log(data._id);
+                }}
+              >
+                <Box
+                  className={classes.badge}
+                  onClick={(e) => {
+                    console.log(data.pro_name);
+                    e.stopPropagation();
+                  }}
+                >
+                  <BsBasketFill size="20" />
+                </Box>
+                <Box className={classes.productTumb}>
+                  <img
+                    src={data.pro_image ? data.pro_image : profile}
+                    alt="products_img"
+                  />
+                </Box>
+                <Box className={classes.productDetails}>
+                  <h2>{data.pro_name}</h2>
+
+                  <Box className={classes.productBottomDetails}>
+                    <Box className={classes.productPrice}>
+                      PRICE :-₹{data.pro_sell_price}
+                      <small>₹{data.pro_mrp}</small>
+                    </Box>
+                    <Box className={classes.productLinks}>{data.pro_unit}</Box>
+                  </Box>
+                </Box>
+              </Box>
+            ))}
+          </div>
+          <Box sx={{ mt: 7, mb: 7, display: "flex", justifyContent: "center" }}>
+            <Pagination
+              count={Math.ceil(currentpageData.length / DataperPage)}
+              variant="outlined"
+              sx={{
+                "& .css-lqq3n7-MuiButtonBase-root-MuiPaginationItem-root.Mui-selected":
+                  {
+                    backgroundColor: "#325240",
+                    color: "#fff",
+                  },
+                "& .css-lqq3n7-MuiButtonBase-root-MuiPaginationItem-root": {
+                  backgroundColor: "#f9f9f9",
+                  color: "#325240",
+                  border: "1px solid #325240",
+                },
+              }}
+              page={page}
+              onChange={handleChangePage}
+            />
+          </Box>
+        </Box>
+      );
+    }
+  };
+  const SearchBar = (
+    <React.Fragment>
+      <ReactSearchAutocomplete
+        items={[{ pro_name: searchitem }, ...ProductData]}
+        maxResults={6}
+        onSearch={handleOnSearch}
+        onSelect={handleOnSelect}
+        placeholder="Search Products"
+        resultStringKeyName="pro_name"
+        fuseOptions={{
+          keys: ["pro_name", "vendor_email_id"],
+        }}
+        styling={{
+          zIndex: "9999",
+          borderRadius: "9px",
+          boxShadow: "0 8px 8px 0 rgba(0, 0, 0, 0.2)",
+          border: "3px solid #325240",
+          height: "7vh",
+          marginBottom: "7vh",
+          placeholderFontSize: "2.5vh",
+          fontSize: "2.5vh",
+          color: "#325240",
+          backgroundColor: "#f9f9f9",
+        }}
+      />
+    </React.Fragment>
+  );
   return (
     <>
       {/* searchbar in top */}
@@ -310,7 +515,7 @@ const Shop = () => {
           bgcolor: "#325240",
           width: "100%",
           position: "fixed",
-          zIndex: 39,
+          zIndex: 9999,
           borderBottom: "2px outset #f9f9f9",
         }}
       >
@@ -334,8 +539,12 @@ const Shop = () => {
                   id="combo-box-city"
                   options={meunName}
                   value={cityname}
+                  popupIcon={<IoMdArrowDropup color="white" />}
+                  disableClearable
                   onChange={(event, value) => {
                     setCityName(value.label);
+                    setSearchCategory("All Products");
+                    setSearchSorting("Default Sorting");
                   }}
                   renderInput={(params) => (
                     <TextField
@@ -360,24 +569,7 @@ const Shop = () => {
                 marginRight: "15%",
               }}
             >
-              <ReactSearchAutocomplete
-                //  items={[{ pro_name: searchitem }, ...ProductData]}
-                maxResults={6}
-                onSearch={handleOnSearch}
-                onSelect={handleOnSelect}
-                placeholder="Search Products"
-                resultStringKeyName="pro_name"
-                fuseOptions={{
-                  keys: ["pro_name", "pro_category"],
-                }}
-                styling={{
-                  // marginBottom: "7vh"
-                  placeholderFontSize: "2.5vh",
-                  fontSize: "2.5vh",
-                  color: "#325240",
-                  backgroundColor: "#f9f9f9",
-                }}
-              />
+              {SearchBar}
             </Box>
           </Grid>
           <Grid
@@ -464,7 +656,11 @@ const Shop = () => {
                   marginRight: "30px",
                 }}
               >
-                <h3 style={{ color: "#325240" }}>Showing 1–9 of 15 results</h3>
+                <h3 style={{ color: "#325240" }}>
+                  {/* Showing {productNumPerpage.numstart}–
+                  {productNumPerpage.numend} of  */}
+                  Showing {currentpageData.length} results
+                </h3>
                 <Box sx={{ display: "flex", justifyContent: "space-around" }}>
                   <Box sx={{ minWidth: 220, marginRight: "20px" }}>
                     <Css2FormControl
@@ -478,9 +674,9 @@ const Shop = () => {
                         id="combo-box-category"
                         options={categoryName}
                         value={searchCategory}
+                        disableClearable
                         onChange={(event, value) => {
                           setSearchCategory(value.label);
-                          console.log("value:", value);
                         }}
                         renderInput={(params) => (
                           <TextField
@@ -505,6 +701,7 @@ const Shop = () => {
                         id="combo-box-sorting"
                         options={SortName}
                         value={searchSorting}
+                        disableClearable
                         onChange={(event, value) => {
                           setSearchSorting(value.label);
                           console.log(searchSorting);
@@ -524,48 +721,8 @@ const Shop = () => {
               </Box>
             </Box>
             {/* products card container */}
-            <Box>
-              <div
-                style={{
-                  boxSizing: "border-box",
-                  display: "flex",
-                  alignItems: "center",
-                  flexWrap: "wrap",
-                }}
-              >
-                {data.map((data) => (
-                  <Box
-                    className={classes.productCard}
-                    key={data.id}
-                    onClick={() => {
-                      console.log(data.id);
-                    }}
-                  >
-                    <Box
-                      className={classes.badge}
-                      onClick={() => {
-                        console.log(data.name);
-                      }}
-                    >
-                      <BsBasketFill size="20" />
-                    </Box>
-                    <Box className={classes.productTumb}>
-                      <img src={profile} alt="" />
-                    </Box>
-                    <Box className={classes.productDetails}>
-                      <h2>{data.name}</h2>
-
-                      <Box className={classes.productBottomDetails}>
-                        <Box className={classes.productPrice}>
-                          PRICE :-₹230.99<small>₹96.00</small>
-                        </Box>
-                        <Box className={classes.productLinks}>Kg</Box>
-                      </Box>
-                    </Box>
-                  </Box>
-                ))}
-              </div>
-            </Box>
+            {displayProductsInShop()}
+            {backDrop()}
           </Box>
         </div>
         <Footer />

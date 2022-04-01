@@ -21,7 +21,7 @@ const NBar = styled.div`
   position: sticky; /* Set the navbar to fixed position */
   margin: 0;
   top: 0;
-  z-index: 99;
+  z-index: 9999;
   .active {
     background-color: #ddf6e4;
     border-radius: 12px;

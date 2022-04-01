@@ -384,7 +384,7 @@ const Products = () => {
               });
               //console.log("sssssssssssssssssssssssssssssssssss");
               // window.location.replace("/dashboard/VendorDashboard/2");
-              // vendorProducts();
+              vendorProducts();
               setTimeout(() => {
                 setEditdialog(false);
                 setFlag(false);
@@ -467,7 +467,7 @@ const Products = () => {
           e.pro_category.toLowerCase().includes(searchitem.toLowerCase())
       )
     );
-  }, [page, searchitem]);
+  }, [page, searchitem, ProductData]);
 
   const DisplayProducts = React.useMemo(() => {
     const indexOfLastPost = page * DataperPage;
@@ -677,6 +677,7 @@ const Products = () => {
                     >
                       <Autocomplete
                         required
+                        disableClearable
                         id="combo-box-category"
                         options={categoryName}
                         value={editinformation.pro_category}
@@ -711,6 +712,7 @@ const Products = () => {
                     >
                       <Autocomplete
                         required
+                        disableClearable
                         id="combo-box-unit"
                         options={unitName}
                         value={editinformation.pro_unit}
@@ -779,6 +781,7 @@ const Products = () => {
                     >
                       <Autocomplete
                         required
+                        disableClearable
                         id="combo-box-stock"
                         options={Stock}
                         value={editinformation.pro_stock}

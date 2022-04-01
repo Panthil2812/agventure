@@ -640,6 +640,7 @@ const Account = () => {
                   >
                     <Autocomplete
                       required
+                      disableClearable
                       id="combo-box-city"
                       options={CityName}
                       value={accountData.city}
@@ -674,6 +675,7 @@ const Account = () => {
                   >
                     <Autocomplete
                       required
+                      disableClearable
                       id="combo-box-state"
                       options={StateName}
                       value={accountData.state}

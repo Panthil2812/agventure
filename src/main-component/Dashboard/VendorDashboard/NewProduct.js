@@ -451,6 +451,7 @@ const NewProduct = () => {
                 >
                   <Autocomplete
                     required
+                    disableClearable
                     id="combo-box-category"
                     options={categoryName}
                     renderInput={(params) => (
@@ -478,6 +479,7 @@ const NewProduct = () => {
                 >
                   <Autocomplete
                     required
+                    disableClearable
                     id="combo-box-unit"
                     options={unitName}
                     renderInput={(params) => (
@@ -525,6 +527,7 @@ const NewProduct = () => {
                 >
                   <Autocomplete
                     required
+                    disableClearable
                     id="combo-box-stock"
                     options={Stock}
                     renderInput={(params) => (

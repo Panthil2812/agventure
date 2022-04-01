@@ -226,7 +226,6 @@ const Contactform = () => {
               <Grid container spacing={2}>
                 <Grid item xs={12} sm={6}>
                   <CssTextField
-                    autoComplete="given-name"
                     name="name"
                     required
                     fullWidth
@@ -242,7 +241,6 @@ const Contactform = () => {
                     id="emailid"
                     label="Email Address"
                     name="emailid"
-                    autoComplete="email"
                   />
                 </Grid>
 
@@ -256,7 +254,6 @@ const Contactform = () => {
                     id="outlined-multiline-flexible"
                     label="Message"
                     name="message"
-                    autoComplete="message"
                   />
                 </Grid>
               </Grid>

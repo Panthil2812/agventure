@@ -529,7 +529,6 @@ export default function SignInSide() {
                       rEmail: e.target.value,
                     });
                   }}
-                  autoComplete="email"
                   autoFocus
                 />
                 <CssTextField
@@ -540,7 +539,6 @@ export default function SignInSide() {
                   label="Password"
                   type="password"
                   id="password"
-                  autoComplete="current-password"
                 />
                 <FormControlLabel
                   sx={{ color: "#325240" }}

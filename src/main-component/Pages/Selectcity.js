@@ -147,6 +147,7 @@ const Selectcity = () => {
             <Autocomplete
               required
               id="combo-box-city"
+              disableClearable
               options={CityName}
               onChange={(event, value) => {
                 setCityValue(value.label);

@@ -276,6 +276,7 @@ const ShopProducts = (props) => {
                 id="Category"
               >
                 <Autocomplete
+                  disableClearable
                   id="combo-box-category"
                   options={categoryName}
                   value={searchCategory}
@@ -303,6 +304,7 @@ const ShopProducts = (props) => {
                 id="Sorting"
               >
                 <Autocomplete
+                  disableClearable
                   id="combo-box-sorting"
                   options={SortName}
                   value={searchSorting}

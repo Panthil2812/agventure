@@ -451,6 +451,7 @@ export default function SignInSide() {
                     <Autocomplete
                       required
                       id="combo-box-city"
+                      disableClearable
                       options={CityName}
                       renderInput={(params) => (
                         <TextField
@@ -477,6 +478,7 @@ export default function SignInSide() {
                   >
                     <Autocomplete
                       required
+                      disableClearable
                       id="combo-box-state"
                       options={StateName}
                       renderInput={(params) => (
@@ -601,6 +603,7 @@ export default function SignInSide() {
                   >
                     <Autocomplete
                       required
+                      disableClearable
                       id="combo-box-city"
                       options={CityName}
                       renderInput={(params) => (
@@ -628,6 +631,7 @@ export default function SignInSide() {
                   >
                     <Autocomplete
                       required
+                      disableClearable
                       id="combo-box-state"
                       options={StateName}
                       renderInput={(params) => (

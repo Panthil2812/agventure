@@ -94,7 +94,7 @@ const Products = () => {
       });
   };
   const handleOnSearch = (string, results) => {
-    console.log(string, results);
+    // console.log(string, results);
     setSearchItem(string);
   };
   const handleOnSelect = (item) => {
