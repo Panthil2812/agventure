@@ -40,7 +40,7 @@ export default function MouseOverPopover() {
   const cratFlag = Boolean(anchorEl);
   const popover_id = cratFlag ? "simple-popover" : undefined;
   const DisplayCartPopover = () => {
-    const paa = true;
+    const paa = false;
     if (paa) {
       return (
         <React.Fragment>

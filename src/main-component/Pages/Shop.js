@@ -68,34 +68,12 @@ const CssFormControl = styled(FormControl)({
   },
 });
 const meunName = [
-  { label: "Mumbai" },
-  { label: "Delhi" },
-  { label: "Bangalore" },
-  { label: "Hyderabad" },
   { label: "Ahmedabad" },
-  { label: "Chennai" },
-  { label: "Kolkata" },
-  { label: "Surat" },
-  { label: "Pune" },
-  { label: "Jaipur" },
-  { label: "Lucknow" },
-  { label: "Kanpur" },
-  { label: "Nagpur" },
-  { label: "Indore" },
-  { label: "Thane" },
-  { label: "Bhopal" },
-  { label: "Patna" },
-  { label: "Vadodara" },
-  { label: "Ghaziabad" },
-  { label: "Ludhiana" },
-  { label: "Agra" },
-  { label: "Nashik" },
-  { label: "Faridabad" },
-  { label: "Meerut" },
+  { label: "Bangalore" },
+  { label: "Delhi" },
+  { label: "Mumbai" },
   { label: "Rajkot" },
-  { label: "Kalyan" },
-  { label: "Vasai" },
-  { label: "Varanasi" },
+  { label: "Surat" },
 ];
 const SortName = [
   { label: "Default Sorting" },
@@ -106,9 +84,11 @@ const SortName = [
 const categoryName = [
   { label: "All Products" },
   { label: "Dairy Products" },
-  { label: "Fruits" },
-  { label: "Grocery" },
-  { label: "Vegetables" },
+  { label: "Fruits & Vegetables" },
+  { label: "Grain" },
+  { label: "nuts" },
+  { label: "pluses" },
+  { label: "Spices and condiments" },
 ];
 const useStyles = makeStyles(() => ({
   menuPaper: {
@@ -271,7 +251,7 @@ const Shop = () => {
     numstart: 0,
     numend: 0,
   });
-  const [DataperPage, setDataperPage] = React.useState(4);
+  const [DataperPage, setDataperPage] = React.useState(10);
   const backDrop = () => {
     return (
       <>
@@ -370,6 +350,7 @@ const Shop = () => {
         )
     );
   }, [page, searchitem, cityname, searchCategory, searchSorting]);
+
   const DisplayProducts = React.useMemo(() => {
     console.log(currentpageData);
     const indexOfLastPost = page * DataperPage;
@@ -416,6 +397,7 @@ const Shop = () => {
               display: "flex",
               alignItems: "center",
               flexWrap: "wrap",
+              // justifyContent: "center",
             }}
           >
             {DisplayProducts.map((data) => (
@@ -449,7 +431,22 @@ const Shop = () => {
                       PRICE :-₹{data.pro_sell_price}
                       <small>₹{data.pro_mrp}</small>
                     </Box>
-                    <Box className={classes.productLinks}>{data.pro_unit}</Box>
+                    {/* <Box className={classes.productLinks}>{data.pro_unit}</Box> */}
+                    <Box className={classes.productLinks}>
+                      {data.pro_unit}
+                      <br />
+                      {data.pro_stock === "In Stock" && (
+                        <strong style={{ color: "#325240", paddingTop: "8px" }}>
+                          {data.pro_stock}
+                        </strong>
+                      )}
+                      {data.pro_stock === "Out of Stock" && (
+                        <strong style={{ color: "#B10000", paddingTop: "8px" }}>
+                          {data.pro_stock}
+                        </strong>
+                      )}
+                      {/*  */}
+                    </Box>
                   </Box>
                 </Box>
               </Box>
@@ -492,11 +489,10 @@ const Shop = () => {
           keys: ["pro_name", "vendor_email_id"],
         }}
         styling={{
-          zIndex: "9999",
           borderRadius: "9px",
           boxShadow: "0 8px 8px 0 rgba(0, 0, 0, 0.2)",
           border: "3px solid #325240",
-          height: "7vh",
+
           marginBottom: "7vh",
           placeholderFontSize: "2.5vh",
           fontSize: "2.5vh",
@@ -630,7 +626,7 @@ const Shop = () => {
               </Typography>
             </Breadcrumbs>
           </Box>
-          <Box sx={{ bgcolor: "#fff" }}>
+          <Box sx={{ bgcolor: "#f9f9f9" }}>
             {/* filter box  */}
             <Box
               sx={{

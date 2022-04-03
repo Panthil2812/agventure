@@ -143,9 +143,11 @@ const CssFormControl = styled(FormControl)({
 });
 const categoryName = [
   { label: "Dairy Products" },
-  { label: "Fruits" },
-  { label: "Grocery" },
-  { label: "Vegetables" },
+  { label: "Fruits & Vegetables" },
+  { label: "Grain" },
+  { label: "nuts" },
+  { label: "pluses" },
+  { label: "Spices and condiments" },
 ];
 const unitName = [
   { label: "Piece" },

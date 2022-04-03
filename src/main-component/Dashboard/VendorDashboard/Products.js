@@ -143,9 +143,11 @@ const CssFormControl = styled(FormControl)({
 });
 const categoryName = [
   { label: "Dairy Products" },
-  { label: "Fruits" },
-  { label: "Grocery" },
-  { label: "Vegetables" },
+  { label: "Fruits & Vegetables" },
+  { label: "Grain" },
+  { label: "nuts" },
+  { label: "pluses" },
+  { label: "Spices and condiments" },
 ];
 const unitName = [
   { label: "Piece" },
@@ -956,7 +958,7 @@ const Products = () => {
                         sx={{ height: "56px", width: "56px" }}
                       />
                     </Grid>
-                    <Grid item xs={5}>
+                    <Grid item xs={4}>
                       <Typography
                         sx={{
                           color: "#325240",
@@ -971,31 +973,11 @@ const Products = () => {
                         </Typography>
                       </Typography>
                     </Grid>
-                    <Grid item xs={2} sx={{ marginTop: "8px" }}>
-                      {data.pro_category === "Vegetables" && (
-                        <Chip
-                          label={data.pro_category}
-                          sx={{ bgcolor: "#D4AC0D", color: "#fff" }}
-                        />
-                      )}
-                      {data.pro_category === "Dairy Products" && (
-                        <Chip
-                          label={data.pro_category}
-                          sx={{ bgcolor: "#B9770E", color: "#fff" }}
-                        />
-                      )}
-                      {data.pro_category === "Fruits" && (
-                        <Chip
-                          label={data.pro_category}
-                          sx={{ bgcolor: "#2874A6", color: "#fff" }}
-                        />
-                      )}
-                      {data.pro_category === "Grocery" && (
-                        <Chip
-                          label={data.pro_category}
-                          sx={{ bgcolor: "#A04000", color: "#fff" }}
-                        />
-                      )}
+                    <Grid item xs={3} sx={{ marginTop: "8px" }}>
+                      <Chip
+                        label={data.pro_category}
+                        sx={{ bgcolor: "#325240", color: "#fff" }}
+                      />
                     </Grid>
                     <Grid item xs={2} sx={{ marginTop: "8px" }}>
                       {data.pro_stock === "In Stock" && (
