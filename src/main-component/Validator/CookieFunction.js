@@ -22,6 +22,60 @@ export const getCookie = (cname) => {
 export const deleteCookie = (name) => {
   document.cookie = name + "=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;";
 };
+
+//cart add infomation in cookie
+export const addInfoToCart = (cartinfo) => {
+  let cookie = getCookie("cart");
+  if (getCookie("cart")) {
+    let data = getCart();
+    console.log("cookie data : ", data);
+    data = data
+      .filter((e) => e.id === cartinfo.id)
+      .map((item) => {
+        // console.log("call");
+        // if (item.id === cartinfo.id) {
+        item.info.qty = item.info.qty + 1;
+        setCookie("cart", JSON.stringify(data), 1);
+        // } else {
+        //   console.log("calling");
+        //   const d = getCart();
+        //   return setCookie(
+        //     "cart",
+        //     JSON.stringify([cartinfo, ...JSON.parse(d)]),
+        //     1
+        //   );
+        // }
+      });
+    console.log("match data : ", data.length);
+    if (data.length === 0) {
+      console.log("efrgegret");
+      setCookie("cart", JSON.stringify([cartinfo, ...JSON.parse(cookie)]), 1);
+    }
+    // if (matchdata.length === 1) {
+    //   console.log("index : ", typeof data);
+    // }
+    // console.log("filter data : ", matchdata);
+  } else {
+    if (!cookie) cookie = "[]";
+    return setCookie(
+      "cart",
+      JSON.stringify([cartinfo, ...JSON.parse(cookie)]),
+      1
+    );
+  }
+};
+export const deleteCartProduct = (id) => {
+  let data = getCart();
+  console.log("info : ", data);
+  data = data.filter((e) => e.id != id);
+  console.log("delete info : ", data);
+  setCookie("cart", JSON.stringify(data), 1);
+};
+export const getCart = () => {
+  let cookie = getCookie("cart");
+  if (!cookie) cookie = "[]";
+  return JSON.parse(cookie);
+};
 //   const login = { name: "John", age: 30, city: "New York" };
 //   // document.cookie = "login=" + JSON.stringify(login);
 //   // setCookie("login", JSON.stringify(login), 1);

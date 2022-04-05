@@ -60,7 +60,7 @@ const UsersAccount = () => {
         <div>
           <Snackbar
             open={open1}
-            sx={{ width: "50%" }}
+            sx={{ width: "50%", zIndex: 9999 }}
             anchorOrigin={{ vertical: "top", horizontal: "center" }}
             autoHideDuration={3000}
             onClose={handleClose}
@@ -80,7 +80,7 @@ const UsersAccount = () => {
         <div>
           <Snackbar
             open={open1}
-            sx={{ width: "50%" }}
+            sx={{ width: "50%", zIndex: 9999 }}
             anchorOrigin={{ vertical: "top", horizontal: "center" }}
             autoHideDuration={3000}
             onClose={handleClose}

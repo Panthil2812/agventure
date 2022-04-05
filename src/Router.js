@@ -10,14 +10,17 @@ import Selectcity from "./main-component/Pages/Selectcity";
 import ErrorPage from "./main-component/Pages/Errorpage";
 import Navbar from "./main-component/sub-component/Navbar";
 import Vendor from "./main-component/Pages/Vendor";
+import Cart from "./main-component/Pages/Cart";
+import CheckOut from "./main-component/Pages/CheckOut";
 import VendorDashboard from "./main-component/Dashboard/Vendor";
 import CustomerDashboard from "./main-component/Dashboard/Customer";
 import AdminDashboard from "./main-component/Dashboard/Admin";
 // import Dashboard from "./main-component/Pages/Dashboard";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Copyright from "./main-component/sub-component/Copyright";
-
+import { getCookie } from "./main-component/Validator/CookieFunction";
 const Router = () => {
+  const user = getCookie("account") && "ibid";
   return (
     <>
       <BrowserRouter>
@@ -31,6 +34,8 @@ const Router = () => {
             <Route path="/about" element={<About />} />
             <Route path="/blog" element={<Blog />} />
             <Route path="/vendor" element={<Vendor />} />
+            <Route path="/ibid/cart" element={<Cart />} />
+            <Route path="/ibid/checkout" element={<CheckOut />} />
             <Route
               path="/dashboard/VendorDashboard/:vid"
               element={<VendorDashboard />}

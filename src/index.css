@@ -12,3 +12,6 @@ code {
     monospace;
 }
 
+#simple-popover .ibid-body{
+  padding-right:0px !important;
+}

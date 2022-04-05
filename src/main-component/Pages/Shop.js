@@ -1,6 +1,10 @@
 import React from "react";
+import { useEffect } from "react";
 import { BsBasketFill } from "react-icons/bs";
+import { AiFillCloseCircle } from "react-icons/ai";
 import { IoMdArrowDropup } from "react-icons/io";
+// import { NavLink } from "react-router-dom";
+
 import { styled, alpha } from "@mui/material/styles";
 import {
   Popover,
@@ -9,6 +13,7 @@ import {
   DialogContent,
   DialogActions,
   IconButton,
+  Link,
   Dialog,
   Button,
   Autocomplete,
@@ -25,7 +30,6 @@ import {
   Pagination,
   ThemeProvider,
   Breadcrumbs,
-  Link,
   Alert,
   Card,
   CardMedia,
@@ -37,13 +41,20 @@ import {
   useTheme,
 } from "@mui/material";
 import { makeStyles } from "@mui/styles";
-import { getCookie } from "../Validator/CookieFunction";
+import {
+  getCookie,
+  getCart,
+  deleteCartProduct,
+  addInfoToCart,
+} from "../Validator/CookieFunction";
+import apples from "../../assets/Images/apples.png";
 import { ReactSearchAutocomplete } from "react-search-autocomplete";
 // import ShopProducts from "../sub-component/ShopProducts";
 import profile from "../../assets/Images/apples.png";
 import Footer from "../sub-component/Footer";
 import axios from "axios";
 import nofound from "../../assets/Images/nofound.png";
+import { Message } from "@mui/icons-material";
 const CssFormControl = styled(FormControl)({
   "& .MuiFormLabel-root": {
     color: "#fff",
@@ -200,7 +211,6 @@ const useStyles = makeStyles(() => ({
       display: "inline-block",
     },
   },
-
   productLinks: {
     textAlign: "right",
     color: "#325240",
@@ -235,9 +245,30 @@ const Css2FormControl = styled(FormControl)({
     },
   },
 });
+const ScrollBox = styled(Box)({
+  "::-webkit-scrollbar": {
+    width: "4px",
+  },
 
+  "::-webkit-scrollbar-thumb": {
+    background: "#325240",
+  },
+
+  "::-webkit-scrollbar-thumb:hover": {
+    background: "#555",
+  },
+});
 const Shop = () => {
   const classes = useStyles();
+  const [anchorCartEl, setAnchorCartEl] = React.useState(null);
+  let cartFlag = Boolean(anchorCartEl);
+  const popover_id = cartFlag ? "simple-popover" : undefined;
+  const [state, setState] = React.useState({
+    open1: false,
+    isLogged: false,
+    message: "",
+  });
+  const { isLogged, open1, message } = state;
 
   const [ProductData, setProductData] = React.useState([]);
   const [searchCategory, setSearchCategory] = React.useState("All Products");
@@ -247,11 +278,19 @@ const Shop = () => {
   const [currentpageData, setcurrentpageDate] = React.useState([]);
   const [page, setPage] = React.useState(0);
   const [flag, setFlag] = React.useState(false);
+  const [cartData, setCartData] = React.useState([]);
   const [productNumPerpage, setProductNumPage] = React.useState({
     numstart: 0,
     numend: 0,
   });
   const [DataperPage, setDataperPage] = React.useState(10);
+  const handleCartClick = (event) => {
+    setAnchorCartEl(event.currentTarget);
+  };
+  const handleCartClose = () => {
+    setAnchorCartEl(null);
+  };
+
   const backDrop = () => {
     return (
       <>
@@ -264,6 +303,55 @@ const Shop = () => {
         </Backdrop>
       </>
     );
+  };
+  const handleMessageClose = () => {
+    setState({ ...state, open1: false });
+  };
+  const messageFunction = () => {
+    console.log("calling .....");
+    console.log("function", state);
+    if (isLogged) {
+      return (
+        <div>
+          <Snackbar
+            open={open1}
+            sx={{ width: "50%", zIndex: 9999 }}
+            anchorOrigin={{ vertical: "top", horizontal: "center" }}
+            autoHideDuration={3000}
+            onClose={handleMessageClose}
+          >
+            <Alert
+              variant="filled"
+              onClose={handleMessageClose}
+              sx={{ width: "100%", bgcolor: "#325240" }}
+            >
+              {message}
+            </Alert>
+          </Snackbar>
+        </div>
+      );
+    } else {
+      return (
+        <div>
+          <Snackbar
+            open={open1}
+            sx={{ width: "50%", zIndex: 9999 }}
+            anchorOrigin={{ vertical: "top", horizontal: "center" }}
+            autoHideDuration={3000}
+            onClose={handleMessageClose}
+          >
+            <Alert
+              variant="filled"
+              onClose={handleMessageClose}
+              severity="error"
+              sx={{ width: "100%" }}
+            >
+              {message}
+            </Alert>
+          </Snackbar>
+        </div>
+      );
+    }
   };
   const handleClose = () => {
     setFlag(false);
@@ -280,7 +368,7 @@ const Shop = () => {
     })
       .then(function (response) {
         if (response.data.status === 504) {
-          console.log("error");
+          //console.log("error");
           setFlag(false);
         }
         if (response.data.status === 200) {
@@ -294,8 +382,14 @@ const Shop = () => {
         setFlag(false);
       });
   };
+  useEffect(() => {
+    // setCartData(getCart());
+    setTimeout(() => {
+      document.getElementsByTagName("body")[0].style.paddingRight = 0;
+    }, 100);
+  }, [cartFlag]);
   const handleChangePage = (event, value) => {
-    console.log(value);
+    // console.log(value);
     setPage(value);
   };
   const handleOnSearch = (string, results) => {
@@ -325,16 +419,6 @@ const Shop = () => {
         (e) =>
           searchCategory === "All Products" || e.pro_category === searchCategory
       )
-        // .filter(
-        //   (e) =>
-        //     searchSorting === "Default Sorting" ||
-        //     (searchSorting === "Sort by Latest" &&
-        //       e.pro_sell_price
-        //         .sort((d1, d2) => {
-        //           return d1 - d2;
-        //         })
-        //         .reverse())
-        // )
         .filter((e) => e.vendor_city === cityname)
         .filter(
           (e) =>
@@ -352,7 +436,7 @@ const Shop = () => {
   }, [page, searchitem, cityname, searchCategory, searchSorting]);
 
   const DisplayProducts = React.useMemo(() => {
-    console.log(currentpageData);
+    //console.log(currentpageData);
     const indexOfLastPost = page * DataperPage;
     const indexOfFirstPost = indexOfLastPost - DataperPage;
     setProductNumPage({
@@ -404,19 +488,21 @@ const Shop = () => {
               <Box
                 className={classes.productCard}
                 key={data.id}
-                onClick={() => {
-                  console.log(data._id);
-                }}
+                onClick={() => {}}
               >
                 <Box
                   className={classes.badge}
                   onClick={(e) => {
-                    console.log(data.pro_name);
-                    e.stopPropagation();
+                    // setFlag(true);
+                    setState({
+                      open1: true,
+                      message: "panthl malaviya",
+                    });
                   }}
                 >
                   <BsBasketFill size="20" />
                 </Box>
+
                 <Box className={classes.productTumb}>
                   <img
                     src={data.pro_image ? data.pro_image : profile}
@@ -445,13 +531,13 @@ const Shop = () => {
                           {data.pro_stock}
                         </strong>
                       )}
-                      {/*  */}
                     </Box>
                   </Box>
                 </Box>
               </Box>
             ))}
           </div>
+
           <Box sx={{ mt: 7, mb: 7, display: "flex", justifyContent: "center" }}>
             <Pagination
               count={Math.ceil(currentpageData.length / DataperPage)}
@@ -502,6 +588,196 @@ const Shop = () => {
       />
     </React.Fragment>
   );
+
+  const DisplayCartPopover = () => {
+    const cart_Data = getCart();
+    console.log("data", cart_Data);
+    if (cart_Data.length === 0) {
+      console.log("cartData");
+      return (
+        <React.Fragment>
+          <Box sx={{ padding: "20px" }}>
+            <Typography
+              var
+              sx={{
+                color: "#325240",
+                textAlign: "center",
+                fontSize: "24px",
+                fontWeight: "bold",
+                borderBottom: "2px solid #325240",
+              }}
+            >
+              CART
+            </Typography>
+            <Box
+              sx={{
+                color: "#325240",
+                padding: "8px",
+                textAlign: "center",
+              }}
+            >
+              <Typography
+                sx={{
+                  fontSize: "18px",
+                  fontWeight: "550",
+                }}
+              >
+                No products in the cart.
+              </Typography>
+            </Box>
+          </Box>
+        </React.Fragment>
+      );
+    } else {
+      // console.log("diaplay", cartData);
+      // cartData.map((item) => {
+      //   console.log("id", item.id);
+      // });
+      return (
+        <React.Fragment>
+          <Box sx={{ padding: "20px" }}>
+            <Typography
+              var
+              sx={{
+                color: "#325240",
+                textAlign: "center",
+                fontSize: "24px",
+                fontWeight: "bold",
+                borderBottom: "2px solid #325240",
+              }}
+            >
+              CART
+            </Typography>
+            <Box sx={{ borderBottom: "2px solid #325240" }}>
+              <ScrollBox sx={{ overflow: "auto", maxHeight: "232px" }}>
+                {/* {console.log(cart_Data)} */}
+                {/* {cart_Data.map((data) => (
+                  <h1>{data.name}</h1>
+                ))} */}
+                {cart_Data.map((data) => {
+                  console.log(data.pro_image);
+                  return (
+                    <>
+                      <Box
+                        sx={{
+                          display: "flex",
+                          flexDirection: "row",
+                          bgcolor: "#f9f9f9",
+                          margin: "5px",
+                          padding: "5px",
+                          borderBottom: "1px solid #000",
+                          "&:last-child": {
+                            borderBottom: "0px",
+                          },
+                        }}
+                      >
+                        <img
+                          style={{
+                            width: "60px",
+                            height: "60px",
+                            borderRadius: "10px",
+                          }}
+                          src={data.pro_image}
+                          alt="crat image"
+                        />
+                        <Box sx={{ flex: "1 0 auto", pl: 3 }}>
+                          <Typography
+                            sx={{ fontSize: "18px", color: "#325240" }}
+                          >
+                            {data.pro_name}
+                          </Typography>
+                          <Typography
+                            sx={{
+                              fontSize: "14px",
+                              color: "#325240",
+                            }}
+                          >
+                            {data.pro_qty} x 45.00
+                          </Typography>
+                        </Box>
+                        <Box
+                          sx={{
+                            display: "flex",
+                            alignItems: "center",
+                            color: "#B10000",
+                          }}
+                        >
+                          <AiFillCloseCircle
+                            size="20"
+                            onClick={() => {
+                              alert("delete product");
+                            }}
+                          />
+                        </Box>
+                      </Box>
+                    </>
+                  );
+                })}
+              </ScrollBox>
+            </Box>
+            <Box>
+              <Box
+                sx={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  color: "#325240",
+                  padding: "8px",
+                }}
+              >
+                <Typography sx={{ fontSize: "18px", fontWeight: "550" }}>
+                  SUBTOTAL:
+                </Typography>
+                <Typography sx={{ fontSize: "18px", fontWeight: "550" }}>
+                  ₹1011.00 /-
+                </Typography>
+              </Box>
+              <Link
+                href="/ibid/cart"
+                sx={{
+                  textDecoration: "none",
+                }}
+              >
+                <Button
+                  fullWidth
+                  sx={{
+                    color: "#f9f9f9",
+                    bgcolor: "#325240",
+                    "&: hover": {
+                      border: "2px solid #325240",
+                      color: "#325240",
+                    },
+                  }}
+                >
+                  View Cart
+                </Button>
+              </Link>
+              <Link
+                href="/ibid/checkout"
+                sx={{
+                  textDecoration: "none",
+                }}
+              >
+                <Button
+                  fullWidth
+                  sx={{
+                    color: "#f9f9f9",
+                    marginTop: "10px",
+                    bgcolor: "#325240",
+                    "&: hover": {
+                      border: "2px solid #325240",
+                      color: "#325240",
+                    },
+                  }}
+                >
+                  CheckOut
+                </Button>
+              </Link>
+            </Box>
+          </Box>
+        </React.Fragment>
+      );
+    }
+  };
   return (
     <>
       {/* searchbar in top */}
@@ -573,27 +849,59 @@ const Shop = () => {
               },
             }}
           >
-            <Box
-              sx={{
-                marginRight: "30px",
-                float: "right",
-                padding: "5px",
-                color: "#ddf6e4",
-                display: "flex",
-                alignItems: "center",
-              }}
-            >
-              <Typography
+            <div>
+              <Box
+                aria-describedby={popover_id}
+                id="body-testing"
+                onClick={handleCartClick}
                 sx={{
-                  textAlign: "right",
-                  marginRight: "10px",
+                  marginRight: "30px",
+                  float: "right",
+                  padding: "5px",
+                  color: "#ddf6e4",
+                  bgcolor: "#325240",
+                  display: "flex",
+                  alignItems: "center",
                 }}
               >
-                My Cart
-                <br />0 items - ₹0.00
-              </Typography>
-              <BsBasketFill size="25" />
-            </Box>
+                <Typography
+                  sx={{
+                    textAlign: "right",
+                    marginRight: "10px",
+                  }}
+                >
+                  My Cart
+                  <br />0 items - ₹0.00
+                </Typography>
+                <BsBasketFill size="25" />
+              </Box>
+              <Popover
+                id={popover_id}
+                open={cartFlag}
+                anchorEl={anchorCartEl}
+                onClose={handleCartClose}
+                cartFlag={anchorCartEl}
+                anchorOrigin={{
+                  vertical: "bottom",
+                  horizontal: "right",
+                }}
+                transformOrigin={{
+                  vertical: "top",
+                  horizontal: "right",
+                }}
+              >
+                <Box
+                  sx={{
+                    height: "auto",
+                    width: "60vh",
+                    bgcolor: "#F9F9F9",
+                    border: "2px solid #325240",
+                  }}
+                >
+                  {DisplayCartPopover()}
+                </Box>
+              </Popover>
+            </div>
           </Grid>
         </Grid>
       </Box>
@@ -696,7 +1004,7 @@ const Shop = () => {
                         disableClearable
                         onChange={(event, value) => {
                           setSearchSorting(value.label);
-                          console.log(searchSorting);
+                          //console.log(searchSorting);
                         }}
                         renderInput={(params) => (
                           <TextField
@@ -715,6 +1023,7 @@ const Shop = () => {
             {/* products card container */}
             {displayProductsInShop()}
             {backDrop()}
+            {messageFunction()}
           </Box>
         </div>
         <Footer />
