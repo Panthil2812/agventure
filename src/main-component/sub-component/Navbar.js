@@ -142,12 +142,12 @@ const Navbar = (prop) => {
             </strong>
             About
           </NLink>
-          <NLink to="/blog">
+          {/* <NLink to="/blog">
             <strong>
               <ImBlogger />
             </strong>
             Blog
-          </NLink>
+          </NLink> */}
           <NLink to="/vendor">
             <strong>
               <GiShop />

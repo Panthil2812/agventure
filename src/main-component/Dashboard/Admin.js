@@ -107,7 +107,7 @@ const Admin = () => {
           <Link underline="hover" color="inherit" href="/">
             <h2>Home</h2>
           </Link>
-          <Typography  sx={{ fontSize: "24px", fontWeight: "bold" }}>
+          <Typography sx={{ fontSize: "24px", fontWeight: "bold" }}>
             My Dashbord
           </Typography>
         </Breadcrumbs>
@@ -172,7 +172,7 @@ const Admin = () => {
               >
                 <StyledTypography>USERS ACCOUNT</StyledTypography>
               </Grid>
-              <Grid
+              {/* <Grid
                 item
                 xs
                 className={state.blog ? classes.active : classes.basic}
@@ -188,7 +188,7 @@ const Admin = () => {
                 }}
               >
                 <StyledTypography>ADD BLOGS</StyledTypography>
-              </Grid>
+              </Grid> */}
               <Grid
                 item
                 xs
@@ -235,6 +235,7 @@ const Admin = () => {
                   setTimeout(() => {
                     deleteCookie("token");
                     deleteCookie("account");
+                    deleteCookie("cart");
                     // deleteCookie("city");
                     window.location.replace("/");
                     setProgress(false);

@@ -41,8 +41,7 @@ const StyledTypography = styled(Typography)({
   fontSize: "18px",
   margin: "8px",
 });
-const Customer = () =>
-{
+const Customer = () => {
   let { cid } = useParams();
   const classes = useStyles();
   const [Progress, setProgress] = React.useState(false);
@@ -193,6 +192,7 @@ const Customer = () =>
                   setTimeout(() => {
                     deleteCookie("token");
                     deleteCookie("account");
+                    deleteCookie("cart");
                     window.location.replace("/");
                     setProgress(false);
                   }, 2000);

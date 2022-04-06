@@ -235,6 +235,7 @@ const Vendor = () => {
                   setTimeout(() => {
                     deleteCookie("token");
                     deleteCookie("account");
+                    deleteCookie("cart");
                     window.location.replace("/");
                     setProgress(false);
                   }, 2000);

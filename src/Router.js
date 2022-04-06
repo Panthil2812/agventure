@@ -11,6 +11,7 @@ import ErrorPage from "./main-component/Pages/Errorpage";
 import Navbar from "./main-component/sub-component/Navbar";
 import Vendor from "./main-component/Pages/Vendor";
 import Cart from "./main-component/Pages/Cart";
+import ProductPage from "./main-component/Pages/ProductPage";
 import CheckOut from "./main-component/Pages/CheckOut";
 import VendorDashboard from "./main-component/Dashboard/Vendor";
 import CustomerDashboard from "./main-component/Dashboard/Customer";
@@ -36,6 +37,7 @@ const Router = () => {
             <Route path="/vendor" element={<Vendor />} />
             <Route path="/ibid/cart" element={<Cart />} />
             <Route path="/ibid/checkout" element={<CheckOut />} />
+            <Route path="/ibid/products/:id" element={<ProductPage />} />
             <Route
               path="/dashboard/VendorDashboard/:vid"
               element={<VendorDashboard />}

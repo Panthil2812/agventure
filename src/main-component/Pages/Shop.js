@@ -3,42 +3,24 @@ import { useEffect } from "react";
 import { BsBasketFill } from "react-icons/bs";
 import { AiFillCloseCircle } from "react-icons/ai";
 import { IoMdArrowDropup } from "react-icons/io";
-// import { NavLink } from "react-router-dom";
 import profile from "../../assets/Images/profile.png";
-import { styled, alpha } from "@mui/material/styles";
+import { styled } from "@mui/material/styles";
 import {
   Popover,
-  DialogTitle,
-  DialogContentText,
-  DialogContent,
-  DialogActions,
-  IconButton,
   Link,
-  Dialog,
   Button,
   Autocomplete,
   FormControl,
-  MenuItem,
-  Menu,
-  createTheme,
   TextField,
-  Select,
   Grid,
-  Chip,
   Snackbar,
-  Divider,
   Pagination,
-  ThemeProvider,
   Breadcrumbs,
   Alert,
-  Card,
-  CardMedia,
-  Avatar,
   Box,
   Typography,
   Backdrop,
   CircularProgress,
-  useTheme,
 } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 import {
@@ -47,13 +29,11 @@ import {
   addInfoToCart,
   deleteCartProduct,
 } from "../Validator/CookieFunction";
-import apples from "../../assets/Images/apples.png";
 import { ReactSearchAutocomplete } from "react-search-autocomplete";
 // import ShopProducts from "../sub-component/ShopProducts";
 import Footer from "../sub-component/Footer";
 import axios from "axios";
 import nofound from "../../assets/Images/nofound.png";
-import { Message } from "@mui/icons-material";
 const CssFormControl = styled(FormControl)({
   "& .MuiFormLabel-root": {
     color: "#fff",
@@ -260,7 +240,7 @@ const ScrollBox = styled(Box)({
 const Shop = () => {
   // const accountData = JSON.parse(getCookie("account"));
   // const accountId = accountData._id;
-  const token = getCookie("token");
+  // const token = getCookie("token");
   const classes = useStyles();
   const [anchorCartEl, setAnchorCartEl] = React.useState(null);
   let cartFlag = Boolean(anchorCartEl);
@@ -280,7 +260,7 @@ const Shop = () => {
   const [currentpageData, setcurrentpageDate] = React.useState([]);
   const [page, setPage] = React.useState(0);
   const [flag, setFlag] = React.useState(false);
-  const [DataperPage, setDataperPage] = React.useState(10);
+  const [DataperPage, setDataperPage] = React.useState(12);
   const [deletecartproduct, setDeletecartproduct] = React.useState(0);
   const [countItem, setCountItem] = React.useState({
     item: 0,
@@ -384,34 +364,7 @@ const Shop = () => {
         setFlag(false);
       });
   };
-  // const getCartProducts = () => {
-  //   setFlag(true);
-  //   axios({
-  //     method: "get",
-  //     headers: {
-  //       Authorization: `Bearer ${token}`,
-  //     },
-  //     url: `${process.env.REACT_APP_BASEURL}cart/fetch_all_cart_products/${accountId}`,
-  //   })
-  //     .then(function (response) {
-  //       if (response.data.status === 504) {
-  //         //console.log("error");
-  //         setFlag(false);
-  //       }
-  //       if (response.data.status === 200) {
-  //         setCartData(response.data.data);
-  //         setFlag(false);
-  //         // setPage(1);
-  //         return 0;
-  //       }
-  //     })
-  //     .catch(function (error) {
-  //       setFlag(false);
-  //     });
-  // };
   useEffect(() => {
-    // setCartData(getCart());
-    //
     setTimeout(() => {
       document.getElementsByTagName("body")[0].style.paddingRight = 0;
       // console.log("cart data: ", cartData);
@@ -419,12 +372,16 @@ const Shop = () => {
   }, [cartFlag]);
   useEffect(() => {
     DisplayCartPopover();
+    let sum = 0;
+    let total = 0;
     getCart().map((data) => {
-      setCountItem({
-        ...countItem,
-        item: countItem.item + data.pro_qty,
-        subtotal: countItem.subtotal + data.pro_qty * data.pro_sell_price,
-      });
+      sum = sum + data.pro_qty;
+      total = total + data.pro_qty * data.pro_sell_price;
+    });
+    setCountItem({
+      // ...countItem,
+      item: sum,
+      subtotal: total,
     });
     console.log("change useeffect");
   }, [deletecartproduct]);
@@ -522,79 +479,88 @@ const Shop = () => {
             }}
           >
             {DisplayProducts.map((data) => (
-              <Box
-                className={classes.productCard}
-                key={data._id}
-                onClick={() => {
-                  alert("products ", data._id);
+              <Link
+                href={"/ibid/products/" + data._id}
+                sx={{
+                  textDecoration: "none",
                 }}
               >
                 <Box
-                  className={classes.badge}
-                  onClick={(e) => {
-                    // console.log("KKK", data);
+                  className={classes.productCard}
+                  key={data._id}
+                  onClick={() => {}}
+                >
+                  <Box
+                    className={classes.badge}
+                    onClick={(e) => {
+                      // console.log("KKK", data);
 
-                    // setFlag(true);
-                    if (getCookie("account")) {
-                      if (data.pro_stock === "Out of Stock") {
-                        setState({
-                          open1: true,
-                          message: "Sorry Products is Out of Stock",
-                        });
+                      // setFlag(true);
+                      if (getCookie("account")) {
+                        if (data.pro_stock === "Out of Stock") {
+                          setState({
+                            open1: true,
+                            message: "Sorry Products is Out of Stock",
+                          });
+                        } else {
+                          addInfoToCart(data);
+                          setDeletecartproduct(Math.random());
+                          setState({
+                            isLogged: true,
+                            open1: true,
+                            message: "Successfully Product Add in Cart",
+                          });
+                        }
                       } else {
-                        addInfoToCart(data);
-                        setDeletecartproduct(deleteCartProduct + 1);
                         setState({
-                          isLogged: true,
                           open1: true,
-                          message: "Successfully Product Add in Cart",
+                          message:
+                            "Sorry, you must be logged in to place a Cart.",
                         });
                       }
-                    } else {
-                      setState({
-                        open1: true,
-                        message:
-                          "Sorry, you must be logged in to place a Cart.",
-                      });
-                    }
-                    e.stopPropagation();
-                  }}
-                >
-                  <BsBasketFill size="20" />
-                </Box>
+                      e.stopPropagation();
+                    }}
+                  >
+                    <BsBasketFill size="20" />
+                  </Box>
 
-                <Box className={classes.productTumb}>
-                  <img
-                    src={data.pro_image ? data.pro_image : profile}
-                    alt="products_img"
-                  />
-                </Box>
-                <Box className={classes.productDetails}>
-                  <h2>{data.pro_name}</h2>
+                  <Box className={classes.productTumb}>
+                    <img
+                      src={data.pro_image ? data.pro_image : profile}
+                      alt="products_img"
+                    />
+                  </Box>
+                  <Box className={classes.productDetails}>
+                    <h2>{data.pro_name}</h2>
 
-                  <Box className={classes.productBottomDetails}>
-                    <Box className={classes.productPrice}>
-                      PRICE :-₹{data.pro_sell_price}
-                      <small>₹{data.pro_mrp}</small>
-                    </Box>
-                    {/* <Box className={classes.productLinks}>{data.pro_unit}</Box> */}
-                    <Box className={classes.productLinks}>
-                      {data.pro_unit}
-                      <br />
-                      {data.pro_stock === "In Stock" && (
-                        <strong style={{ color: "#325240", paddingTop: "8px" }}>
-                          {data.pro_stock}
-                        </strong>
-                      )}
-                      {data.pro_stock === "Out of Stock" && (
-                        <strong style={{ color: "#B10000", paddingTop: "8px" }}>
-                          {data.pro_stock}
-                        </strong>
-                      )}
+                    <Box className={classes.productBottomDetails}>
+                      <Box className={classes.productPrice}>
+                        PRICE :-₹{data.pro_sell_price}
+                        <small>₹{data.pro_mrp}</small>
+                      </Box>
+                      {/* <Box className={classes.productLinks}>{data.pro_unit}</Box> */}
+                      <Box className={classes.productLinks}>
+                        {data.pro_unit}
+                        <br />
+                        {data.pro_stock === "In Stock" && (
+                          <strong
+                            style={{ color: "#325240", paddingTop: "8px" }}
+                          >
+                            {data.pro_stock}
+                          </strong>
+                        )}
+                        {data.pro_stock === "Out of Stock" && (
+                          <strong
+                            style={{ color: "#B10000", paddingTop: "8px" }}
+                          >
+                            {data.pro_stock}
+                          </strong>
+                        )}
+                      </Box>
                     </Box>
                   </Box>
                 </Box>
-              </Box>
+              </Link>
             ))}
           </div>
 
@@ -774,7 +740,7 @@ const Shop = () => {
                             size="20"
                             onClick={() => {
                               deleteCartProduct(data._id);
-                              setDeletecartproduct(deleteCartProduct + 1);
+                              setDeletecartproduct(Math.random());
                             }}
                           />
                         </Box>
@@ -797,7 +763,7 @@ const Shop = () => {
                   SUBTOTAL:
                 </Typography>
                 <Typography sx={{ fontSize: "18px", fontWeight: "550" }}>
-                  ₹1011.00 /-
+                  ₹{countItem.subtotal.toFixed(2)} /-
                 </Typography>
               </Box>
               <Link
@@ -990,6 +956,7 @@ const Shop = () => {
           <Box
             sx={{
               paddingLeft: "20px",
+              bgcolor: "#f0f0f0",
               borderBottom: "2px outset #f9f9f9",
             }}
           >
