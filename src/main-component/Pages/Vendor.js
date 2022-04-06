@@ -45,26 +45,32 @@ const meunName = [
   { label: "Rajkot" },
   { label: "Surat" },
 ];
-const CssFormControl = styled(FormControl)({
-  "& .MuiFormLabel-root": {
-    color: "#fff",
+const Css2FormControl = styled(FormControl)({
+  "& .MuiFormControlLabel-label": {
+    color: "#325240",
   },
-  "& .css-1sumxir-MuiFormLabel-root-MuiInputLabel-root": {
-    color: "#f9f9f9",
+  "::-webkit-scrollbar": {
+    display: "none",
   },
-  "& .css-1sumxir-MuiFormLabel-root-MuiInputLabel-root.Mui": {
-    color: "#f9f9f9",
+  "& label.Mui-focused": {
+    color: "#325240",
   },
-  "& .css-14s5rfu-MuiFormLabel-root-MuiInputLabel-root": {
-    color: "f9f9f9",
-  },
-  "& .MuiInputBase-root": {
-    border: "none",
-    color: "#ddf6e4",
+  "& .MuiInput-underline:after": {
+    borderWidth: "2px",
+    borderBottomColor: "#325240",
   },
   "& .MuiOutlinedInput-root": {
     "& fieldset": {
-      border: "none",
+      borderWidth: "2px",
+      borderColor: "#325240",
+    },
+    "&:hover fieldset": {
+      borderWidth: "2px",
+      borderColor: "#325240",
+    },
+    "&.Mui-focused fieldset": {
+      borderWidth: "2px",
+      borderColor: "#325240",
     },
   },
 });
@@ -122,12 +128,14 @@ const Vendor = () => {
   React.useEffect(() => {
     // console.log(cityname);
     setcurrentpageDate(
-      vendorData.filter(
-        (e) =>
-          e.user_name.toLowerCase().includes(searchitem.toLowerCase()) ||
-          e.email_id.toLowerCase().includes(searchitem.toLowerCase()) ||
-          e.full_name.toLowerCase().includes(searchitem.toLowerCase())
-      )
+      vendorData
+        .filter((e) => e.city === cityname)
+        .filter(
+          (e) =>
+            e.user_name.toLowerCase().includes(searchitem.toLowerCase()) ||
+            e.email_id.toLowerCase().includes(searchitem.toLowerCase()) ||
+            e.full_name.toLowerCase().includes(searchitem.toLowerCase())
+        )
     );
   }, [page, searchitem, cityname]);
   const DisplayVendor = React.useMemo(() => {
@@ -157,7 +165,7 @@ const Vendor = () => {
         maxResults={6}
         onSearch={handleOnSearch}
         onSelect={handleOnSelect}
-        placeholder="Search Products"
+        placeholder="Search vendor"
         resultStringKeyName="user_name"
         fuseOptions={{
           keys: ["user_name", "email_id"],
@@ -177,219 +185,211 @@ const Vendor = () => {
     </React.Fragment>
   );
   const vendorCardDisplay = () => {
-    return (
-      <Box>
-        <div
-          style={{
-            boxSizing: "border-box",
-            display: "flex",
-            alignItems: "center",
-            flexWrap: "wrap",
-            padding: "20px",
+    if (DisplayVendor.length) {
+      return (
+        <Box>
+          <div
+            style={{
+              boxSizing: "border-box",
+              display: "flex",
+              alignItems: "center",
+              flexWrap: "wrap",
+              padding: "20px",
 
-            // justifyContent: "space-between",
-          }}
-        >
-          {DisplayVendor.map((data) => {
-            return (
-              <Box
-                key={data._id}
-                sx={{
-                  border: "2px solid #325240",
-                  borderRadius: "27px",
-                  marginBottom: 3,
-                  marginTop: 3,
-                  height: "40vh",
-                  position: "relative",
-                  width: "60vh",
-                  margin: "20px",
-                  boxShadow: "0px 16px 16px 5px rgba(0, 0, 0, 0.2)",
-                }}
-              >
-                <img
-                  src={banner}
-                  alt="banner"
-                  style={{
-                    height: "100%",
-                    width: "100%",
-                    borderRadius: "25px",
-                  }}
-                />
+              // justifyContent: "space-between",
+            }}
+          >
+            {DisplayVendor.map((data) => {
+              return (
                 <Box
+                  key={data._id}
                   sx={{
-                    position: "absolute",
-                    top: 0,
-                    padding: "20px",
+                    border: "2px solid #325240",
+                    borderRadius: "27px",
+                    marginBottom: 3,
+                    marginTop: 3,
+                    height: "40vh",
+                    position: "relative",
+                    width: "60vh",
+                    margin: "20px",
+                    boxShadow: "0px 16px 16px 5px rgba(0, 0, 0, 0.2)",
+                    transform: "scale(1)",
+                    transition: "all 0.3s ease-in-out",
+                    "&:hover": {
+                      transform: "scale(1.1)",
+                      boxShadow: "0 20px 20px 0 rgba(0, 0, 0, 0.2)",
+                    },
                   }}
                 >
-                  <Typography
-                    sx={{
-                      fontSize: "24px",
-                      fontWeight: "600px",
-                      color: "#325240",
-                    }}
-                  >
-                    {data.full_name}
-                  </Typography>
-                  <Typography
-                    sx={{
-                      fontSize: "16px",
-                      fontWeight: "300px",
-                      color: "#325240",
-                      mt: 2,
-                    }}
-                  >
-                    {data.address}
-                  </Typography>
-                  <Typography
-                    sx={{
-                      fontSize: "16px",
-                      fontWeight: "300px",
-                      color: "#325240",
-                      mt: 2,
-                    }}
-                  >
-                    <FaPhoneAlt /> +91 {data.phone}
-                  </Typography>
-                </Box>
-                <Box
-                  sx={{
-                    position: "absolute",
-                    bottom: 0,
-
-                    zIndex: 99,
-                    right: 0,
-                    mb: 3,
-                    mr: 3,
-                  }}
-                >
-                  <Avatar
-                    alt="Remy Sharp"
-                    src={data.profile_pic ? data.profile_pic : profile}
-                    sx={{
-                      width: 75,
-                      height: 75,
-                      border: 3,
-                      borderColor: "#f9f9f9",
-                      boxShadow: "0px 16px 16px 10px rgba(0, 0, 0, 0.3)",
+                  <img
+                    src={banner}
+                    alt="banner"
+                    style={{
+                      height: "100%",
+                      width: "100%",
+                      borderRadius: "25px",
                     }}
                   />
-                </Box>
-                <Box
-                  sx={{
-                    position: "absolute",
-                    width: "100%",
-                    bottom: 0,
-
-                    bgcolor: "#325240",
-                    borderBottomRightRadius: "20px",
-                    borderBottomLeftRadius: "20px",
-                  }}
-                >
-                  <IconButton
-                    sx={{ color: "#f9f9f9", paddingLeft: 3 }}
-                    onClick={() => {
-                      alert(data._id);
+                  <Box
+                    sx={{
+                      position: "absolute",
+                      top: 0,
+                      padding: "20px",
                     }}
                   >
-                    <IoIosArrowDroprightCircle size="30" />
-                  </IconButton>
-                </Box>
-              </Box>
-            );
-          })}
-        </div>
+                    <Typography
+                      sx={{
+                        fontSize: "24px",
+                        fontWeight: "600px",
+                        color: "#325240",
+                      }}
+                    >
+                      {data.full_name}
+                    </Typography>
+                    <Typography
+                      sx={{
+                        fontSize: "16px",
+                        fontWeight: "300px",
+                        color: "#325240",
+                        mt: 2,
+                      }}
+                    >
+                      {data.address}
+                    </Typography>
+                    <Typography
+                      sx={{
+                        fontSize: "16px",
+                        fontWeight: "300px",
+                        color: "#325240",
+                        mt: 2,
+                      }}
+                    >
+                      <FaPhoneAlt /> +91 {data.phone}
+                    </Typography>
+                  </Box>
+                  <Box
+                    sx={{
+                      position: "absolute",
+                      bottom: 0,
 
-        <Box sx={{ mt: 7, mb: 7, display: "flex", justifyContent: "center" }}>
-          <Pagination
-            count={Math.ceil(currentpageData.length / DataperPage)}
-            variant="outlined"
-            sx={{
-              "& .css-lqq3n7-MuiButtonBase-root-MuiPaginationItem-root.Mui-selected":
-                {
-                  backgroundColor: "#325240",
-                  color: "#fff",
+                      zIndex: 99,
+                      right: 0,
+                      mb: 3,
+                      mr: 3,
+                    }}
+                  >
+                    <Avatar
+                      alt="Remy Sharp"
+                      src={data.profile_pic ? data.profile_pic : profile}
+                      sx={{
+                        width: 75,
+                        height: 75,
+                        border: 3,
+                        borderColor: "#f9f9f9",
+                        boxShadow: "0px 16px 16px 10px rgba(0, 0, 0, 0.3)",
+                        transform: "scale(1)",
+                        transition: "all 0.5s ease-in-out",
+                        "& :hover": {
+                          transform: "scale(1.2)",
+                        },
+                      }}
+                    />
+                  </Box>
+                  <Box
+                    sx={{
+                      position: "absolute",
+                      width: "100%",
+                      bottom: 0,
+
+                      bgcolor: "#325240",
+                      borderBottomRightRadius: "20px",
+                      borderBottomLeftRadius: "20px",
+                    }}
+                  >
+                    <IconButton
+                      sx={{ color: "#f9f9f9", paddingLeft: 3 }}
+                      onClick={() => {
+                        alert(data._id);
+                      }}
+                    >
+                      <IoIosArrowDroprightCircle size="30" />
+                    </IconButton>
+                  </Box>
+                </Box>
+              );
+            })}
+          </div>
+
+          <Box sx={{ mt: 7, mb: 7, display: "flex", justifyContent: "center" }}>
+            <Pagination
+              count={Math.ceil(currentpageData.length / DataperPage)}
+              variant="outlined"
+              sx={{
+                "& .css-lqq3n7-MuiButtonBase-root-MuiPaginationItem-root.Mui-selected":
+                  {
+                    backgroundColor: "#325240",
+                    color: "#fff",
+                  },
+                "& .css-lqq3n7-MuiButtonBase-root-MuiPaginationItem-root": {
+                  backgroundColor: "#f9f9f9",
+                  color: "#325240",
+                  border: "1px solid #325240",
                 },
-              "& .css-lqq3n7-MuiButtonBase-root-MuiPaginationItem-root": {
-                backgroundColor: "#f9f9f9",
+              }}
+              page={page}
+              onChange={handleChangePage}
+            />
+          </Box>
+        </Box>
+      );
+    } else {
+      return (
+        <Box sx={{ textAlign: "center", padding: "30px" }}>
+          <img alt="image" src={nofound} />
+          <Typography
+            component="h1"
+            variant="h5"
+            sx={{
+              color: "#325240",
+              fontWeight: "bold",
+              margin: "0 auto 32px auto",
+              width: "fit-content",
+              textAlign: "center",
+            }}
+          >
+            <span
+              style={{
+                display: "block",
+              }}
+            >
+              No Vendor Found!
+            </span>
+          </Typography>
+          <Button
+            sx={{
+              bgcolor: "#325240",
+              color: "#f9f9f9",
+              "&:hover": {
                 color: "#325240",
-                border: "1px solid #325240",
+                bgcolor: "#f9f9f9",
+                border: "2px solid #325240",
               },
             }}
-            page={page}
-            onChange={handleChangePage}
-          />
+          >
+            GO TO HOME PAGE
+          </Button>
         </Box>
-      </Box>
-    );
+      );
+    }
   };
   return (
     <>
       <Box
         sx={{
-          padding: "10px 0px 5px 0px",
-          bgcolor: "#325240",
-          width: "100%",
-          position: "fixed",
-          zIndex: 9999,
-          borderBottom: "2px outset #f9f9f9",
-        }}
-      >
-        <Grid container spacing={3}>
-          <Grid item xs={2.1} sx={{ mt: "8px" }}>
-            <Box sx={{ marginLeft: "20px" }}>
-              <CssFormControl
-                fullWidth
-                required
-                name="vcity"
-                label="City"
-                type="City"
-                id="vcity"
-              >
-                <Autocomplete
-                  required
-                  id="combo-box-city"
-                  options={meunName}
-                  value={cityname}
-                  popupIcon={<IoMdArrowDropup color="white" />}
-                  disableClearable
-                  onChange={(event, value) => {
-                    setCityName(value.label);
-                  }}
-                  renderInput={(params) => (
-                    <TextField
-                      required
-                      {...params}
-                      label="City"
-                      name="vcity"
-                      id="vcity"
-                    />
-                  )}
-                />
-              </CssFormControl>
-            </Box>
-          </Grid>
-          <Grid item xs={9.9}>
-            <Box
-              sx={{
-                marginTop: "4px",
-                borderRadius: "18px",
-                boxShadow: "0 16px 16px 0 rgba(0, 0, 0, 0.2)",
-                marginLeft: "20%",
-                marginRight: "25%",
-              }}
-            >
-              {SearchBar}
-            </Box>
-          </Grid>
-        </Grid>
-      </Box>
-      <Box
-        sx={{
           bgcolor: "#f9f9f9",
           position: "relative",
           width: "100%",
-          top: "71px",
+          // top: "71px",
         }}
       >
         <div>
@@ -411,7 +411,81 @@ const Vendor = () => {
               </Typography>
             </Breadcrumbs>
           </Box>
-          <Box sx={{ bgcolor: "#f9f9f9" }}>
+          <Box
+            sx={{
+              bgcolor: "#f0f0f0",
+              boxShadow: "0px 16px 16px 0px rgba(0, 0, 0, 0.2)",
+              border: "1px solid #325240",
+              borderRadius: "8px",
+              margin: 3,
+            }}
+          >
+            <Box
+              spacing={3}
+              sx={{
+                alignItems: "center",
+                display: "flex",
+                justifyContent: "space-between", //space-around  //space-evenly
+                padding: "10px",
+                marginLeft: "30px",
+                marginRight: "30px",
+              }}
+            >
+              <h3 style={{ color: "#325240" }}>
+                {/* Showing {productNumPerpage.numstart}–
+                  {productNumPerpage.numend} of  */}
+                Showing {DisplayVendor.length} Results
+              </h3>
+              <Box sx={{ display: "flex", justifyContent: "space-around" }}>
+                <Box sx={{ minWidth: 220, marginRight: "20px" }}>
+                  <Css2FormControl
+                    fullWidth
+                    required
+                    name="vcity"
+                    label="City"
+                    type="City"
+                    id="vcity"
+                  >
+                    <Autocomplete
+                      required
+                      id="combo-box-city"
+                      options={meunName}
+                      value={cityname}
+                      popupIcon={<IoMdArrowDropup color="#325240" />}
+                      disableClearable
+                      onChange={(event, value) => {
+                        setCityName(value.label);
+                      }}
+                      renderInput={(params) => (
+                        <TextField
+                          required
+                          {...params}
+                          label="City"
+                          name="vcity"
+                          id="vcity"
+                        />
+                      )}
+                    />
+                  </Css2FormControl>
+                </Box>
+
+                <Box
+                  sx={{
+                    minWidth: 420,
+                    marginTop: "4px",
+                    // borderRadius: "18px",
+                    // boxShadow: "0 16px 16px 0 rgba(0, 0, 0, 0.2)",
+                    zIndex: 999,
+                    marginLeft: "20%",
+                    marginRight: "25%",
+                  }}
+                >
+                  {SearchBar}
+                </Box>
+              </Box>
+            </Box>
+          </Box>
+          <Box>
             {vendorCardDisplay()}
 
             {backDrop()}

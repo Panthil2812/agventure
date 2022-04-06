@@ -98,7 +98,7 @@ const Vendor = () => {
     <>
       <Box
         sx={{
-          bgcolor: "#f9f9f9",
+          bgcolor: "#f0f0f0",
           paddingLeft: "20px",
           borderBottom: "2px outset #325240",
         }}

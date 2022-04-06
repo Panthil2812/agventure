@@ -234,6 +234,7 @@ const ShopProducts = (props) => {
         sx={{
           paddingLeft: "20px",
           borderBottom: "2px outset #f9f9f9",
+          bgcolor: "#f0f0f0",
         }}
       >
         <Breadcrumbs aria-label="breadcrumb" separator="›">
