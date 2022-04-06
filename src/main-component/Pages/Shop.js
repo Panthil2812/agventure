@@ -100,7 +100,7 @@ const useStyles = makeStyles(() => ({
     transform: "scale(1)",
     transition: "all 0.3s ease-in-out",
     "&:hover": {
-      transform: "scale(1.02)",
+      transform: "scale(1.03)",
       boxShadow: "0 20px 20px 0 rgba(0, 0, 0, 0.2)",
     },
   },
@@ -479,12 +479,6 @@ const Shop = () => {
             }}
           >
             {DisplayProducts.map((data) => (
-              // <Link
-              //   href={"/ibid/products/" + data._id}
-              //   sx={{
-              //     textDecoration: "none",
-              //   }}
-              // >
               <Box
                 className={classes.productCard}
                 key={data._id}

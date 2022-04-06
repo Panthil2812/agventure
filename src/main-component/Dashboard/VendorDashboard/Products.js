@@ -163,7 +163,6 @@ const unitName = [
   { label: "Ton" },
 ];
 const Stock = [{ label: "In Stock" }, { label: "Out of Stock" }];
-
 const Products = () => {
   const classes = useStyles();
   const account = JSON.parse(getCookie("account"));
@@ -336,7 +335,7 @@ const Products = () => {
       });
   };
   const handleOnSearch = (string, results) => {
-    console.log(string, results);
+    // console.log(string, results);
     setSearchItem(string);
   };
   const handleOnSelect = (item) => {
@@ -489,11 +488,10 @@ const Products = () => {
           keys: ["pro_name", "pro_category"],
         }}
         styling={{
-          zIndex: "50",
           borderRadius: "9px",
           boxShadow: "0 8px 8px 0 rgba(0, 0, 0, 0.2)",
           border: "3px solid #325240",
-          height: "7vh",
+          // height: "7vh",
           marginBottom: "7vh",
           placeholderFontSize: "2.5vh",
           fontSize: "2.5vh",
@@ -931,34 +929,72 @@ const Products = () => {
       );
     } else {
       return (
-        <Box>
+        <Box
+          sx={{
+            padding: "10px",
+          }}
+        >
           {DisplayProducts.map((data) => {
             return (
-              <Card
+              <Box
                 sx={{
+                  display: "flex",
+                  flexDirection: "row",
                   bgcolor: "#f9f9f9",
-                  margin: "8px",
-                  padding: "10px",
-                  alignItem: "center",
-                  border: "0.5px solid #325240",
-                  boxShadow: "0 4px 4px 0 rgba(0, 0, 0, 0.2)",
+                  border: "2px solid #325240",
+                  borderRadius: "10px",
+                  margin: 3,
+                  padding: 1,
+                  boxShadow: "0px 16px 16px 0px rgba(0, 0, 0, 0.2)",
+                  transform: "scale(1)",
+                  transition: "all 0.3s ease-in-out",
                   "&:hover": {
-                    bgcolor: "#f1f1f1",
-                    boxShadow: "0 16px 16px 4px rgba(0, 0, 0, 0.2)",
+                    transform: "scale(1.04)",
+                    boxShadow: "0 20px 20px 0 rgba(0, 0, 0, 0.2)",
                   },
                 }}
                 key={data._id}
               >
                 <Box sx={{ flexGrow: 1 }}>
                   <Grid container spacing={2}>
-                    <Grid item xs={1}>
-                      <Avatar
-                        alt="Remy Sharp"
+                    <Grid item xs={1} sx={{ alignSelf: "center" }}>
+                      <img
+                        style={{
+                          width: "75px",
+                          height: "70px",
+                          borderRadius: "10px",
+                        }}
                         src={data.pro_image ? data.pro_image : profile}
-                        sx={{ height: "56px", width: "56px" }}
+                        alt="crat products image"
                       />
                     </Grid>
-                    <Grid item xs={4}>
+                    <Grid item xs={4} sx={{ alignSelf: "center" }}>
+                      <Box
+                        sx={{
+                          alignSelf: "center",
+                          marginLeft: "20px",
+                        }}
+                      >
+                        <Typography
+                          sx={{
+                            color: "#325240",
+                            fontSize: "18px",
+                            fontWeight: "bold",
+                          }}
+                        >
+                          {data.pro_name}
+                        </Typography>
+                        <Typography
+                          sx={{
+                            color: "#325240",
+                            fontSize: "14px",
+                          }}
+                        >
+                          Price : ₹ {data.pro_sell_price} /{data.pro_unit}
+                        </Typography>
+                      </Box>
+                    </Grid>
+                    <Grid item xs={3} sx={{ alignSelf: "center" }}>
                       <Typography
                         sx={{
                           color: "#325240",
@@ -966,36 +1002,54 @@ const Products = () => {
                           fontWeight: "bold",
                         }}
                       >
-                        {data.pro_name}
-                        <br />
-                        <Typography>
-                          ₹ {data.pro_sell_price} /{data.pro_unit}
-                        </Typography>
-                      </Typography>
-                    </Grid>
-                    <Grid item xs={3} sx={{ marginTop: "8px" }}>
-                      <Chip
-                        label={data.pro_category}
-                        sx={{ bgcolor: "#325240", color: "#fff" }}
-                      />
-                    </Grid>
-                    <Grid item xs={2} sx={{ marginTop: "8px" }}>
-                      {data.pro_stock === "In Stock" && (
                         <Chip
-                          label={data.pro_stock}
+                          label={data.pro_category}
                           sx={{ bgcolor: "#325240", color: "#fff" }}
                         />
-                      )}
-                      {data.pro_stock === "Out of Stock" && (
-                        <Chip
-                          label={data.pro_stock}
-                          sx={{ bgcolor: "#B10000", color: "#fff" }}
-                        />
-                      )}
+                      </Typography>
                     </Grid>
-                    <Grid item xs={1} sx={{ marginTop: "5px" }}>
+                    <Grid item xs={2} sx={{ alignSelf: "center" }}>
+                      <Typography
+                        sx={{
+                          color: "#325240",
+                          fontSize: "18px",
+                          fontWeight: "bold",
+                          alignSelf: "center",
+                          // marginRight: 5,
+                          textAlign: "justify",
+                        }}
+                      >
+                        {data.pro_stock === "In Stock" && (
+                          <Chip
+                            label={data.pro_stock}
+                            sx={{ bgcolor: "#325240", color: "#fff" }}
+                          />
+                        )}
+                        {data.pro_stock === "Out of Stock" && (
+                          <Chip
+                            label={data.pro_stock}
+                            sx={{ bgcolor: "#B10000", color: "#fff" }}
+                          />
+                        )}
+                      </Typography>
+                    </Grid>
+                    <Grid
+                      item
+                      xs={2}
+                      sx={{ alignSelf: "center", display: "flex" }}
+                    >
                       <IconButton
-                        sx={{ color: "blue" }}
+                        sx={{
+                          bgcolor: "blue",
+                          padding: "5px",
+                          borderRadius: "10px",
+                          color: "#f0f0f0",
+                          alignSelf: "center",
+                          "&:hover": {
+                            color: "blue",
+                            border: "1px solid blue",
+                          },
+                        }}
                         onClick={() => {
                           {
                             setEditinformation({
@@ -1016,25 +1070,36 @@ const Products = () => {
                           }
                         }}
                       >
-                        <ModeEditIcon />
+                        <ModeEditIcon size="20" />
                       </IconButton>
-                    </Grid>
-                    <Grid item xs={1} sx={{ marginTop: "5px" }}>
+
                       <IconButton
-                        color="error"
+                        sx={{
+                          bgcolor: "#B10000",
+                          padding: "5px",
+                          marginLeft: "20px",
+                          borderRadius: "10px",
+                          color: "#f0f0f0",
+                          alignSelf: "center",
+                          "&:hover": {
+                            color: "#B10000",
+                            border: "1px solid #B10000",
+                          },
+                        }}
                         onClick={() => {
                           setDid(data._id);
                           setOpen(true);
                         }}
                       >
-                        <DeleteIcon />
+                        <DeleteIcon size="20" />
                       </IconButton>
                     </Grid>
                   </Grid>
                 </Box>
-              </Card>
+              </Box>
             );
           })}
+
           <Box sx={{ mt: 7, display: "flex", justifyContent: "center" }}>
             <Pagination
               count={Math.ceil(currentpageData.length / DataperPage)}
@@ -1076,19 +1141,41 @@ const Products = () => {
         >
           PRODUCTS
         </Typography>
-        <Box>
+        <Box
+          sx={{
+            bgcolor: "#f0f0f0",
+            boxShadow: "0px 16px 16px 0px rgba(0, 0, 0, 0.2)",
+            border: "1px solid #325240",
+            borderRadius: "8px",
+          }}
+        >
           <Box
             sx={{
-              boxShadow: "0 4px 4px 0 rgba(0, 0, 0, 0.2)",
-              marginLeft: "25%",
-              marginRight: "25%",
+              alignItems: "center",
+              display: "flex",
+              justifyContent: "space-between",
+              padding: "10px",
+              marginLeft: "30px",
+              marginRight: "30px",
             }}
           >
-            {SearchBar}
-          </Box>
-          <Box sx={{ mt: 7 }}> {showProducts()}</Box>
-        </Box>
+            <h3 style={{ color: "#325240" }}>
+              Showing {DisplayProducts.length} Results
+            </h3>
 
+            <Box
+              sx={{
+                minWidth: 420,
+                borderRadius: "18px",
+                boxShadow: "0 16px 16px 0 rgba(0, 0, 0, 0.2)",
+                zIndex: 999,
+              }}
+            >
+              {SearchBar}
+            </Box>
+          </Box>
+        </Box>
+        <Box sx={{ mt: 7 }}>{showProducts()}</Box>
         {deleteDialogBox}
         {editDialogBox}
         {backDrop()}

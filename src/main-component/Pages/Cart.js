@@ -258,19 +258,26 @@ const Cart = () => {
               No Products in Cart
             </span>
           </Typography>
-          <Button
+          <Link
+            href="/shop"
             sx={{
-              bgcolor: "#325240",
-              color: "#f9f9f9",
-              "&:hover": {
-                color: "#325240",
-                bgcolor: "#f9f9f9",
-                border: "2px solid #325240",
-              },
+              textDecoration: "none",
             }}
           >
-            GO TO Shop PAGE
-          </Button>
+            <Button
+              sx={{
+                bgcolor: "#325240",
+                color: "#f9f9f9",
+                "&:hover": {
+                  color: "#325240",
+                  bgcolor: "#f9f9f9",
+                  border: "2px solid #325240",
+                },
+              }}
+            >
+              GO TO Shop PAGE
+            </Button>
+          </Link>
         </Box>
       );
     }
