@@ -144,10 +144,10 @@ const useStyles = makeStyles(() => ({
     },
   },
   productDetails: {
-    padding: "10px",
-    "& h2": {
+    "& h3": {
       fontWeight: "600",
-      marginBottom: "18px",
+      marginBottom: "14px",
+      marginTop: "14px",
       textAlign: "center",
       textTransform: "capitalize",
       color: "#325240",
@@ -163,6 +163,7 @@ const useStyles = makeStyles(() => ({
   },
 
   productBottomDetails: {
+    padding: "10px",
     overflow: "hidden",
     borderTop: "2px solid #325240",
     paddingTop: "10px",
@@ -179,12 +180,12 @@ const useStyles = makeStyles(() => ({
   },
 
   productPrice: {
-    fontSize: "18px",
+    fontSize: "16px",
     color: "#325240",
     fontWeight: "600",
     "& small": {
       marginLeft: "5px",
-      fontSize: "80%",
+      fontSize: "90%",
       fontWeight: "400",
       textDecoration: "line-through",
       display: "inline-block",
@@ -528,12 +529,13 @@ const Shop = () => {
                   />
                 </Box>
                 <Box className={classes.productDetails}>
-                  <h2>{data.pro_name}</h2>
+                  <h3>{data.pro_name}</h3>
 
                   <Box className={classes.productBottomDetails}>
                     <Box className={classes.productPrice}>
-                      PRICE :-₹{data.pro_sell_price}
-                      <small>₹{data.pro_mrp}</small>
+                      PRICE :-₹{data.pro_sell_price.toFixed(2)}
+                      <br />
+                      <small>₹{data.pro_mrp.toFixed(2)}</small>
                     </Box>
                     {/* <Box className={classes.productLinks}>{data.pro_unit}</Box> */}
                     <Box className={classes.productLinks}>

@@ -25,13 +25,7 @@ import {
   Backdrop,
   CircularProgress,
 } from "@mui/material";
-import { makeStyles } from "@mui/styles";
-import {
-  getCookie,
-  getCart,
-  addInfoToCart,
-  deleteCartProduct,
-} from "../Validator/CookieFunction";
+import { getCookie } from "../Validator/CookieFunction";
 import { ReactSearchAutocomplete } from "react-search-autocomplete";
 // import ShopProducts from "../sub-component/ShopProducts";
 import Footer from "../sub-component/Footer";
@@ -82,9 +76,19 @@ const Vendor = () => {
   const [searchitem, setSearchItem] = React.useState("");
   const [flag, setFlag] = React.useState(false);
   const [page, setPage] = React.useState(0);
-  const [DataperPage, setDataperPage] = React.useState(10);
+  const [DataperPage, setDataperPage] = React.useState(9);
+  const [state, setState] = React.useState({
+    open1: false,
+    isLogged: false,
+    message: "",
+  });
+  const { isLogged, open1, message } = state;
   const handleClose = () => {
     setFlag(false);
+    setState({
+      ...state,
+      open1: false,
+    });
   };
   const handleChangePage = (event, value) => {
     // console.log(value);
@@ -157,7 +161,28 @@ const Vendor = () => {
       </>
     );
   };
-
+  const errorFunction = () => {
+    return (
+      <div>
+        <Snackbar
+          open={open1}
+          sx={{ width: "50%", zIndex: 9999 }}
+          anchorOrigin={{ vertical: "top", horizontal: "center" }}
+          autoHideDuration={3000}
+          onClose={handleClose}
+        >
+          <Alert
+            variant="filled"
+            onClose={handleClose}
+            severity="error"
+            sx={{ width: "100%" }}
+          >
+            {message}
+          </Alert>
+        </Snackbar>
+      </div>
+    );
+  };
   const SearchBar = (
     <React.Fragment>
       <ReactSearchAutocomplete
@@ -309,7 +334,15 @@ const Vendor = () => {
                     <IconButton
                       sx={{ color: "#f9f9f9", paddingLeft: 3 }}
                       onClick={() => {
-                        alert(data._id);
+                        if (getCookie("account")) {
+                          window.location.replace(`/ibid/vendor/${data._id}`);
+                        } else {
+                          setState({
+                            open1: true,
+                            message:
+                              "Sorry, You must be logged in to Vendor details",
+                          });
+                        }
                       }}
                     >
                       <IoIosArrowDroprightCircle size="30" />
@@ -487,7 +520,7 @@ const Vendor = () => {
           </Box>
           <Box>
             {vendorCardDisplay()}
-
+            {errorFunction()}
             {backDrop()}
           </Box>
         </div>
