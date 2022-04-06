@@ -150,6 +150,7 @@ const StateName = [
 
 const Account = () => {
   const account = JSON.parse(getCookie("account"));
+
   const token = getCookie("token");
   const [accountData, setAccountData] = React.useState({
     username: account.user_name,

@@ -4,7 +4,7 @@ import { BsBasketFill } from "react-icons/bs";
 import { AiFillCloseCircle } from "react-icons/ai";
 import { IoMdArrowDropup } from "react-icons/io";
 // import { NavLink } from "react-router-dom";
-
+import profile from "../../assets/Images/profile.png";
 import { styled, alpha } from "@mui/material/styles";
 import {
   Popover,
@@ -44,13 +44,12 @@ import { makeStyles } from "@mui/styles";
 import {
   getCookie,
   getCart,
-  deleteCartProduct,
   addInfoToCart,
+  deleteCartProduct,
 } from "../Validator/CookieFunction";
 import apples from "../../assets/Images/apples.png";
 import { ReactSearchAutocomplete } from "react-search-autocomplete";
 // import ShopProducts from "../sub-component/ShopProducts";
-import profile from "../../assets/Images/apples.png";
 import Footer from "../sub-component/Footer";
 import axios from "axios";
 import nofound from "../../assets/Images/nofound.png";
@@ -259,6 +258,9 @@ const ScrollBox = styled(Box)({
   },
 });
 const Shop = () => {
+  // const accountData = JSON.parse(getCookie("account"));
+  // const accountId = accountData._id;
+  const token = getCookie("token");
   const classes = useStyles();
   const [anchorCartEl, setAnchorCartEl] = React.useState(null);
   let cartFlag = Boolean(anchorCartEl);
@@ -278,12 +280,12 @@ const Shop = () => {
   const [currentpageData, setcurrentpageDate] = React.useState([]);
   const [page, setPage] = React.useState(0);
   const [flag, setFlag] = React.useState(false);
-  const [cartData, setCartData] = React.useState([]);
-  const [productNumPerpage, setProductNumPage] = React.useState({
-    numstart: 0,
-    numend: 0,
-  });
   const [DataperPage, setDataperPage] = React.useState(10);
+  const [deletecartproduct, setDeletecartproduct] = React.useState(0);
+  const [countItem, setCountItem] = React.useState({
+    item: 0,
+    subtotal: 0.0,
+  });
   const handleCartClick = (event) => {
     setAnchorCartEl(event.currentTarget);
   };
@@ -308,8 +310,8 @@ const Shop = () => {
     setState({ ...state, open1: false });
   };
   const messageFunction = () => {
-    console.log("calling .....");
-    console.log("function", state);
+    // console.log("calling .....");
+    // console.log("function", state);
     if (isLogged) {
       return (
         <div>
@@ -382,12 +384,51 @@ const Shop = () => {
         setFlag(false);
       });
   };
+  // const getCartProducts = () => {
+  //   setFlag(true);
+  //   axios({
+  //     method: "get",
+  //     headers: {
+  //       Authorization: `Bearer ${token}`,
+  //     },
+  //     url: `${process.env.REACT_APP_BASEURL}cart/fetch_all_cart_products/${accountId}`,
+  //   })
+  //     .then(function (response) {
+  //       if (response.data.status === 504) {
+  //         //console.log("error");
+  //         setFlag(false);
+  //       }
+  //       if (response.data.status === 200) {
+  //         setCartData(response.data.data);
+  //         setFlag(false);
+  //         // setPage(1);
+  //         return 0;
+  //       }
+  //     })
+  //     .catch(function (error) {
+  //       setFlag(false);
+  //     });
+  // };
   useEffect(() => {
     // setCartData(getCart());
+    //
     setTimeout(() => {
       document.getElementsByTagName("body")[0].style.paddingRight = 0;
+      // console.log("cart data: ", cartData);
     }, 100);
   }, [cartFlag]);
+  useEffect(() => {
+    DisplayCartPopover();
+    getCart().map((data) => {
+      setCountItem({
+        ...countItem,
+        item: countItem.item + data.pro_qty,
+        subtotal: countItem.subtotal + data.pro_qty * data.pro_sell_price,
+      });
+    });
+    console.log("change useeffect");
+  }, [deletecartproduct]);
+
   const handleChangePage = (event, value) => {
     // console.log(value);
     setPage(value);
@@ -404,6 +445,7 @@ const Shop = () => {
   };
   React.useEffect(() => {
     allProducts();
+    // getCartProducts();
   }, []);
   React.useEffect(() => {
     // console.log(cityname);
@@ -434,15 +476,10 @@ const Shop = () => {
         )
     );
   }, [page, searchitem, cityname, searchCategory, searchSorting]);
-
   const DisplayProducts = React.useMemo(() => {
     //console.log(currentpageData);
     const indexOfLastPost = page * DataperPage;
     const indexOfFirstPost = indexOfLastPost - DataperPage;
-    setProductNumPage({
-      numstart: indexOfFirstPost + 1,
-      numend: indexOfLastPost,
-    });
     return currentpageData.slice(indexOfFirstPost, indexOfLastPost);
   }, [page, currentpageData]);
   const displayProductsInShop = () => {
@@ -487,17 +524,40 @@ const Shop = () => {
             {DisplayProducts.map((data) => (
               <Box
                 className={classes.productCard}
-                key={data.id}
-                onClick={() => {}}
+                key={data._id}
+                onClick={() => {
+                  alert("products ", data._id);
+                }}
               >
                 <Box
                   className={classes.badge}
                   onClick={(e) => {
+                    // console.log("KKK", data);
+
                     // setFlag(true);
-                    setState({
-                      open1: true,
-                      message: "panthl malaviya",
-                    });
+                    if (getCookie("account")) {
+                      if (data.pro_stock === "Out of Stock") {
+                        setState({
+                          open1: true,
+                          message: "Sorry Products is Out of Stock",
+                        });
+                      } else {
+                        addInfoToCart(data);
+                        setDeletecartproduct(deleteCartProduct + 1);
+                        setState({
+                          isLogged: true,
+                          open1: true,
+                          message: "Successfully Product Add in Cart",
+                        });
+                      }
+                    } else {
+                      setState({
+                        open1: true,
+                        message:
+                          "Sorry, you must be logged in to place a Cart.",
+                      });
+                    }
+                    e.stopPropagation();
                   }}
                 >
                   <BsBasketFill size="20" />
@@ -589,11 +649,15 @@ const Shop = () => {
     </React.Fragment>
   );
 
+  const cartText = `${countItem.item} items - ₹${countItem.subtotal.toFixed(
+    2
+  )}`;
+
   const DisplayCartPopover = () => {
     const cart_Data = getCart();
-    console.log("data", cart_Data);
+    // console.log("data", cart_Data);
     if (cart_Data.length === 0) {
-      console.log("cartData");
+      // console.log("cartData");
       return (
         <React.Fragment>
           <Box sx={{ padding: "20px" }}>
@@ -655,7 +719,8 @@ const Shop = () => {
                   <h1>{data.name}</h1>
                 ))} */}
                 {cart_Data.map((data) => {
-                  console.log(data.pro_image);
+                  // console.log("KK", data);
+
                   return (
                     <>
                       <Box
@@ -677,7 +742,10 @@ const Shop = () => {
                             height: "60px",
                             borderRadius: "10px",
                           }}
-                          src={data.pro_image}
+                          src={data.pro_image.replace(
+                            "/products/",
+                            "%2Fproducts%2F"
+                          )}
                           alt="crat image"
                         />
                         <Box sx={{ flex: "1 0 auto", pl: 3 }}>
@@ -692,7 +760,7 @@ const Shop = () => {
                               color: "#325240",
                             }}
                           >
-                            {data.pro_qty} x 45.00
+                            {data.pro_qty} x ₹ {data.pro_sell_price}
                           </Typography>
                         </Box>
                         <Box
@@ -705,7 +773,8 @@ const Shop = () => {
                           <AiFillCloseCircle
                             size="20"
                             onClick={() => {
-                              alert("delete product");
+                              deleteCartProduct(data._id);
+                              setDeletecartproduct(deleteCartProduct + 1);
                             }}
                           />
                         </Box>
@@ -871,7 +940,8 @@ const Shop = () => {
                   }}
                 >
                   My Cart
-                  <br />0 items - ₹0.00
+                  <br />
+                  {cartText}
                 </Typography>
                 <BsBasketFill size="25" />
               </Box>

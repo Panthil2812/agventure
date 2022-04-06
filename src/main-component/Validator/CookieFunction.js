@@ -25,17 +25,18 @@ export const deleteCookie = (name) => {
 
 //cart add infomation in cookie
 export const addInfoToCart = (cartinfo) => {
-  let cookie = getCookie("cart");
-  if (getCookie("cart")) {
-    let data = getCart();
-    console.log("cookie data : ", data);
+  let cookie = getCart();
+  // console.log({ cartinfo, cookie });
+  if (cookie.length) {
+    let data = cookie;
+    // console.log("cookie data : ", data);
     data = data
-      .filter((e) => e.id === cartinfo.id)
+      .filter((e) => e._id === cartinfo._id)
       .map((item) => {
         // console.log("call");
         // if (item.id === cartinfo.id) {
-        item.info.qty = item.info.qty + 1;
-        setCookie("cart", JSON.stringify(data), 1);
+        item.pro_qty = item.pro_qty + 1;
+
         // } else {
         //   console.log("calling");
         //   const d = getCart();
@@ -45,30 +46,27 @@ export const addInfoToCart = (cartinfo) => {
         //     1
         //   );
         // }
+        // console.log(" JSON.stringify(data)", JSON.stringify(data));
+        setCookie("cart", JSON.stringify(data), 1);
       });
-    console.log("match data : ", data.length);
+    // console.log("match data : ", data.length);
     if (data.length === 0) {
-      console.log("efrgegret");
-      setCookie("cart", JSON.stringify([cartinfo, ...JSON.parse(cookie)]), 1);
+      // console.log("efrgegret");
+      setCookie("cart", JSON.stringify([cartinfo, ...cookie]), 1);
     }
     // if (matchdata.length === 1) {
     //   console.log("index : ", typeof data);
     // }
     // console.log("filter data : ", matchdata);
   } else {
-    if (!cookie) cookie = "[]";
-    return setCookie(
-      "cart",
-      JSON.stringify([cartinfo, ...JSON.parse(cookie)]),
-      1
-    );
+    setCookie("cart", JSON.stringify([cartinfo, ...cookie]), 1);
   }
 };
 export const deleteCartProduct = (id) => {
   let data = getCart();
-  console.log("info : ", data);
-  data = data.filter((e) => e.id != id);
-  console.log("delete info : ", data);
+  // console.log("info : ", data);
+  data = data.filter((e) => e._id != id);
+  // console.log("delete info : ", data);
   setCookie("cart", JSON.stringify(data), 1);
 };
 export const getCart = () => {
