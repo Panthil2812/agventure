@@ -62,6 +62,31 @@ export const addInfoToCart = (cartinfo) => {
     setCookie("cart", JSON.stringify([cartinfo, ...cookie]), 1);
   }
 };
+export const editCartProducts = (cartinfo, type) => {
+  let cookie = getCart();
+  // console.log({ cartinfo, cookie });
+  if (cookie.length) {
+    let data = cookie;
+    data = data
+      .filter((e) => e._id === cartinfo._id)
+      .map((item) => {
+        if (type) {
+          item.pro_qty = item.pro_qty + 1;
+          setCookie("cart", JSON.stringify(data), 1);
+        } else {
+          item.pro_qty = item.pro_qty - 1;
+          if (item.pro_qty) {
+            setCookie("cart", JSON.stringify(data), 1);
+          } else {
+            deleteCartProduct(cartinfo._id);
+          }
+        }
+      });
+    // if (data.length === 0) {
+    //   setCookie("cart", JSON.stringify([cartinfo, ...cookie]), 1);
+    // }
+  }
+};
 export const deleteCartProduct = (id) => {
   let data = getCart();
   // console.log("info : ", data);

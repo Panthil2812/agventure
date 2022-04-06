@@ -479,88 +479,87 @@ const Shop = () => {
             }}
           >
             {DisplayProducts.map((data) => (
-              <Link
-                href={"/ibid/products/" + data._id}
-                sx={{
-                  textDecoration: "none",
+              // <Link
+              //   href={"/ibid/products/" + data._id}
+              //   sx={{
+              //     textDecoration: "none",
+              //   }}
+              // >
+              <Box
+                className={classes.productCard}
+                key={data._id}
+                onClick={() => {
+                  const link = `/ibid/products/${data._id}`;
+                  window.location.replace(link);
                 }}
               >
                 <Box
-                  className={classes.productCard}
-                  key={data._id}
-                  onClick={() => {}}
-                >
-                  <Box
-                    className={classes.badge}
-                    onClick={(e) => {
-                      // console.log("KKK", data);
+                  className={classes.badge}
+                  onClick={(e) => {
+                    // console.log("KKK", data);
 
-                      // setFlag(true);
-                      if (getCookie("account")) {
-                        if (data.pro_stock === "Out of Stock") {
-                          setState({
-                            open1: true,
-                            message: "Sorry Products is Out of Stock",
-                          });
-                        } else {
-                          addInfoToCart(data);
-                          setDeletecartproduct(Math.random());
-                          setState({
-                            isLogged: true,
-                            open1: true,
-                            message: "Successfully Product Add in Cart",
-                          });
-                        }
-                      } else {
+                    // setFlag(true);
+                    if (getCookie("account")) {
+                      if (data.pro_stock === "Out of Stock") {
                         setState({
                           open1: true,
-                          message:
-                            "Sorry, you must be logged in to place a Cart.",
+                          message: "Sorry Products is Out of Stock",
+                        });
+                      } else {
+                        addInfoToCart(data);
+                        setDeletecartproduct(Math.random());
+                        setState({
+                          isLogged: true,
+                          open1: true,
+                          message: "Successfully Product Add in Cart",
                         });
                       }
-                      e.stopPropagation();
-                    }}
-                  >
-                    <BsBasketFill size="20" />
-                  </Box>
+                    } else {
+                      setState({
+                        open1: true,
+                        message:
+                          "Sorry, you must be logged in to place a Cart.",
+                      });
+                    }
+                    e.stopPropagation();
+                  }}
+                >
+                  <BsBasketFill size="20" />
+                </Box>
 
-                  <Box className={classes.productTumb}>
-                    <img
-                      src={data.pro_image ? data.pro_image : profile}
-                      alt="products_img"
-                    />
-                  </Box>
-                  <Box className={classes.productDetails}>
-                    <h2>{data.pro_name}</h2>
+                <Box className={classes.productTumb}>
+                  <img
+                    src={data.pro_image ? data.pro_image : profile}
+                    alt="products_img"
+                  />
+                </Box>
+                <Box className={classes.productDetails}>
+                  <h2>{data.pro_name}</h2>
 
-                    <Box className={classes.productBottomDetails}>
-                      <Box className={classes.productPrice}>
-                        PRICE :-₹{data.pro_sell_price}
-                        <small>₹{data.pro_mrp}</small>
-                      </Box>
-                      {/* <Box className={classes.productLinks}>{data.pro_unit}</Box> */}
-                      <Box className={classes.productLinks}>
-                        {data.pro_unit}
-                        <br />
-                        {data.pro_stock === "In Stock" && (
-                          <strong
-                            style={{ color: "#325240", paddingTop: "8px" }}
-                          >
-                            {data.pro_stock}
-                          </strong>
-                        )}
-                        {data.pro_stock === "Out of Stock" && (
-                          <strong
-                            style={{ color: "#B10000", paddingTop: "8px" }}
-                          >
-                            {data.pro_stock}
-                          </strong>
-                        )}
-                      </Box>
+                  <Box className={classes.productBottomDetails}>
+                    <Box className={classes.productPrice}>
+                      PRICE :-₹{data.pro_sell_price}
+                      <small>₹{data.pro_mrp}</small>
+                    </Box>
+                    {/* <Box className={classes.productLinks}>{data.pro_unit}</Box> */}
+                    <Box className={classes.productLinks}>
+                      {data.pro_unit}
+                      <br />
+                      {data.pro_stock === "In Stock" && (
+                        <strong style={{ color: "#325240", paddingTop: "8px" }}>
+                          {data.pro_stock}
+                        </strong>
+                      )}
+                      {data.pro_stock === "Out of Stock" && (
+                        <strong style={{ color: "#B10000", paddingTop: "8px" }}>
+                          {data.pro_stock}
+                        </strong>
+                      )}
                     </Box>
                   </Box>
                 </Box>
-              </Link>
+              </Box>
+              // </Link>
             ))}
           </div>
 
