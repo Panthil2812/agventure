@@ -339,7 +339,7 @@ const Products = () => {
     setSearchItem(string);
   };
   const handleOnSelect = (item) => {
-    // setSearchItem(item);
+    setSearchItem(item.pro_name);
   };
   const handleEditDialogSubmit = () => {
     const info = {

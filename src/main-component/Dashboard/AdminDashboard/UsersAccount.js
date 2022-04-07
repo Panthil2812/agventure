@@ -199,7 +199,7 @@ const UsersAccount = () => {
     setSearchItem(string);
   };
   const handleOnSelect = (item) => {
-    // setSearchItem(item);
+    setSearchItem(item.user_name);
   };
   React.useEffect(() => {
     userAccount();
@@ -289,8 +289,8 @@ const UsersAccount = () => {
           borderRadius: "9px",
           boxShadow: "0 8px 8px 0 rgba(0, 0, 0, 0.2)",
           border: "3px solid #325240",
-          height: "7vh",
-          marginBottom: "7vh",
+          // height: "7vh",
+          // marginBottom: "7vh",
           placeholderFontSize: "2.5vh",
           fontSize: "2.5vh",
           color: "#325240",
@@ -435,26 +435,50 @@ const UsersAccount = () => {
           sx={{
             color: "#325240",
             fontWeight: "bold",
-            marginBottom: 4,
+            margin: "0 auto 32px auto",
+            width: "fit-content",
             borderBottom: "2px outset #325240",
             textAlign: "center",
           }}
         >
           USER ACCOUNT
         </Typography>
-        <Box>
+        <Box
+          sx={{
+            bgcolor: "#f0f0f0",
+            boxShadow: "0px 16px 16px 0px rgba(0, 0, 0, 0.2)",
+            border: "1px solid #325240",
+            borderRadius: "8px",
+          }}
+        >
           <Box
             sx={{
-              boxShadow: "0 4px 4px 0 rgba(0, 0, 0, 0.2)",
-              marginLeft: "25%",
-              marginRight: "25%",
+              alignItems: "center",
+              display: "flex",
+              justifyContent: "space-between",
+              padding: "10px",
+              marginLeft: "30px",
+              marginRight: "30px",
             }}
           >
-            {SearchBar}
+            <h3 style={{ color: "#325240" }}>
+              Showing {DisplayProducts.length} Results
+            </h3>
+
+            <Box
+              sx={{
+                minWidth: 420,
+                borderRadius: "18px",
+                boxShadow: "0 16px 16px 0 rgba(0, 0, 0, 0.2)",
+                zIndex: 999,
+              }}
+            >
+              {SearchBar}
+            </Box>
           </Box>
-          <Box sx={{ mt: 7 }}>{showUserAccount()}</Box>
         </Box>
 
+        <Box sx={{ mt: 7 }}>{showUserAccount()}</Box>
         {dialogBox}
         {backDrop()}
         {errorFunction()}

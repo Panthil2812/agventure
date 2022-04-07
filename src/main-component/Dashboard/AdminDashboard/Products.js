@@ -98,7 +98,7 @@ const Products = () => {
     setSearchItem(string);
   };
   const handleOnSelect = (item) => {
-    // setSearchItem(item);
+    setSearchItem(item.pro_name);
   };
   React.useEffect(() => {
     allProducts();
@@ -136,8 +136,8 @@ const Products = () => {
           borderRadius: "9px",
           boxShadow: "0 8px 8px 0 rgba(0, 0, 0, 0.2)",
           border: "3px solid #325240",
-          height: "7vh",
-          marginBottom: "7vh",
+          // height: "7vh",
+          // marginBottom: "7vh",
           placeholderFontSize: "2.5vh",
           fontSize: "2.5vh",
           color: "#325240",
@@ -178,30 +178,37 @@ const Products = () => {
         <Box>
           {DisplayProducts.map((data) => {
             return (
-              <Card
+              <Box
                 sx={{
                   bgcolor: "#f9f9f9",
-                  margin: "8px",
-                  padding: "10px",
+                  margin: 3,
+                  padding: 1,
                   alignItem: "center",
-                  border: "0.5px solid #325240",
-                  boxShadow: "0 4px 4px 0 rgba(0, 0, 0, 0.2)",
+                  border: "2px solid #325240",
+                  borderRadius: "10px",
+                  boxShadow: "0px 16px 16px 0px rgba(0, 0, 0, 0.2)",
+                  transform: "scale(1)",
+                  transition: "all 0.3s ease-in-out",
                   "&:hover": {
-                    bgcolor: "#f1f1f1",
-                    boxShadow: "0 16px 16px 4px rgba(0, 0, 0, 0.2)",
+                    transform: "scale(1.04)",
+                    boxShadow: "0 20px 20px 0 rgba(0, 0, 0, 0.2)",
                   },
                 }}
               >
                 <Box sx={{ flexGrow: 1 }}>
                   <Grid container spacing={2}>
-                    <Grid item xs={1}>
-                      <Avatar
-                        alt="Remy Sharp"
+                    <Grid item xs={1.5} sx={{ alignSelf: "center" }}>
+                      <img
+                        style={{
+                          width: "70px",
+                          height: "65px",
+                          borderRadius: "10px",
+                        }}
                         src={data.pro_image ? data.pro_image : profile}
-                        sx={{ height: "56px", width: "56px" }}
+                        alt="crat products image"
                       />
                     </Grid>
-                    <Grid item xs={4}>
+                    <Grid item xs={2.5} sx={{ alignSelf: "center" }}>
                       <Typography
                         sx={{
                           color: "#325240",
@@ -217,13 +224,13 @@ const Products = () => {
                       </Typography>
                     </Grid>
 
-                    <Grid item xs={3} sx={{ marginTop: "5px" }}>
+                    <Grid item xs={3} sx={{ alignSelf: "center" }}>
                       <Chip
                         label={data.vendor_email_id}
                         sx={{ bgcolor: "#325240", color: "#fff" }}
                       />
                     </Grid>
-                    <Grid item xs={2} sx={{ marginTop: "8px" }}>
+                    <Grid item xs={2} sx={{ alignSelf: "center" }}>
                       {data.pro_category === "Vegetables" && (
                         <Chip
                           label={data.pro_category}
@@ -249,7 +256,7 @@ const Products = () => {
                         />
                       )}
                     </Grid>
-                    <Grid item xs={2} sx={{ marginTop: "8px" }}>
+                    <Grid item xs={2} sx={{ alignSelf: "center" }}>
                       {data.pro_stock === "In Stock" && (
                         <Chip
                           label={data.pro_stock}
@@ -265,7 +272,7 @@ const Products = () => {
                     </Grid>
                   </Grid>
                 </Box>
-              </Card>
+              </Box>
             );
           })}
           <Box sx={{ mt: 7, display: "flex", justifyContent: "center" }}>
@@ -309,19 +316,41 @@ const Products = () => {
         >
           ALL PRODUCTS
         </Typography>
-        <Box>
+        <Box
+          sx={{
+            bgcolor: "#f0f0f0",
+            boxShadow: "0px 16px 16px 0px rgba(0, 0, 0, 0.2)",
+            border: "1px solid #325240",
+            borderRadius: "8px",
+          }}
+        >
           <Box
             sx={{
-              boxShadow: "0 4px 4px 0 rgba(0, 0, 0, 0.2)",
-              marginLeft: "25%",
-              marginRight: "25%",
+              alignItems: "center",
+              display: "flex",
+              justifyContent: "space-between",
+              padding: "10px",
+              marginLeft: "30px",
+              marginRight: "30px",
             }}
           >
-            {SearchBar}
-          </Box>
-          <Box sx={{ mt: 7 }}>{showProducts()}</Box>
-        </Box>
+            <h3 style={{ color: "#325240" }}>
+              Showing {DisplayProducts.length} Results
+            </h3>
 
+            <Box
+              sx={{
+                minWidth: 420,
+                borderRadius: "18px",
+                boxShadow: "0 16px 16px 0 rgba(0, 0, 0, 0.2)",
+                zIndex: 999,
+              }}
+            >
+              {SearchBar}
+            </Box>
+          </Box>
+        </Box>
+        <Box sx={{ mt: 7 }}>{showProducts()}</Box>
         {backDrop()}
       </Box>
     </>

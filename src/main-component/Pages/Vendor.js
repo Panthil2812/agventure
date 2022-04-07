@@ -98,7 +98,7 @@ const Vendor = () => {
     setSearchItem(string);
   };
   const handleOnSelect = (item) => {
-    // setSearchItem(item.pro_name);
+    setSearchItem(item.user_name);
   };
   const callVendorData = () => {
     setFlag(true);

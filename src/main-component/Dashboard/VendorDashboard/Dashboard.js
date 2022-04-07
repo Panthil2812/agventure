@@ -29,14 +29,7 @@ const Dashboard = () => {
     let increasedDate = new Date(startDate.getTime() + increment * 86400000);
     return increasedDate.getDate() + " " + month[increasedDate.getMonth()];
   };
-  const categoryName = [
-    { label: "Dairy Products" },
-    { label: "Fruits & Vegetables" },
-    { label: "Grain" },
-    { label: "nuts" },
-    { label: "pluses" },
-    { label: "Spices and condiments" },
-  ];
+
   const data1 = [
     ["Total Products", "sell per products"],
     ["Dairy Products", parseInt(Math.random() * 100)],

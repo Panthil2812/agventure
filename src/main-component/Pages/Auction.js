@@ -94,7 +94,7 @@ const Auction = () => {
     setSearchItem(string);
   };
   const handleOnSelect = (item) => {
-    // setSearchItem(item.pro_name);
+    setSearchItem(item.pro_name);
   };
   const callVendorData = () => {
     setFlag(true);
