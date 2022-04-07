@@ -699,7 +699,7 @@ const ProductPage = () => {
               class="table-checkout"
             >
               <tbody>
-                <tr class="cart_item">
+                <tr>
                   <td
                     style={{
                       padding: "12px 20px",
@@ -736,7 +736,7 @@ const ProductPage = () => {
                     </Typography>
                   </td>
                 </tr>
-                <tr class="cart_item">
+                <tr>
                   <td
                     style={{
                       padding: "12px 20px",
@@ -774,7 +774,7 @@ const ProductPage = () => {
                     </Typography>
                   </td>
                 </tr>
-                <tr class="cart_item">
+                <tr>
                   <td
                     style={{
                       padding: "12px 20px",
@@ -852,12 +852,12 @@ const ProductPage = () => {
                 height: "450px",
                 borderRadius: "5%",
                 border: "4px solid #f9f9f9",
-                boxShadow: "0 8px 8px 0 rgba(0, 0, 0, 0.2)",
-                // overflow: "hidden",
+                boxShadow: "0 18px 18px 8px rgba(0, 0, 0, 0.2)",
                 transform: "scale(1)",
-                transition: "all 0.5s ease-in-out",
-                "& :hover": {
-                  transform: "scale(1.07)",
+                transition: "all 0.3s ease-in-out",
+                "&:hover": {
+                  transform: "scale(1.04)",
+                  boxShadow: "0 20px 20px 0 rgba(0, 0, 0, 0.2)",
                 },
               }}
             />

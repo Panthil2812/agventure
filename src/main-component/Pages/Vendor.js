@@ -183,6 +183,7 @@ const Vendor = () => {
       </div>
     );
   };
+
   const SearchBar = (
     <React.Fragment>
       <ReactSearchAutocomplete
