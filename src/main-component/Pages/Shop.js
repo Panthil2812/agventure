@@ -541,9 +541,9 @@ const Shop = () => {
 
                   <Box className={classes.productBottomDetails}>
                     <Box className={classes.productPrice}>
-                      PRICE :-₹{data.pro_sell_price.toFixed(2)}
+                      Price : {data.pro_sell_price.toFixed(2)}₹
                       <br />
-                      <small>₹{data.pro_mrp.toFixed(2)}</small>
+                      <small>{data.pro_mrp.toFixed(2)}</small>₹
                     </Box>
                     {/* <Box className={classes.productLinks}>{data.pro_unit}</Box> */}
                     <Box className={classes.productLinks}>

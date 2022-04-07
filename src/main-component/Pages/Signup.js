@@ -33,7 +33,7 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Copyright from "../sub-component/Copyright";
 import ValidatorSignup from "../Validator/ValidatorSignup";
 
-// import { useNavigate } from "react-router-dom";
+import { setCookie } from "../Validator/CookieFunction";
 import validator from "validator";
 import { enCrypt } from "../Validator/crypto";
 
@@ -315,6 +315,7 @@ export default function SignInSide() {
                 message: errorMessage.message,
               });
               setFlag(false);
+              setCookie("city", Data.city, 1);
               setTimeout(() => {
                 //navigate("/signin");
                 window.location.replace("/signin");

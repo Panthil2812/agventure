@@ -5,7 +5,7 @@ import { BsBasketFill } from "react-icons/bs";
 import { AiFillCloseCircle } from "react-icons/ai";
 import { IoMdArrowDropup } from "react-icons/io";
 import profile from "../../assets/Images/profile.png";
-import { styled } from "@mui/material/styles";
+// import { styled } from "@mui/material/styles";
 import {
   Popover,
   Link,
@@ -32,58 +32,17 @@ import {
   addInfoToCart,
   deleteCartProduct,
 } from "../Validator/CookieFunction";
-import { ReactSearchAutocomplete } from "react-search-autocomplete";
-// import ShopProducts from "../sub-component/ShopProducts";
 import Footer from "../sub-component/Footer";
+import ProductInfo from "../sub-component/productInfo";
 import axios from "axios";
 import apples from "../../assets/Images/apples.png";
 import nofound from "../../assets/Images/nofound.png";
-const CssFormControl = styled(FormControl)({
-  "& .MuiFormLabel-root": {
-    color: "#fff",
-  },
-  "& .css-1sumxir-MuiFormLabel-root-MuiInputLabel-root": {
-    color: "#f9f9f9",
-  },
-  "& .css-1sumxir-MuiFormLabel-root-MuiInputLabel-root.Mui": {
-    color: "#f9f9f9",
-  },
-  "& .css-14s5rfu-MuiFormLabel-root-MuiInputLabel-root": {
-    color: "f9f9f9",
-  },
-  "& .MuiInputBase-root": {
-    border: "none",
-    color: "#ddf6e4",
-  },
-  "& .MuiOutlinedInput-root": {
-    "& fieldset": {
-      border: "none",
-    },
-  },
-});
-const meunName = [
-  { label: "Ahmedabad" },
-  { label: "Bangalore" },
-  { label: "Delhi" },
-  { label: "Mumbai" },
-  { label: "Rajkot" },
-  { label: "Surat" },
-];
-const SortName = [
-  { label: "Default Sorting" },
-  { label: "Sort by Latest" },
-  { label: "Sort by Price: Low to High" },
-  { label: "Sort by Price: High to Low" },
-];
-const categoryName = [
-  { label: "All Products" },
-  { label: "Dairy Products" },
-  { label: "Fruits & Vegetables" },
-  { label: "Grain" },
-  { label: "nuts" },
-  { label: "pluses" },
-  { label: "Spices and condiments" },
-];
+import { styled } from "@mui/system";
+import TabsUnstyled from "@mui/base/TabsUnstyled";
+import TabsListUnstyled from "@mui/base/TabsListUnstyled";
+import TabPanelUnstyled from "@mui/base/TabPanelUnstyled";
+import { buttonUnstyledClasses } from "@mui/base/ButtonUnstyled";
+import TabUnstyled, { tabUnstyledClasses } from "@mui/base/TabUnstyled";
 const useStyles = makeStyles(() => ({
   menuPaper: {
     maxHeight: 300,
@@ -93,7 +52,7 @@ const useStyles = makeStyles(() => ({
   },
   productCard: {
     width: "252px",
-    margin: "20px",
+    margin: "12px",
     padding: "10px",
     position: "relative",
     background: "#f9f9f9",
@@ -200,35 +159,6 @@ const useStyles = makeStyles(() => ({
     color: "#325240",
   },
 }));
-const Css2FormControl = styled(FormControl)({
-  "& .MuiFormControlLabel-label": {
-    color: "#325240",
-  },
-  "::-webkit-scrollbar": {
-    display: "none",
-  },
-  "& label.Mui-focused": {
-    color: "#325240",
-  },
-  "& .MuiInput-underline:after": {
-    borderWidth: "2px",
-    borderBottomColor: "#325240",
-  },
-  "& .MuiOutlinedInput-root": {
-    "& fieldset": {
-      borderWidth: "2px",
-      borderColor: "#325240",
-    },
-    "&:hover fieldset": {
-      borderWidth: "2px",
-      borderColor: "#325240",
-    },
-    "&.Mui-focused fieldset": {
-      borderWidth: "2px",
-      borderColor: "#325240",
-    },
-  },
-});
 const ScrollBox = styled(Box)({
   "::-webkit-scrollbar": {
     width: "4px",
@@ -242,6 +172,59 @@ const ScrollBox = styled(Box)({
     background: "#555",
   },
 });
+
+const Tab = styled(TabUnstyled)`
+  font-family: IBM Plex Sans, sans-serif;
+  color: white;
+  cursor: pointer;
+  font-size: 0.875rem;
+  font-weight: bold;
+  background-color: transparent;
+  width: 100%;
+  padding: 24px;
+  margin: 6px 6px;
+  border: none;
+  border-radius: 5px;
+  display: flex;
+  justify-content: center;
+
+  &:hover {
+    background-color: #325240;
+  }
+
+  &:focus {
+    color: #f9f9f9;
+    border-radius: 3px;
+    outline: 2px solid #f9f9f9;
+    outline-offset: 2px;
+  }
+
+  &.${tabUnstyledClasses.selected} {
+    background-color: #f9f9f9;
+    color: #325240;
+  }
+
+  &.${buttonUnstyledClasses.disabled} {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+`;
+
+const TabPanel = styled(TabPanelUnstyled)`
+  margin-top: 30px;
+  margin-bottom: 90px;
+`;
+
+const TabsList = styled(TabsListUnstyled)`
+  min-width: 320px;
+  background-color: #325240;
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  align-content: space-between;
+`;
+
 const ProductPage = () => {
   const { id } = useParams();
   const classes = useStyles();
@@ -258,6 +241,7 @@ const ProductPage = () => {
 
   const [ProductData, setProductData] = React.useState([]);
   const [VendorData, setVendorData] = React.useState([]);
+  const [RelatedData, setRelatedData] = React.useState([]);
   const [flag, setFlag] = React.useState(false);
   const [deletecartproduct, setDeletecartproduct] = React.useState(0);
   const [countItem, setCountItem] = React.useState({
@@ -354,6 +338,7 @@ const ProductPage = () => {
         if (response.data.status === 200) {
           setProductData(response.data.product);
           setVendorData(response.data.data);
+          setRelatedData(response.data.related);
           setFlag(false);
           return 0;
         }
@@ -386,7 +371,7 @@ const ProductPage = () => {
   React.useEffect(() => {
     allProducts();
   }, []);
-  const displayVendorProduct = () => {
+  const displayProducts = (Data) => {
     return (
       <Box>
         <div
@@ -398,7 +383,7 @@ const ProductPage = () => {
             // justifyContent: "center",
           }}
         >
-          {VendorData.map((data) => (
+          {Data.map((data) => (
             <Box
               className={classes.productCard}
               key={data._id}
@@ -681,141 +666,351 @@ const ProductPage = () => {
       );
     }
   };
+  const ProductsDetailTab = () => {
+    return (
+      <TabsUnstyled defaultValue={0}>
+        <TabsList>
+          <Tab>DESCRIPTION</Tab>
+          <Tab>VENDOR INFO</Tab>
+          <Tab>MORE FROM VENDOR</Tab>
+        </TabsList>
+        <TabPanel value={0}>
+          <Typography
+            sx={{ color: "#325240", fontSize: "20px", fontWeight: "300" }}
+          >
+            {ProductData.ldescription} {ProductData.ldescription}
+          </Typography>
+        </TabPanel>
+        <TabPanel value={1}>
+          <Box>
+            <table
+              style={{
+                margin: " 0 -1px 24px 0",
+                textAlign: "left",
+                width: "100%",
+                maxWidth: "80%",
+                margin: "auto",
+                borderCollapse: "separate",
+                border: "none",
+                borderSpacing: "0px",
+                border: "2px solid #325240",
+                borderRadius: "10px",
+              }}
+              class="table-checkout"
+            >
+              <tbody>
+                <tr class="cart_item">
+                  <td
+                    style={{
+                      padding: "12px 20px",
+                      // border: "1px solid #325240",
+                    }}
+                  >
+                    <Typography
+                      sx={{
+                        color: "#325240",
+                        fontSize: "18px",
+                        fontWeight: "bold",
+                        float: "Left",
+                      }}
+                    >
+                      Vendor Name
+                    </Typography>
+                  </td>
+                  <td
+                    style={{
+                      padding: "12px 20px",
+                      borderLeft: "2px solid #325240",
+                    }}
+                  >
+                    <Typography
+                      sx={{
+                        color: "#325240",
+                        fontSize: "18px",
+                        fontWeight: "bold",
+                        marginLeft: "auto",
+                        float: "Left",
+                      }}
+                    >
+                      {ProductData.vendor_name}
+                    </Typography>
+                  </td>
+                </tr>
+                <tr class="cart_item">
+                  <td
+                    style={{
+                      padding: "12px 20px",
+                      borderTop: "2px solid #325240",
+                    }}
+                  >
+                    <Typography
+                      sx={{
+                        color: "#325240",
+                        fontSize: "18px",
+                        fontWeight: "bold",
+                        float: "Left",
+                      }}
+                    >
+                      Email Id
+                    </Typography>
+                  </td>
+                  <td
+                    style={{
+                      padding: "12px 20px",
+                      borderLeft: "2px solid #325240",
+                      borderTop: "2px solid #325240",
+                    }}
+                  >
+                    <Typography
+                      sx={{
+                        color: "#325240",
+                        fontSize: "18px",
+                        fontWeight: "bold",
+                        marginLeft: "auto",
+                        float: "Left",
+                      }}
+                    >
+                      {ProductData.vendor_email_id}
+                    </Typography>
+                  </td>
+                </tr>
+                <tr class="cart_item">
+                  <td
+                    style={{
+                      padding: "12px 20px",
+                      borderTop: "2px solid #325240",
+                    }}
+                  >
+                    <Typography
+                      sx={{
+                        color: "#325240",
+                        fontSize: "18px",
+                        fontWeight: "bold",
+                        float: "Left",
+                      }}
+                    >
+                      Contact No
+                    </Typography>
+                  </td>
+                  <td
+                    style={{
+                      padding: "12px 20px",
+                      borderLeft: "2px solid #325240",
+                      borderTop: "2px solid #325240",
+                    }}
+                  >
+                    <Typography
+                      sx={{
+                        color: "#325240",
+                        fontSize: "18px",
+                        fontWeight: "bold",
+                        marginLeft: "auto",
+                        float: "Left",
+                      }}
+                    >
+                      +91 {ProductData.vendor_phone}
+                    </Typography>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </Box>
+        </TabPanel>
+        <TabPanel value={2}>
+          <Box sx={{ width: "100%", maxWidth: "98%", margin: "auto" }}>
+            {displayProducts(VendorData)}
+          </Box>
+        </TabPanel>
+      </TabsUnstyled>
+    );
+  };
   const productDetailsCard = () => {
     return (
-      <Box
-        sx={{
-          display: "flex",
-          p: 4,
-          width: "100%",
-          maxWidth: "90%",
-          margin: "auto",
-          alignItems: "center",
-          justifyContent: "space-around",
-          // border: "2px solid #fff",
-          borderRadius: "20px",
-        }}
-      >
-        <Avatar
-          src={ProductData.pro_image}
-          alt="products image"
-          sx={{
-            width: "400px",
-            height: "450px",
-            borderRadius: "5%",
-            border: "4px solid #f9f9f9",
-            boxShadow: "0 8px 8px 0 rgba(0, 0, 0, 0.2)",
-            // overflow: "hidden",
-            transform: "scale(1)",
-            transition: "all 0.5s ease-in-out",
-            "& :hover": {
-              transform: "scale(1.07)",
-            },
-          }}
-        />
+      <div>
         <Box
           sx={{
-            width: "600px",
+            p: 4,
+            width: "100%",
+            maxWidth: "90%",
+            margin: "auto",
+            alignItems: "center",
+            borderRadius: "20px",
           }}
         >
-          <Typography
-            sx={{ fontSize: "32px", fontWeight: "600", color: "#325240" }}
-          >
-            {ProductData.pro_name}
-          </Typography>
-          <Typography
+          <Box
             sx={{
-              fontSize: "18px",
-              fontWeight: "300",
-              color: "#325240",
-              mt: 2,
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-around",
             }}
           >
-            The Ragdoll is a cat breed with blue eyes and a distinct colorpoint
-            coat. It is a large and muscular semi-longhair cat with a soft and
-            silky coat.
-          </Typography>
-          <Typography
-            sx={{
-              fontSize: "16px",
-              fontWeight: "600",
-              color: "#325240",
-              mt: 2,
-            }}
-          >
-            Category : {ProductData.pro_category}
-          </Typography>
-          <Typography
-            sx={{
-              fontSize: "22px",
-              fontWeight: "600",
-              color: "#325240",
-              mt: 1,
-            }}
-          >
-            Price : ₹ {ProductData.pro_sell_price} /-
-          </Typography>
-          <Typography
-            sx={{
-              fontSize: "16px",
-              fontWeight: "200",
-              color: "#325240",
-              mt: 0,
-            }}
-          >
-            Unit : {ProductData.pro_unit}
-          </Typography>
-          <Typography
-            sx={{
-              fontSize: "16px",
-              fontWeight: "200",
-              color: "#325240",
-              mt: 1,
-            }}
-          >
-            HSN : 12345678
-          </Typography>
-          <Typography
-            sx={{
-              fontSize: "16px",
-              fontWeight: "300",
-              color: "#325240",
-              mt: 1,
-              pb: 1,
-              borderBottom: "2px solid #fff",
-            }}
-          >
-            {ProductData.pro_stock === "In Stock" ? (
-              <Chip
-                label="In Stock"
-                sx={{ color: "#f9f9f9", bgcolor: "#325240" }}
-              />
-            ) : (
-              <Chip
-                label="Out Of Stock"
-                sx={{ color: "#f9f9f9", bgcolor: "#B10000" }}
-              />
-            )}
-          </Typography>
+            <Avatar
+              src={ProductData.pro_image}
+              alt="products image"
+              sx={{
+                width: "400px",
+                height: "450px",
+                borderRadius: "5%",
+                border: "4px solid #f9f9f9",
+                boxShadow: "0 8px 8px 0 rgba(0, 0, 0, 0.2)",
+                // overflow: "hidden",
+                transform: "scale(1)",
+                transition: "all 0.5s ease-in-out",
+                "& :hover": {
+                  transform: "scale(1.07)",
+                },
+              }}
+            />
+            <Box
+              sx={{
+                width: "600px",
+              }}
+            >
+              <Typography
+                sx={{ fontSize: "32px", fontWeight: "600", color: "#325240" }}
+              >
+                {ProductData.pro_name}
+              </Typography>
+              <Typography
+                sx={{
+                  fontSize: "18px",
+                  fontWeight: "300",
+                  color: "#325240",
+                  mt: 2,
+                }}
+              >
+                {ProductData.sdescription}
+              </Typography>
+              <Typography
+                sx={{
+                  fontSize: "16px",
+                  fontWeight: "600",
+                  color: "#325240",
+                  mt: 2,
+                }}
+              >
+                Category : {ProductData.pro_category}
+              </Typography>
+              <Typography
+                sx={{
+                  fontSize: "22px",
+                  fontWeight: "600",
+                  color: "#325240",
+                  mt: 1,
+                }}
+              >
+                Price : ₹ {ProductData.pro_sell_price} /-
+              </Typography>
+              <Typography
+                sx={{
+                  fontSize: "16px",
+                  fontWeight: "200",
+                  color: "#325240",
+                  mt: 0,
+                }}
+              >
+                Unit : {ProductData.pro_unit}
+              </Typography>
+              <Typography
+                sx={{
+                  fontSize: "16px",
+                  fontWeight: "200",
+                  color: "#325240",
+                  mt: 1,
+                }}
+              >
+                HSN : 12345678
+              </Typography>
+              <Typography
+                sx={{
+                  fontSize: "16px",
+                  fontWeight: "300",
+                  color: "#325240",
+                  mt: 1,
+                  pb: 1,
+                  borderBottom: "2px solid #fff",
+                }}
+              >
+                {ProductData.pro_stock === "In Stock" ? (
+                  <Chip
+                    label="In Stock"
+                    sx={{ color: "#f9f9f9", bgcolor: "#325240" }}
+                  />
+                ) : (
+                  <Chip
+                    label="Out Of Stock"
+                    sx={{ color: "#f9f9f9", bgcolor: "#B10000" }}
+                  />
+                )}
+              </Typography>
 
-          <Button
-            sx={{
-              color: "#f9f9f9",
-              bgcolor: "#325240",
-              border: "2px solid transparent",
-              mt: 2,
-              p: 1,
-              "&: hover": {
-                border: "2px solid #325240",
-                color: "#325240",
-              },
-            }}
-          >
-            <BsBasketFill size="25" />
-            <Typography sx={{ ml: 2, mr: 2 }}>add to cart</Typography>
-          </Button>
+              <Button
+                sx={{
+                  color: "#f9f9f9",
+                  bgcolor: "#325240",
+                  border: "2px solid transparent",
+                  mt: 2,
+                  p: 1,
+                  "&: hover": {
+                    border: "2px solid #325240",
+                    color: "#325240",
+                  },
+                }}
+                onClick={() => {
+                  if (getCookie("account")) {
+                    if (getCookie("city") === ProductData.vendor_city) {
+                      if (ProductData.pro_stock === "Out of Stock") {
+                        setState({
+                          open1: true,
+                          message: "Sorry Products is Out of Stock",
+                        });
+                      } else {
+                        addInfoToCart(ProductData);
+                        setDeletecartproduct(Math.random());
+                        setState({
+                          isLogged: true,
+                          open1: true,
+                          message: "Successfully Product Add in Cart",
+                        });
+                      }
+                    } else {
+                      setState({
+                        open1: true,
+                        message:
+                          "Sorry, you must be products select in your city.",
+                      });
+                    }
+                  } else {
+                    setState({
+                      open1: true,
+                      message: "Sorry, you must be logged in to place a Cart.",
+                    });
+                  }
+                }}
+              >
+                <BsBasketFill size="25" />
+                <Typography sx={{ ml: 2, mr: 2 }}>add to cart</Typography>
+              </Button>
+            </Box>
+          </Box>
         </Box>
-      </Box>
+        <Box sx={{ mt: 7, m: 2 }}>{ProductsDetailTab()}</Box>
+        <Typography
+          sx={{
+            m: 5,
+            color: "#325240",
+            fontSize: "24px",
+            fontWeight: "600",
+            textAlign: "center",
+            borderBottom: "2px solid #325240",
+          }}
+        >
+          Related Products{" "}
+        </Typography>
+        <Box sx={{ mt: 7, width: "100%", maxWidth: "95%", margin: "auto" }}>
+          {displayProducts(RelatedData)}
+        </Box>
+      </div>
     );
   };
   return (
@@ -860,7 +1055,7 @@ const ProductPage = () => {
           id="body-testing"
           onClick={handleCartClick}
           sx={{
-            marginRight: "30px",
+            marginLeft: "30px",
 
             padding: "5px",
             color: "#ddf6e4",
@@ -908,6 +1103,7 @@ const ProductPage = () => {
           </Box>
         </Popover>
       </Box>
+
       <Box
         sx={{
           // height: "50%",
@@ -918,6 +1114,10 @@ const ProductPage = () => {
         }}
       >
         {productDetailsCard()}
+        <Box>
+          {backDrop()}
+          {messageFunction()}
+        </Box>
         <Footer />
       </Box>
     </>

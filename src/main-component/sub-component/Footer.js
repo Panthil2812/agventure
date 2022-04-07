@@ -257,12 +257,12 @@ const Footer = () => {
                       Contact Us
                     </Link>
                   </div>
-                  <div style={{ margin: "5px" }}>
+                  {/* <div style={{ margin: "5px" }}>
                     {" "}
                     <Link className={classes.link} to="/blog">
                       Blog
                     </Link>
-                  </div>
+                  </div> */}
                 </div>
               </Grid>
               <Grid
