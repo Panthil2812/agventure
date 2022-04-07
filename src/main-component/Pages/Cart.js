@@ -75,7 +75,7 @@ const Cart = () => {
                     borderRadius: "10px",
                     margin: 3,
                     padding: 1,
-                    boxShadow: "0px 16px 16px 0px rgba(0, 0, 0, 0.2)",
+                    boxShadow: "0px 4px 4px 0px rgba(0, 0, 0, 0.2)",
                   }}
                 >
                   <img
@@ -233,6 +233,112 @@ const Cart = () => {
               );
             })}
           </Box>
+          <Box sx={{ padding: "20px" }}>
+            <Box
+              sx={{
+                marginRight: 3,
+                bgcolor: "#f9f9f9",
+                border: "2px solid #325240",
+                borderRadius: "10px",
+                width: "100%",
+                maxWidth: "50%",
+                color: "#325240",
+                marginLeft: "auto",
+              }}
+            >
+              <Box
+                sx={{
+                  display: "flex",
+                }}
+              >
+                <Typography
+                  sx={{
+                    fontSize: "22px",
+                    fontWeight: "600",
+                    // textAlign: "center",
+                    p: 2,
+                    width: "100%",
+                    maxWidth: "50%",
+                  }}
+                >
+                  Total Item
+                </Typography>
+                <Typography
+                  sx={{
+                    fontSize: "22px",
+                    fontWeight: "400",
+                    p: 2,
+                    borderLeft: "2px solid #325240",
+                    textAlign: "right",
+                    width: "100%",
+                    maxWidth: "50%",
+                  }}
+                >
+                  {countItem.item}
+                </Typography>
+              </Box>
+              <Box
+                sx={{
+                  display: "flex",
+                  // justifyContent: "space-around",
+                  borderTop: "2px solid #325240",
+                }}
+              >
+                <Typography
+                  sx={{
+                    fontSize: "22px",
+                    fontWeight: "600",
+                    // textAlign: "center",
+                    p: 2,
+                    width: "100%",
+                    maxWidth: "50%",
+                  }}
+                >
+                  Total Amount
+                </Typography>
+                <Typography
+                  sx={{
+                    fontSize: "22px",
+                    fontWeight: "400",
+                    p: 2,
+                    textAlign: "right",
+                    borderLeft: "2px solid #325240",
+                    width: "100%",
+                    maxWidth: "50%",
+                  }}
+                >
+                  ₹{countItem.subtotal}
+                </Typography>
+              </Box>
+              <Box
+                sx={{
+                  display: "flex",
+                  // justifyContent: "space-around",
+                  borderTop: "2px solid #325240",
+                  p: 2,
+                }}
+              >
+                <Button
+                  sx={{
+                    bgcolor: "#325240",
+                    color: "#f9f9f9",
+                    marginLeft: "auto",
+                    border: "2px solid transparent",
+                    "&:hover": {
+                      color: "#325240",
+                      bgcolor: "#f9f9f9",
+                      border: "2px solid #325240",
+                    },
+                  }}
+                  onClick={() => {
+                    window.location.replace("/ibid/checkout");
+                  }}
+                >
+                  proceed to checkout
+                </Button>
+              </Box>
+            </Box>
+          </Box>
         </div>
       );
     } else {
@@ -303,13 +409,11 @@ const Cart = () => {
         </Breadcrumbs>
       </Box>
 
-      <Box
-        sx={{
-          height: "100vh",
-        }}
-      >
-        {displayCartProducts()}
-      </Box>
+      <Box>{displayCartProducts()}</Box>
+
+      {/*  */}
+
+      {/*  */}
       <Footer />
     </>
   );

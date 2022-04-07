@@ -130,7 +130,7 @@ const useStyles = makeStyles(() => ({
     width: "100%",
     height: "270px",
     borderRadius: "5%",
-    boxShadow: "0 8px 8px 0 rgba(0, 0, 0, 0.2)",
+    boxShadow: "0 8px 8px 4px rgba(0, 0, 0, 0.2)",
     border: "2px solid #325240",
     overflow: "hidden",
     "& img": {
@@ -495,18 +495,26 @@ const Shop = () => {
 
                     // setFlag(true);
                     if (getCookie("account")) {
-                      if (data.pro_stock === "Out of Stock") {
-                        setState({
-                          open1: true,
-                          message: "Sorry Products is Out of Stock",
-                        });
+                      if (getCookie("city") === data.vendor_city) {
+                        if (data.pro_stock === "Out of Stock") {
+                          setState({
+                            open1: true,
+                            message: "Sorry Products is Out of Stock",
+                          });
+                        } else {
+                          addInfoToCart(data);
+                          setDeletecartproduct(Math.random());
+                          setState({
+                            isLogged: true,
+                            open1: true,
+                            message: "Successfully Product Add in Cart",
+                          });
+                        }
                       } else {
-                        addInfoToCart(data);
-                        setDeletecartproduct(Math.random());
                         setState({
-                          isLogged: true,
                           open1: true,
-                          message: "Successfully Product Add in Cart",
+                          message:
+                            "Sorry, you must be products select in your city.",
                         });
                       }
                     } else {
@@ -616,9 +624,7 @@ const Shop = () => {
 
   const DisplayCartPopover = () => {
     const cart_Data = getCart();
-    // console.log("data", cart_Data);
-    if (cart_Data.length === 0) {
-      // console.log("cartData");
+    if (!cart_Data.length) {
       return (
         <React.Fragment>
           <Box sx={{ padding: "20px" }}>
@@ -654,10 +660,6 @@ const Shop = () => {
         </React.Fragment>
       );
     } else {
-      // console.log("diaplay", cartData);
-      // cartData.map((item) => {
-      //   console.log("id", item.id);
-      // });
       return (
         <React.Fragment>
           <Box sx={{ padding: "20px" }}>
@@ -675,13 +677,7 @@ const Shop = () => {
             </Typography>
             <Box sx={{ borderBottom: "2px solid #325240" }}>
               <ScrollBox sx={{ overflow: "auto", maxHeight: "232px" }}>
-                {/* {console.log(cart_Data)} */}
-                {/* {cart_Data.map((data) => (
-                  <h1>{data.name}</h1>
-                ))} */}
                 {cart_Data.map((data) => {
-                  // console.log("KK", data);
-
                   return (
                     <>
                       <Box
@@ -702,6 +698,7 @@ const Shop = () => {
                             width: "60px",
                             height: "60px",
                             borderRadius: "10px",
+                            border: "1px solid #325240",
                           }}
                           src={data.pro_image.replace(
                             "/products/",
@@ -709,7 +706,9 @@ const Shop = () => {
                           )}
                           alt="crat image"
                         />
-                        <Box sx={{ flex: "1 0 auto", pl: 3 }}>
+                        <Box
+                          sx={{ flex: "1 0 auto", pl: 3, alignSelf: "center" }}
+                        >
                           <Typography
                             sx={{ fontSize: "18px", color: "#325240" }}
                           >
@@ -727,7 +726,7 @@ const Shop = () => {
                         <Box
                           sx={{
                             display: "flex",
-                            alignItems: "center",
+                            alignSelf: "center",
                             color: "#B10000",
                           }}
                         >
@@ -772,6 +771,8 @@ const Shop = () => {
                   sx={{
                     color: "#f9f9f9",
                     bgcolor: "#325240",
+                    border: "2px solid transparent",
+
                     "&: hover": {
                       border: "2px solid #325240",
                       color: "#325240",
@@ -793,6 +794,8 @@ const Shop = () => {
                     color: "#f9f9f9",
                     marginTop: "10px",
                     bgcolor: "#325240",
+                    border: "2px solid transparent",
+
                     "&: hover": {
                       border: "2px solid #325240",
                       color: "#325240",
@@ -956,13 +959,11 @@ const Shop = () => {
             }}
           >
             <Breadcrumbs aria-label="breadcrumb" separator="›">
-              <Link underline="hover" sx={{ color: "#325240" }} href="/">
+              {/* <Link underline="hover" sx={{ color: "#325240" }} href="/shop">
                 <h2>Home</h2>
-              </Link>
-              <Typography
-                sx={{ color: "#325240", fontSize: "24px", fontWeight: "bold" }}
-              >
-                Shop
+              </Link> */}
+              <Typography sx={{ color: "#325240" }}>
+                <h2>Shop</h2>
               </Typography>
             </Breadcrumbs>
           </Box>
@@ -1008,6 +1009,7 @@ const Shop = () => {
                         value={searchCategory}
                         disableClearable
                         onChange={(event, value) => {
+                          setPage(1);
                           setSearchCategory(value.label);
                         }}
                         renderInput={(params) => (

@@ -41,13 +41,13 @@ const Dashboard = () => {
   ];
   const data2 = [
     ["date", "sales per day"],
-    [incrementDate(1), 1500],
-    [incrementDate(2), 4358],
-    [incrementDate(3), 4364],
-    [incrementDate(4), 1245],
-    [incrementDate(5), 3234],
-    [incrementDate(6), 4547],
-    [incrementDate(7), 8436],
+    [incrementDate(1), parseInt(Math.random() * 10000)],
+    [incrementDate(2), parseInt(Math.random() * 10000)],
+    [incrementDate(3), parseInt(Math.random() * 10000)],
+    [incrementDate(4), parseInt(Math.random() * 10000)],
+    [incrementDate(5), parseInt(Math.random() * 10000)],
+    [incrementDate(6), parseInt(Math.random() * 10000)],
+    [incrementDate(7), parseInt(Math.random() * 10000)],
   ];
 
   const option1 = {

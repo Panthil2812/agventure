@@ -300,7 +300,7 @@ const UsersAccount = () => {
     </React.Fragment>
   );
   const showUserAccount = () => {
-    if (currentpageData.length === 0) {
+    if (!currentpageData.length) {
       return (
         <Box sx={{ textAlign: "center" }}>
           <img alt="image" src={nofound} />
@@ -331,12 +331,13 @@ const UsersAccount = () => {
         <Box>
           {DisplayProducts.map((data) => {
             return (
-              <Card
+              <Box
                 sx={{
                   bgcolor: "#f9f9f9",
-                  margin: "8px",
+                  margin: 3,
                   padding: "10px",
                   alignItem: "center",
+                  borderRadius: "10px",
                   border: "1.5px solid #325240",
                   boxShadow: "0 4px 4px 0 rgba(0, 0, 0, 0.2)",
                   "&:hover": {
@@ -349,12 +350,13 @@ const UsersAccount = () => {
                   <Grid container spacing={3}>
                     <Grid item xs={1}>
                       <Avatar
+                        variant="rounded"
                         alt="Remy Sharp"
                         src={data.profile_pic ? data.profile_pic : profile}
                         sx={{ height: "50px", width: "50px" }}
                       />
                     </Grid>
-                    <Grid item xs={7}>
+                    <Grid item xs={7} sx={{ alignSelf: "center" }}>
                       <Typography
                         sx={{
                           color: "#325240",
@@ -367,7 +369,7 @@ const UsersAccount = () => {
                         <Typography>{data.email_id}</Typography>
                       </Typography>
                     </Grid>
-                    <Grid item xs={3} sx={{ marginTop: "8px" }}>
+                    <Grid item xs={3} sx={{ alignSelf: "center" }}>
                       {data.type ? (
                         <Chip
                           label="Vendor"
@@ -387,7 +389,7 @@ const UsersAccount = () => {
                       {/* <Chip label="Vendor" color="warning" />
                        */}
                     </Grid>
-                    <Grid item xs={1} sx={{ marginTop: "5px" }}>
+                    <Grid item xs={1} sx={{ alignSelf: "center" }}>
                       <IconButton
                         color="error"
                         onClick={() => {
@@ -399,7 +401,7 @@ const UsersAccount = () => {
                     </Grid>
                   </Grid>
                 </Box>
-              </Card>
+              </Box>
             );
           })}
           <Box sx={{ mt: 7, display: "flex", justifyContent: "center" }}>
@@ -462,7 +464,7 @@ const UsersAccount = () => {
             }}
           >
             <h3 style={{ color: "#325240" }}>
-              Showing {DisplayProducts.length} Results
+              Showing {userData.length} Results
             </h3>
 
             <Box

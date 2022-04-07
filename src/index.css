@@ -15,3 +15,7 @@ code {
 #simple-popover .ibid-body{
   padding-right:0px !important;
 }
+table-checkout .cart_item:first-child td {
+  border-top: 1px solid #ebe9eb;
+
+}

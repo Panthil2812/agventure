@@ -22,6 +22,7 @@ const Title = styled.h1`
 const Content = styled.p`
   color: #325240;
 `;
+
 const myArray = [
   organic,
   organic1,

@@ -104,11 +104,11 @@ const Admin = () => {
         }}
       >
         <Breadcrumbs aria-label="breadcrumb" separator="›">
-          <Link underline="hover" color="inherit" href="/">
+          {/* <Link underline="hover" color="inherit" href="/">
             <h2>Home</h2>
-          </Link>
-          <Typography sx={{ fontSize: "24px", fontWeight: "bold" }}>
-            My Dashbord
+          </Link> */}
+          <Typography sx={{ color: "#325240" }}>
+            <h2>Admin Dashbord</h2>
           </Typography>
         </Breadcrumbs>
       </Box>

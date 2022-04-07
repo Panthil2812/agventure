@@ -32,18 +32,18 @@ const Dashboard = () => {
   const data1 = [
     ["Total User", "User Records"],
     ["Customer", parseInt(Math.random() * 100)],
-    ["Vendor", parseInt(Math.random() * 100)],
-    ["Admin", parseInt(Math.random() * 50)],
+    ["Vendor", parseInt(Math.random() * 60)],
+    ["Admin", parseInt(Math.random() * 20)],
   ];
   const data2 = [
     ["date", "sales per day"],
-    [incrementDate(1), 15000],
-    [incrementDate(2), 83580],
-    [incrementDate(3), 43640],
-    [incrementDate(4), 62450],
-    [incrementDate(5), 32340],
-    [incrementDate(6), 65470],
-    [incrementDate(7), 18436],
+    [incrementDate(1), parseInt(Math.random() * 10000)],
+    [incrementDate(2), parseInt(Math.random() * 10000)],
+    [incrementDate(3), parseInt(Math.random() * 10000)],
+    [incrementDate(4), parseInt(Math.random() * 10000)],
+    [incrementDate(5), parseInt(Math.random() * 10000)],
+    [incrementDate(6), parseInt(Math.random() * 10000)],
+    [incrementDate(7), parseInt(Math.random() * 10000)],
   ];
 
   const option1 = {
@@ -158,7 +158,7 @@ const Dashboard = () => {
                 textAlign: "center",
               }}
             >
-              TOTAL Users
+              TOTAL USERS
             </Typography>
           </Box>
 

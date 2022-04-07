@@ -417,7 +417,7 @@ const Newadmin = () => {
     allAdmin();
   }, []);
   const displayAdmin = () => {
-    if (AdminData.length === 0) {
+    if (!AdminData.length) {
       return (
         <Box sx={{ textAlign: "center" }}>
           <img alt="image" src={nofound} />
@@ -449,10 +449,10 @@ const Newadmin = () => {
           <Card
             sx={{
               bgcolor: "#f9f9f9",
-              margin: "8px",
-              padding: "10px",
+              margin: 3,
+              padding: 1,
               alignItem: "center",
-              border: "0.5px solid #325240",
+              border: "2px solid #325240",
               boxShadow: "0 4px 4px 0 rgba(0, 0, 0, 0.2)",
               "&:hover": {
                 bgcolor: "#f1f1f1",
@@ -464,11 +464,13 @@ const Newadmin = () => {
               <Grid container spacing={3}>
                 <Grid item xs={1}>
                   <Avatar
+                    variant="rounded"
                     alt="Remy Sharp"
                     src={data.profile_pic ? data.profile_pic : profile}
+                    sx={{ height: "50px", width: "50px" }}
                   />
                 </Grid>
-                <Grid item xs={7} sx={{ textAlign: "center" }}>
+                <Grid item xs={7} sx={{ alignSelf: "center" }}>
                   <Typography
                     sx={{
                       color: "#325240",
@@ -482,7 +484,7 @@ const Newadmin = () => {
                   </Typography>
                 </Grid>
 
-                <Grid item xs={3} sx={{ marginTop: "5px" }}>
+                <Grid item xs={3} sx={{ alignSelf: "center" }}>
                   <Chip
                     label={data.email_id}
                     sx={{ bgcolor: "#325240", color: "#fff" }}

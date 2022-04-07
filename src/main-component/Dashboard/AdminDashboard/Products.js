@@ -147,7 +147,7 @@ const Products = () => {
     </React.Fragment>
   );
   const showProducts = () => {
-    if (currentpageData.length === 0) {
+    if (!currentpageData.length) {
       return (
         <Box sx={{ textAlign: "center" }}>
           <img alt="image" src={nofound} />
@@ -182,7 +182,7 @@ const Products = () => {
                 sx={{
                   bgcolor: "#f9f9f9",
                   margin: 3,
-                  padding: 1,
+                  padding: "5px",
                   alignItem: "center",
                   border: "2px solid #325240",
                   borderRadius: "10px",
@@ -195,8 +195,12 @@ const Products = () => {
                   },
                 }}
               >
-                <Box sx={{ flexGrow: 1 }}>
-                  <Grid container spacing={2}>
+                <Box>
+                  <Grid
+                    container
+                    spacing={2}
+                    sx={{ display: "flex", justifyContent: "space-between" }}
+                  >
                     <Grid item xs={1.5} sx={{ alignSelf: "center" }}>
                       <img
                         style={{
@@ -230,42 +234,22 @@ const Products = () => {
                         sx={{ bgcolor: "#325240", color: "#fff" }}
                       />
                     </Grid>
-                    <Grid item xs={2} sx={{ alignSelf: "center" }}>
-                      {data.pro_category === "Vegetables" && (
-                        <Chip
-                          label={data.pro_category}
-                          sx={{ bgcolor: "#D4AC0D", color: "#fff" }}
-                        />
-                      )}
-                      {data.pro_category === "Dairy Products" && (
-                        <Chip
-                          label={data.pro_category}
-                          sx={{ bgcolor: "#B9770E", color: "#fff" }}
-                        />
-                      )}
-                      {data.pro_category === "Fruits" && (
-                        <Chip
-                          label={data.pro_category}
-                          sx={{ bgcolor: "#2874A6", color: "#fff" }}
-                        />
-                      )}
-                      {data.pro_category === "Grocery" && (
-                        <Chip
-                          label={data.pro_category}
-                          sx={{ bgcolor: "#A04000", color: "#fff" }}
-                        />
-                      )}
+                    <Grid item xs={3} sx={{ alignSelf: "center" }}>
+                      <Chip
+                        label={data.pro_category}
+                        sx={{ bgcolor: "#B9770E", color: "#fff" }}
+                      />
                     </Grid>
                     <Grid item xs={2} sx={{ alignSelf: "center" }}>
                       {data.pro_stock === "In Stock" && (
                         <Chip
-                          label={data.pro_stock}
+                          label="In Stock"
                           sx={{ bgcolor: "#325240", color: "#fff" }}
                         />
                       )}
                       {data.pro_stock === "Out of Stock" && (
                         <Chip
-                          label={data.pro_stock}
+                          label="Out of Stock"
                           sx={{ bgcolor: "#B10000", color: "#fff" }}
                         />
                       )}
@@ -335,7 +319,7 @@ const Products = () => {
             }}
           >
             <h3 style={{ color: "#325240" }}>
-              Showing {DisplayProducts.length} Results
+              Showing {ProductData.length} Results
             </h3>
 
             <Box

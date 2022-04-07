@@ -312,11 +312,6 @@ const Vendor = () => {
                         border: 3,
                         borderColor: "#f9f9f9",
                         boxShadow: "0px 16px 16px 10px rgba(0, 0, 0, 0.3)",
-                        transform: "scale(1)",
-                        transition: "all 0.5s ease-in-out",
-                        "& :hover": {
-                          transform: "scale(1.2)",
-                        },
                       }}
                     />
                   </Box>
@@ -408,6 +403,9 @@ const Vendor = () => {
                 border: "2px solid #325240",
               },
             }}
+            onClick={() => {
+              window.location.replace("/");
+            }}
           >
             GO TO HOME PAGE
           </Button>
@@ -434,13 +432,11 @@ const Vendor = () => {
             }}
           >
             <Breadcrumbs aria-label="breadcrumb" separator="›">
-              <Link underline="hover" sx={{ color: "#325240" }} href="/">
+              {/* <Link underline="hover" sx={{ color: "#325240" }} href="/">
                 <h2>Home</h2>
-              </Link>
-              <Typography
-                sx={{ color: "#325240", fontSize: "24px", fontWeight: "bold" }}
-              >
-                Vendor
+              </Link> */}
+              <Typography sx={{ color: "#325240" }}>
+                <h2>Vendor</h2>
               </Typography>
             </Breadcrumbs>
           </Box>
