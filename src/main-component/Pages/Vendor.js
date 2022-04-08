@@ -277,7 +277,7 @@ const Vendor = () => {
                         fontSize: "16px",
                         fontWeight: "300px",
                         color: "#325240",
-                        mt: 2,
+                        mt: 1,
                       }}
                     >
                       {data.address}
@@ -287,7 +287,7 @@ const Vendor = () => {
                         fontSize: "16px",
                         fontWeight: "300px",
                         color: "#325240",
-                        mt: 2,
+                        mt: 1,
                       }}
                     >
                       <FaPhoneAlt /> +91 {data.phone}
