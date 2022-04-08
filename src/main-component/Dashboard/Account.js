@@ -290,6 +290,8 @@ const Account = () => {
                 open: true,
                 message: errorMessage.message,
               });
+              setCookie("city", Data.city, 1);
+              deleteCookie("cart");
               setFlag(false);
               setTimeout(() => {
                 setCookie("account", JSON.stringify(response.data.data), 1);

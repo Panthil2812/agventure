@@ -10,8 +10,9 @@ import Selectcity from "./main-component/Pages/Selectcity";
 import ErrorPage from "./main-component/Pages/Errorpage";
 import Navbar from "./main-component/sub-component/Navbar";
 import Vendor from "./main-component/Pages/Vendor";
-import Cart from "./main-component/Pages/Cart";
 import ProductPage from "./main-component/Pages/ProductPage";
+import SuccessPage from "./main-component/Pages/SuccessOrder";
+import Cart from "./main-component/Pages/Cart";
 import VendorPage from "./main-component/Pages/VendorPage";
 import CheckOut from "./main-component/Pages/CheckOut";
 import VendorDashboard from "./main-component/Dashboard/Vendor";
@@ -40,6 +41,7 @@ const Router = () => {
             <Route path="/ibid/checkout" element={<CheckOut />} />
             <Route path="/ibid/products/:id" element={<ProductPage />} />
             <Route path="/ibid/vendor/:id" element={<VendorPage />} />
+            <Route path="/ibid/shop/checkout/:id" element={<SuccessPage />} />
             <Route
               path="/dashboard/VendorDashboard/:vid"
               element={<VendorDashboard />}

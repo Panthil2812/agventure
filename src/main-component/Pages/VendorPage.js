@@ -202,63 +202,91 @@ const VendorPage = () => {
       });
   };
   const displayProducts = () => {
-    return (
-      <Box sx={{ mt: 3, mb: 9 }}>
-        <div
-          style={{
-            boxSizing: "border-box",
-            display: "flex",
-            alignItems: "center",
-            flexWrap: "wrap",
-          }}
-        >
-          {vendorProductData.map((data) => (
-            <Box
-              className={classes.productCard}
-              key={data._id}
-              onClick={() => {
-                const link = `/ibid/products/${data._id}`;
-                window.location.replace(link);
-              }}
-            >
-              <Box className={classes.productTumb}>
-                <img
-                  src={data.pro_image ? data.pro_image : profile}
-                  alt="products_img"
-                />
-              </Box>
-              <Box className={classes.productDetails}>
-                <h3>{data.pro_name}</h3>
+    if (vendorProductData.length) {
+      return (
+        <Box sx={{ mt: 3, mb: 9 }}>
+          <div
+            style={{
+              boxSizing: "border-box",
+              display: "flex",
+              alignItems: "center",
+              flexWrap: "wrap",
+            }}
+          >
+            {vendorProductData.map((data) => (
+              <Box
+                className={classes.productCard}
+                key={data._id}
+                onClick={() => {
+                  const link = `/ibid/products/${data._id}`;
+                  window.location.replace(link);
+                }}
+              >
+                <Box className={classes.productTumb}>
+                  <img
+                    src={data.pro_image ? data.pro_image : profile}
+                    alt="products_img"
+                  />
+                </Box>
+                <Box className={classes.productDetails}>
+                  <h3>{data.pro_name}</h3>
 
-                <Box className={classes.productBottomDetails}>
-                  <Box className={classes.productPrice}>
-                    PRICE :-₹{data.pro_sell_price.toFixed(2)}
-                    <br />
-                    <small>₹{data.pro_mrp.toFixed(2)}</small>
-                  </Box>
-                  {/* <Box className={classes.productLinks}>{data.pro_unit}</Box> */}
-                  <Box className={classes.productLinks}>
-                    {data.pro_unit}
-                    <br />
-                    {data.pro_stock === "In Stock" && (
-                      <strong style={{ color: "#325240", paddingTop: "8px" }}>
-                        {data.pro_stock}
-                      </strong>
-                    )}
-                    {data.pro_stock === "Out of Stock" && (
-                      <strong style={{ color: "#B10000", paddingTop: "8px" }}>
-                        {data.pro_stock}
-                      </strong>
-                    )}
+                  <Box className={classes.productBottomDetails}>
+                    <Box className={classes.productPrice}>
+                      PRICE :-₹{data.pro_sell_price.toFixed(2)}
+                      <br />
+                      <small>₹{data.pro_mrp.toFixed(2)}</small>
+                    </Box>
+                    {/* <Box className={classes.productLinks}>{data.pro_unit}</Box> */}
+                    <Box className={classes.productLinks}>
+                      {data.pro_unit}
+                      <br />
+                      {data.pro_stock === "In Stock" && (
+                        <strong style={{ color: "#325240", paddingTop: "8px" }}>
+                          {data.pro_stock}
+                        </strong>
+                      )}
+                      {data.pro_stock === "Out of Stock" && (
+                        <strong style={{ color: "#B10000", paddingTop: "8px" }}>
+                          {data.pro_stock}
+                        </strong>
+                      )}
+                    </Box>
                   </Box>
                 </Box>
               </Box>
-            </Box>
-            // </Link>
-          ))}
-        </div>
-      </Box>
-    );
+              // </Link>
+            ))}
+          </div>
+        </Box>
+      );
+    } else {
+      return (
+        <Box sx={{ textAlign: "center" }}>
+          <img alt="image" src={nofound} />
+          <Typography
+            component="h1"
+            variant="h5"
+            sx={{
+              color: "#325240",
+              fontWeight: "bold",
+              margin: "0 auto 32px auto",
+              width: "fit-content",
+              textAlign: "center",
+            }}
+          >
+            <span
+              style={{
+                display: "block",
+              }}
+            >
+              No Products Found!
+            </span>
+            <span>Ready to start selling something awesome?</span>
+          </Typography>
+        </Box>
+      );
+    }
   };
   const vendorDetailsCard = () => {
     return (
@@ -279,10 +307,11 @@ const VendorPage = () => {
               display: "flex",
               alignItems: "center",
               justifyContent: "space-between",
+              flexWrap: "wrap",
             }}
           >
             <Avatar
-              src={vendorData.profile_pic}
+              src={vendorData.profile_pic ? vendorData.profile_pic : profile}
               alt="products image"
               sx={{
                 width: "300px",
@@ -298,167 +327,127 @@ const VendorPage = () => {
                 // },
               }}
             />
-            <Box>
-              <table style={{ alignItems: "center" }} class="table-checkout">
-                <tbody>
-                  <tr>
-                    <td
-                      style={{
-                        padding: "12px 20px",
-                        // border: "1px solid #325240",
-                      }}
-                    >
-                      <Typography
-                        sx={{
-                          color: "#325240",
-                          fontSize: "18px",
-                        }}
-                      >
-                        Vendor Name :
-                      </Typography>
-                    </td>
-                    <td
-                      style={{
-                        padding: "12px 20px",
-                      }}
-                    >
-                      <Typography
-                        sx={{
-                          color: "#325240",
-                          fontSize: "20px",
-                          fontWeight: "bold",
-                        }}
-                      >
-                        {vendorData.full_name}
-                      </Typography>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td
-                      style={{
-                        padding: "12px 20px",
-                      }}
-                    >
-                      <Typography
-                        sx={{
-                          color: "#325240",
-                          fontSize: "18px",
-                        }}
-                      >
-                        Email Id :
-                      </Typography>
-                    </td>
-                    <td
-                      style={{
-                        padding: "12px 20px",
-                      }}
-                    >
-                      <Typography
-                        sx={{
-                          color: "#325240",
-                          fontSize: "20px",
-                          fontWeight: "bold",
-                        }}
-                      >
-                        {vendorData.email_id}
-                      </Typography>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td
-                      style={{
-                        padding: "12px 20px",
-                      }}
-                    >
-                      <Typography
-                        sx={{
-                          color: "#325240",
-                          fontSize: "18px",
-                        }}
-                      >
-                        Address :
-                      </Typography>
-                    </td>
-                    <td
-                      style={{
-                        padding: "12px 20px",
-                      }}
-                    >
-                      <Typography
-                        sx={{
-                          color: "#325240",
-                          fontSize: "20px",
-                          fontWeight: "bold",
-                        }}
-                      >
-                        {vendorData.address}
-                      </Typography>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td
-                      style={{
-                        padding: "12px 20px",
-                      }}
-                    >
-                      <Typography
-                        sx={{
-                          color: "#325240",
-                          fontSize: "20px",
-                        }}
-                      >
-                        Contact No :
-                      </Typography>
-                    </td>
-                    <td
-                      style={{
-                        padding: "12px 20px",
-                      }}
-                    >
-                      <Typography
-                        sx={{
-                          color: "#325240",
-                          fontSize: "18px",
-                          fontWeight: "bold",
-                        }}
-                      >
-                        +91 {vendorData.phone}
-                      </Typography>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td
-                      style={{
-                        padding: "12px 20px",
-                      }}
-                    >
-                      <Typography
-                        sx={{
-                          color: "#325240",
-                          fontSize: "20px",
-                        }}
-                      >
-                        Total Products :
-                      </Typography>
-                    </td>
-                    <td
-                      style={{
-                        padding: "12px 20px",
-                      }}
-                    >
-                      <Typography
-                        sx={{
-                          color: "#325240",
-                          fontSize: "18px",
-                          fontWeight: "bold",
-                        }}
-                      >
-                        {vendorProductData.length}
-                      </Typography>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
+            <Box sx={{ width: "65%" }}>
+              <Box sx={{ display: "flex", width: "100%", marginBottom: 2 }}>
+                <Box sx={{ flex: "0 1 25%", marginRight: 2 }}>
+                  <Typography
+                    sx={{
+                      color: "#325240",
+                      fontSize: "18px",
+                      whiteSpace: "nowrap",
+                    }}
+                  >
+                    Vendor Name :
+                  </Typography>
+                </Box>
+                <Box sx={{ flex: "1 1 84%" }}>
+                  <Typography
+                    sx={{
+                      color: "#325240",
+                      fontSize: "20px",
+                      fontWeight: "bold",
+                    }}
+                  >
+                    {vendorData.full_name}
+                  </Typography>
+                </Box>
+              </Box>
+              <Box sx={{ display: "flex", width: "100%", marginBottom: 2 }}>
+                <Box sx={{ flex: "0 1 25%", marginRight: 2 }}>
+                  <Typography
+                    sx={{
+                      color: "#325240",
+                      fontSize: "18px",
+                      whiteSpace: "nowrap",
+                    }}
+                  >
+                    Email Id :
+                  </Typography>
+                </Box>
+                <Box sx={{ flex: "1 1 84%" }}>
+                  <Typography
+                    sx={{
+                      color: "#325240",
+                      fontSize: "20px",
+                      fontWeight: "bold",
+                    }}
+                  >
+                    {vendorData.email_id}
+                  </Typography>
+                </Box>
+              </Box>
+              <Box sx={{ display: "flex", width: "100%", marginBottom: 2 }}>
+                <Box sx={{ flex: "0 1 25%", marginRight: 2 }}>
+                  <Typography
+                    sx={{
+                      color: "#325240",
+                      fontSize: "18px",
+                      whiteSpace: "nowrap",
+                    }}
+                  >
+                    Address :
+                  </Typography>
+                </Box>
+                <Box sx={{ flex: "0 1 85%" }}>
+                  <Typography
+                    sx={{
+                      color: "#325240",
+                      fontSize: "20px",
+                      fontWeight: "bold",
+                    }}
+                  >
+                    {vendorData.address}
+                  </Typography>
+                </Box>
+              </Box>
+              <Box sx={{ display: "flex", width: "100%", marginBottom: 2 }}>
+                <Box sx={{ flex: "0 1 25%", marginRight: 2 }}>
+                  <Typography
+                    sx={{
+                      color: "#325240",
+                      fontSize: "18px",
+                      whiteSpace: "nowrap",
+                    }}
+                  >
+                    Contact No :
+                  </Typography>
+                </Box>
+                <Box sx={{ flex: "0 1 85%" }}>
+                  <Typography
+                    sx={{
+                      color: "#325240",
+                      fontSize: "20px",
+                      fontWeight: "bold",
+                    }}
+                  >
+                    {vendorData.phone}
+                  </Typography>
+                </Box>
+              </Box>
+              <Box sx={{ display: "flex", width: "100%", marginBottom: 2 }}>
+                <Box sx={{ flex: "0 1 25%", marginRight: 2 }}>
+                  <Typography
+                    sx={{
+                      color: "#325240",
+                      fontSize: "18px",
+                      whiteSpace: "nowrap",
+                    }}
+                  >
+                    Total Products :
+                  </Typography>
+                </Box>
+                <Box sx={{ flex: "0 1 85%" }}>
+                  <Typography
+                    sx={{
+                      color: "#325240",
+                      fontSize: "20px",
+                      fontWeight: "bold",
+                    }}
+                  >
+                    {vendorProductData.length}
+                  </Typography>
+                </Box>
+              </Box>
             </Box>
           </Box>
         </Box>

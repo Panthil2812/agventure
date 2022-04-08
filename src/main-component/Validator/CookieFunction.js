@@ -26,38 +26,20 @@ export const deleteCookie = (name) => {
 //cart add infomation in cookie
 export const addInfoToCart = (cartinfo) => {
   let cookie = getCart();
-  // console.log({ cartinfo, cookie });
   if (cookie.length) {
+    // console.log("calling");
     let data = cookie;
-    // console.log("cookie data : ", data);
     data = data
       .filter((e) => e._id === cartinfo._id)
       .map((item) => {
-        // console.log("call");
-        // if (item.id === cartinfo.id) {
         item.pro_qty = item.pro_qty + 1;
-
-        // } else {
-        //   console.log("calling");
-        //   const d = getCart();
-        //   return setCookie(
-        //     "cart",
-        //     JSON.stringify([cartinfo, ...JSON.parse(d)]),
-        //     1
-        //   );
-        // }
-        // console.log(" JSON.stringify(data)", JSON.stringify(data));
         setCookie("cart", JSON.stringify(data), 1);
       });
-    // console.log("match data : ", data.length);
     if (data.length === 0) {
       // console.log("efrgegret");
       setCookie("cart", JSON.stringify([cartinfo, ...cookie]), 1);
+      // console.log("panthil ", getCart());
     }
-    // if (matchdata.length === 1) {
-    //   console.log("index : ", typeof data);
-    // }
-    // console.log("filter data : ", matchdata);
   } else {
     setCookie("cart", JSON.stringify([cartinfo, ...cookie]), 1);
   }

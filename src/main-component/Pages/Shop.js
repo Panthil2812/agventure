@@ -241,7 +241,7 @@ const ScrollBox = styled(Box)({
 const Shop = () => {
   // const accountData = JSON.parse(getCookie("account"));
   // const accountId = accountData._id;
-  // const token = getCookie("token");
+  //
   const classes = useStyles();
   const [anchorCartEl, setAnchorCartEl] = React.useState(null);
   let cartFlag = Boolean(anchorCartEl);
@@ -441,7 +441,7 @@ const Shop = () => {
     return currentpageData.slice(indexOfFirstPost, indexOfLastPost);
   }, [page, currentpageData]);
   const displayProductsInShop = () => {
-    if (currentpageData.length === 0) {
+    if (!currentpageData.length) {
       return (
         <Box sx={{ textAlign: "center" }}>
           <img alt="image" src={nofound} />
@@ -491,9 +491,16 @@ const Shop = () => {
                 <Box
                   className={classes.badge}
                   onClick={(e) => {
-                    // console.log("KKK", data);
-
-                    // setFlag(true);
+                    const info = {
+                      pro_image: data.pro_image,
+                      pro_name: data.pro_name,
+                      pro_qty: data.pro_qty,
+                      pro_sell_price: data.pro_sell_price,
+                      pro_unit: data.pro_unit,
+                      vendor_id: data.vendor_id,
+                      vendor_name: data.vendor_name,
+                      _id: data._id,
+                    };
                     if (getCookie("account")) {
                       if (getCookie("city") === data.vendor_city) {
                         if (data.pro_stock === "Out of Stock") {
@@ -502,13 +509,21 @@ const Shop = () => {
                             message: "Sorry Products is Out of Stock",
                           });
                         } else {
-                          addInfoToCart(data);
-                          setDeletecartproduct(Math.random());
-                          setState({
-                            isLogged: true,
-                            open1: true,
-                            message: "Successfully Product Add in Cart",
-                          });
+                          if (getCart().length <= 9) {
+                            addInfoToCart(info);
+                            setDeletecartproduct(Math.random());
+                            setState({
+                              isLogged: true,
+                              open1: true,
+                              message: "Successfully Product Add in Cart",
+                            });
+                          } else {
+                            setState({
+                              open1: true,
+                              message:
+                                "Sorry, you maximun 10 Products Add in Cart.",
+                            });
+                          }
                         }
                       } else {
                         setState({
@@ -624,6 +639,7 @@ const Shop = () => {
 
   const DisplayCartPopover = () => {
     const cart_Data = getCart();
+    console.log(cart_Data);
     if (!cart_Data.length) {
       return (
         <React.Fragment>

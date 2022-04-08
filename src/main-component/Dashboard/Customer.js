@@ -46,12 +46,11 @@ const Customer = () => {
   const classes = useStyles();
   const [Progress, setProgress] = React.useState(false);
   const [state, setState] = React.useState({
-    dash: cid === "1" ? true : false,
-    pro: cid === "2" ? true : false,
-    apro: cid === "3" ? true : false,
-    auction: cid === "4" ? true : false,
-    order: cid === "5" ? true : false,
-    account: cid === "6" ? true : false,
+    pro: cid === "1" ? true : false,
+    apro: cid === "2" ? true : false,
+    auction: cid === "3" ? true : false,
+    order: cid === "4" ? true : false,
+    account: cid === "5" ? true : false,
     logout: cid === false,
   });
   const handleClose = () => {
@@ -117,7 +116,7 @@ const Customer = () => {
         <Grid container spacing={2}>
           <Grid item xs={3} sx={{ bgcolor: "#f9f9f9", padding: "20px" }}>
             <Box sx={{ boxShadow: "0 4px 16px 0 rgba(0, 0, 0, 0.2)" }}>
-              <Grid
+              {/* <Grid
                 item
                 xs
                 className={state.dash ? classes.active : classes.basic}
@@ -131,17 +130,18 @@ const Customer = () => {
                 }}
               >
                 <StyledTypography>DASHBOARD</StyledTypography>
-              </Grid>
+              </Grid> */}
               <Grid
                 item
                 xs
                 className={state.order ? classes.active : classes.basic}
                 onClick={() => {
                   setState({
-                    dash: false,
                     account: false,
                     auction: false,
                     order: true,
+                    apro: false,
+                    pro: false,
                   });
                 }}
               >
@@ -153,10 +153,11 @@ const Customer = () => {
                 className={state.auction ? classes.active : classes.basic}
                 onClick={() => {
                   setState({
-                    dash: false,
+                    apro: false,
+                    pro: false,
                     order: false,
-                    account: false,
                     auction: true,
+                    account: false,
                   });
                 }}
               >
@@ -169,7 +170,6 @@ const Customer = () => {
                 className={state.account ? classes.active : classes.basic}
                 onClick={() => {
                   setState({
-                    dash: false,
                     apro: false,
                     pro: false,
                     order: false,
@@ -209,7 +209,7 @@ const Customer = () => {
             </Box>
           </Grid>
           <Grid item xs={9} sx={{ bgcolor: "#f9f9f9", padding: "20px" }}>
-            {state.dash && <Dashboard />}
+            {/* {state.dash && <Dashboard />} */}
             {state.order && <Orders />}
             {state.auction && <MyBids />}
             {state.account && <Account />}

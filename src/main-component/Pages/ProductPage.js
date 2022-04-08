@@ -789,6 +789,44 @@ const ProductPage = () => {
                         float: "Left",
                       }}
                     >
+                      City Name
+                    </Typography>
+                  </td>
+                  <td
+                    style={{
+                      padding: "12px 20px",
+                      borderLeft: "2px solid #325240",
+                      borderTop: "2px solid #325240",
+                    }}
+                  >
+                    <Typography
+                      sx={{
+                        color: "#325240",
+                        fontSize: "18px",
+                        fontWeight: "bold",
+                        marginLeft: "auto",
+                        float: "Left",
+                      }}
+                    >
+                      {ProductData.vendor_city}
+                    </Typography>
+                  </td>
+                </tr>
+                <tr>
+                  <td
+                    style={{
+                      padding: "12px 20px",
+                      borderTop: "2px solid #325240",
+                    }}
+                  >
+                    <Typography
+                      sx={{
+                        color: "#325240",
+                        fontSize: "18px",
+                        fontWeight: "bold",
+                        float: "Left",
+                      }}
+                    >
                       Contact No
                     </Typography>
                   </td>
@@ -999,13 +1037,13 @@ const ProductPage = () => {
           sx={{
             m: 5,
             color: "#325240",
-            fontSize: "24px",
+            fontSize: "36px",
             fontWeight: "600",
             textAlign: "center",
-            borderBottom: "2px solid #325240",
+            textDecoration: "underline ",
           }}
         >
-          Related Products{" "}
+          Related Products
         </Typography>
         <Box sx={{ mt: 7, width: "100%", maxWidth: "95%", margin: "auto" }}>
           {displayProducts(RelatedData)}
