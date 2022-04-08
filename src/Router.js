@@ -22,6 +22,7 @@ import AdminDashboard from "./main-component/Dashboard/Admin";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Copyright from "./main-component/sub-component/Copyright";
 import { getCookie } from "./main-component/Validator/CookieFunction";
+import CustomerOrderDetaillPage from "./main-component/Dashboard/CustomerDashboard/CustomerOrderDetaillPage";
 const Router = () => {
   const user = getCookie("account") && "ibid";
   return (
@@ -42,6 +43,10 @@ const Router = () => {
             <Route path="/ibid/products/:id" element={<ProductPage />} />
             <Route path="/ibid/vendor/:id" element={<VendorPage />} />
             <Route path="/ibid/shop/checkout/:id" element={<SuccessPage />} />
+            <Route
+              path="/ibid/customer/order/:id"
+              element={<CustomerOrderDetaillPage />}
+            />
             <Route
               path="/dashboard/VendorDashboard/:vid"
               element={<VendorDashboard />}
