@@ -262,7 +262,6 @@ const Shop = () => {
     message: "",
   });
   const { isLogged, open1, message } = state;
-
   const [ProductData, setProductData] = React.useState([]);
   const [searchCategory, setSearchCategory] = React.useState("All Products");
   const [searchSorting, setSearchSorting] = React.useState("Default Sorting");
@@ -354,10 +353,10 @@ const Shop = () => {
     axios({
       method: "get",
       headers: {
-        "content-type": "application/x-www-form-urlencoded",
+        // "content-type": "application/x-www-form-urlencoded",
         // Authorization: `Bearer ${token}`,
       },
-      url: `${process.env.REACT_APP_BASEURL}products/fetch_all_products_without_token`,
+      url: `${process.env.REACT_APP_BASEURL}auction/get_auction_products`,
     })
       .then(function (response) {
         if (response.data.status === 504) {
@@ -383,17 +382,6 @@ const Shop = () => {
   }, [cartFlag]);
   useEffect(() => {
     DisplayCartPopover();
-    let sum = 0;
-    let total = 0;
-    getCart().map((data) => {
-      sum = sum + data.pro_qty;
-      total = total + data.pro_qty * data.pro_sell_price;
-    });
-    setCountItem({
-      // ...countItem,
-      item: sum,
-      subtotal: total,
-    });
     console.log("change useeffect");
   }, [deletecartproduct]);
 
@@ -450,6 +438,130 @@ const Shop = () => {
     const indexOfFirstPost = indexOfLastPost - DataperPage;
     return currentpageData.slice(indexOfFirstPost, indexOfLastPost);
   }, [page, currentpageData]);
+  const auctionTimerBox = (, start, end) => {
+    const time = 
+    const setTime = "set" + time;
+    [time, setTime] = React.useState({
+      day: 0,
+      hour: 0,
+      min: 0,
+      sec: 0,
+    });
+    setInterval(() => {
+      const d = new Date();
+      if (end - d.getTime() >= 0 && start <= d.getTime()) {
+        const d = new Date();
+        const diff = end - d.getTime();
+        const day = Math.floor(diff / (1000 * 60 * 60 * 24));
+        const hour = Math.floor((diff / (1000 * 60 * 60)) % 24);
+        const min = Math.floor((diff / (1000 * 60)) % 60);
+        const sec = Math.floor((diff / 1000) % 60);
+        ({
+          day: day,
+          hour: hour,
+          min: min,
+          sec: sec,
+        });
+        console.log("diff: ", diff);
+        console.log("day diff : ", day);
+        console.log("Hours diff : ", hour);
+        console.log("Minutes diff : ", min);
+        console.log("Seconds diff : ", sec);
+      } else if (end - d.getTime() <= 0) {
+        console.log("time ended");
+        setTime({
+          day: 0,
+          hour: 0,
+          min: 0,
+          sec: 0,
+        });
+      } else {
+        console.log("comimg soon");
+        setTime({
+          day: 0,
+          hour: 0,
+          min: 0,
+          sec: 0,
+        });
+      }
+    }, 1000);
+    return (
+      <div>
+        <Box
+          sx={{
+            width: "auto",
+            bgcolor: "#f9f9f9",
+            color: "#325240",
+            textAlign: "center",
+            p: 1,
+            m: 1,
+            border: "2px solid #325240",
+            borderRadius: "10px",
+          }}
+        >
+          <Typography sx={{ mb: 1, fontSize: "14px" }}>
+            {/* {setInterval(() => {
+                      data.pro_end_time.getTime() - date.getTime() >= 0 &&
+                        data.pro_start_time.getTime() <= date.getTime();
+                    }, 1000)} */}
+            Time Left:
+          </Typography>
+
+          <Grid container spacing={0.5}>
+            <Grid item xs={3} sx={{ textAlign: "center" }}>
+              <Typography sx={{ fontSize: "14px" }}>
+                {time.day}
+                <br />
+                Days
+              </Typography>
+            </Grid>
+            <Grid
+              item
+              xs={3}
+              sx={{
+                borderLeft: "1px solid black",
+                textAlign: "center",
+              }}
+            >
+              <Typography sx={{ fontSize: "14px" }}>
+                {time.hour}
+                <br />
+                Hours
+              </Typography>
+            </Grid>
+            <Grid
+              item
+              xs={3}
+              sx={{
+                borderLeft: "1px solid black",
+                textAlign: "center",
+              }}
+            >
+              <Typography sx={{ fontSize: "14px" }}>
+                {time.min}
+                <br />
+                Min
+              </Typography>
+            </Grid>
+            <Grid
+              item
+              xs={3}
+              sx={{
+                borderLeft: "1px solid black",
+                textAlign: "center",
+              }}
+            >
+              <Typography sx={{ fontSize: "14px" }}>
+                {time.sec}
+                <br />
+                Sec
+              </Typography>
+            </Grid>
+          </Grid>
+        </Box>
+      </div>
+    );
+  };
   const displayProductsInShop = () => {
     if (!currentpageData.length) {
       return (
@@ -492,154 +604,93 @@ const Shop = () => {
               justifyContent: "space-between",
             }}
           >
-            {DisplayProducts.map((data) => (
-              <Box
-                className={classes.productCard}
-                key={data._id}
-                onClick={() => {
-                  const link = `/ibid/products/${data._id}`;
-                  window.location.replace(link);
-                }}
-              >
+            {DisplayProducts.map((data) => {
+              return (
                 <Box
-                  className={classes.badge}
-                  onClick={(e) => {
-                    const info = {
-                      pro_image: data.pro_image,
-                      pro_name: data.pro_name,
-                      pro_qty: data.pro_qty,
-                      pro_sell_price: data.pro_sell_price,
-                      pro_unit: data.pro_unit,
-                      vendor_id: data.vendor_id,
-                      vendor_name: data.vendor_name,
-                      _id: data._id,
-                    };
-                    if (getCookie("account")) {
-                      if (getCookie("city") === data.vendor_city) {
-                        if (data.pro_stock === "Out of Stock") {
-                          setState({
-                            open1: true,
-                            message: "Sorry Products is Out of Stock",
-                          });
-                        } else {
-                          if (getCart().length <= 9) {
-                            addInfoToCart(info);
-                            setDeletecartproduct(Math.random());
-                            setState({
-                              isLogged: true,
-                              open1: true,
-                              message: "Successfully Product Add in Cart",
-                            });
-                          } else {
-                            setState({
-                              open1: true,
-                              message:
-                                "Sorry, you maximun 10 Products Add in Cart.",
-                            });
-                          }
-                        }
-                      } else {
-                        setState({
-                          open1: true,
-                          message:
-                            "Sorry, you must be products select in your city.",
-                        });
-                      }
-                    } else {
-                      setState({
-                        open1: true,
-                        message:
-                          "Sorry, you must be logged in to place a Cart.",
-                      });
-                    }
-                    e.stopPropagation();
+                  className={classes.productCard}
+                  key={data._id}
+                  onClick={() => {
+                    //const link = `/ibid/products/${data._id}`;
+                    //window.location.replace(link);
                   }}
                 >
-                  <AiFillHeart size="25" />
-                </Box>
+                  <Box
+                    className={classes.badge}
+                    // onClick={(e) => {
+                    //   const info = {
+                    //     pro_image: data.pro_image,
+                    //     pro_name: data.pro_name,
+                    //     pro_qty: data.pro_qty,
+                    //     pro_sell_price: data.pro_sell_price,
+                    //     pro_unit: data.pro_unit,
+                    //     vendor_id: data.vendor_id,
+                    //     vendor_name: data.vendor_name,
+                    //     _id: data._id,
+                    //   };
+                    //   if (getCookie("account")) {
+                    //     if (getCookie("city") === data.vendor_city) {
+                    //       if (data.pro_stock === "Out of Stock") {
+                    //         setState({
+                    //           open1: true,
+                    //           message: "Sorry Products is Out of Stock",
+                    //         });
+                    //       } else {
+                    //         if (getCart().length <= 9) {
+                    //           addInfoToCart(info);
+                    //           setDeletecartproduct(Math.random());
+                    //           setState({
+                    //             isLogged: true,
+                    //             open1: true,
+                    //             message: "Successfully Product Add in Cart",
+                    //           });
+                    //         } else {
+                    //           setState({
+                    //             open1: true,
+                    //             message:
+                    //               "Sorry, you maximun 10 Products Add in Cart.",
+                    //           });
+                    //         }
+                    //       }
+                    //     } else {
+                    //       setState({
+                    //         open1: true,
+                    //         message:
+                    //           "Sorry, you must be products select in your city.",
+                    //       });
+                    //     }
+                    //   } else {
+                    //     setState({
+                    //       open1: true,
+                    //       message:
+                    //         "Sorry, you must be logged in to place a Cart.",
+                    //     });
+                    //   }
+                    //   e.stopPropagation();
+                    // }}
+                  >
+                    <AiFillHeart size="25" />
+                  </Box>
 
-                <Box className={classes.productTumb}>
-                  <img
-                    src={data.pro_image ? data.pro_image : profile}
-                    alt="products_img"
-                  />
-                </Box>
-                <Box
-                  sx={{
-                    width: "auto",
-                    bgcolor: "#f9f9f9",
-                    color: "#325240",
-                    textAlign: "center",
-                    p: 1,
-                    m: 1,
-                    border: "2px solid #325240",
-                    borderRadius: "10px",
-                  }}
-                >
-                  <Typography sx={{ mb: 1, fontSize: "14px" }}>
-                    Time Left:
-                  </Typography>
+                  <Box className={classes.productTumb}>
+                    <img
+                      src={data.pro_image ? data.pro_image : profile}
+                      alt="products_img"
+                    />
+                  </Box>
+                  {auctionTimerBox(
+                    data._id,
+                    data.pro_start_time,
+                    data.pro_end_time
+                  )}
+                  <Box className={classes.productDetails}>
+                    <h2>{data.pro_name}</h2>
 
-                  <Grid container spacing={0.5}>
-                    <Grid item xs={3} sx={{ textAlign: "center" }}>
-                      <Typography sx={{ fontSize: "14px" }}>
-                        49
-                        <br />
-                        Days
-                      </Typography>
-                    </Grid>
-                    <Grid
-                      item
-                      xs={3}
-                      sx={{
-                        borderLeft: "1px solid black",
-                        textAlign: "center",
-                      }}
-                    >
-                      <Typography sx={{ fontSize: "14px" }}>
-                        49
-                        <br />
-                        Hours
-                      </Typography>
-                    </Grid>
-                    <Grid
-                      item
-                      xs={3}
-                      sx={{
-                        borderLeft: "1px solid black",
-                        textAlign: "center",
-                      }}
-                    >
-                      <Typography sx={{ fontSize: "14px" }}>
-                        49
-                        <br />
-                        Min
-                      </Typography>
-                    </Grid>
-                    <Grid
-                      item
-                      xs={3}
-                      sx={{
-                        borderLeft: "1px solid black",
-                        textAlign: "center",
-                      }}
-                    >
-                      <Typography sx={{ fontSize: "14px" }}>
-                        49
-                        <br />
-                        Sec
-                      </Typography>
-                    </Grid>
-                  </Grid>
+                    <h3>Bid : {data.pro_sell_price}₹</h3>
+                  </Box>
                 </Box>
-                <Box className={classes.productDetails}>
-                  <h2>{data.pro_name}</h2>
-
-                  <h3>Bid : {data.pro_sell_price}₹</h3>
-                </Box>
-              </Box>
-              // </Link>
-            ))}
+                // </Link>
+              );
+            })}
           </div>
 
           <Box sx={{ mt: 7, mb: 7, display: "flex", justifyContent: "center" }}>
@@ -953,6 +1004,7 @@ const Shop = () => {
             item
             xs={3}
             sx={{
+              alignSelf: "center",
               "& :hover": {
                 color: "#fff",
               },
@@ -979,9 +1031,7 @@ const Shop = () => {
                     marginRight: "10px",
                   }}
                 >
-                  My Cart
-                  <br />
-                  {cartText}
+                  WishList
                 </Typography>
                 <AiFillHeart size="25" />
               </Box>
@@ -1036,7 +1086,7 @@ const Shop = () => {
           >
             <Breadcrumbs aria-label="breadcrumb" separator="›">
               <Typography sx={{ color: "#325240" }}>
-                <h2>Shop</h2>
+                <h2>Auction</h2>
               </Typography>
             </Breadcrumbs>
           </Box>

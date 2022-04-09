@@ -38,7 +38,7 @@ import validator from "validator";
 import { storage } from "../../../Firebase/index";
 import Products from "./Products";
 import { makeStyles } from "@mui/styles";
-import ValidatorProduct from "../../Validator/ValidatorProduct";
+import ValidatorAuctionProducts from "../../Validator/ValidatorAuctionProducts";
 import capitalizeFirstLetter from "../../Validator/capitalizeFirstLetter";
 import {
   setCookie,
@@ -255,13 +255,13 @@ const AuctionProducts = () => {
       pro_qty: data.get("pro_qty"),
       bid_start_amount: data.get("bid_start_amount"),
       bid_inc_amount: data.get("bid_inc_amount"),
-      pro_start_time: data.get("pro_start_time"),
-      pro_end_time: data.get("pro_end_time"),
+      pro_start_time: start.getTime(),
+      pro_end_time: end.getTime(),
       sdescription: validator.trim(data.get("sdescription")),
       ldescription: validator.trim(data.get("ldescription")),
     };
-
-    const errorMessage = ValidatorProduct(info);
+    console.log(info);
+    const errorMessage = ValidatorAuctionProducts(info);
     // console.log(errorMessage);
     if (!errorMessage.flag) {
       setState({
@@ -273,7 +273,7 @@ const AuctionProducts = () => {
       let time = d.getTime();
       setFlag(true);
       const uploadTask = storage
-        .ref(`images/products/${account._id}_${time}_${imagefile.name}`)
+        .ref(`images/products/${account._id}_${time}_auction_${imagefile.name}`)
         .put(imagefile);
       uploadTask.on(
         "state_changed",
@@ -285,36 +285,19 @@ const AuctionProducts = () => {
           console.log("calling function ...");
           storage
             .ref("images/products/")
-            .child(`${account._id}_${time}_${imagefile.name}`)
+            .child(`${account._id}_${time}_auction_${imagefile.name}`)
             .getDownloadURL()
             .then((url) => {
               console.log("main : ", url);
-              const Data = {
-                vendor_id: account._id,
-                vendor_name: capitalizeFirstLetter(account.full_name),
-                vendor_email_id: account.email_id,
-                vendor_city: account.city,
-                vendor_state: account.state,
-                vendor_phone: account.phone,
-                pro_name: capitalizeFirstLetter(info.pro_name),
-                pro_category: info.pro_category,
-                sdescription: info.sdescription,
-                ldescription: info.ldescription,
-                pro_image: url,
-                pro_unit: info.pro_unit,
-                pro_mrp: info.pro_mrp,
-                pro_sell_price: info.pro_sell_price,
-                pro_stock: info.pro_stock,
-                pro_hsn: info.pro_hsn,
-              };
+              info.pro_image = url;
               axios({
                 method: "post",
                 headers: {
-                  "content-type": "application/x-www-form-urlencoded",
+                  // "content-type": "application/x-www-form-urlencoded",
                   Authorization: `Bearer ${token}`,
                 },
-                data: qs.stringify(Data),
-                url: `${process.env.REACT_APP_BASEURL}products/add_product`,
+                data: qs.stringify(info),
+                url: `${process.env.REACT_APP_BASEURL}auction/crate_auction_product`,
               })
                 .then(function (response) {
                   if (response.data.status === 200) {
@@ -324,7 +307,7 @@ const AuctionProducts = () => {
                       message: "You have Successfully Added New Products",
                     });
                     setFlag(false);
-                    window.location.replace("/dashboard/VendorDashboard/2");
+                    // window.location.replace("/dashboard/VendorDashboard/2");
                   }
                 })
                 .catch(function (error) {
@@ -353,7 +336,7 @@ const AuctionProducts = () => {
           },
         }}
       >
-        Save Product
+        Save Product Auction
       </Button>
       <div>{errorfunction()}</div>
       <div>{backDrop()}</div>
@@ -524,9 +507,9 @@ const AuctionProducts = () => {
               <CssTextField
                 required
                 fullWidth
-                id="bid_start_amount"
-                label="Bid Price"
                 type="number"
+                id="bid_start_amount"
+                label="Start Bid Price"
                 name="bid_start_amount"
               />
             </Grid>
@@ -545,7 +528,7 @@ const AuctionProducts = () => {
                 <DateTimePicker
                   clearable
                   label="Start Date"
-                  //        value={start}
+                  value={start}
                   minDate={new Date()}
                   onChange={(newValue) => {
                     setValue({
@@ -567,7 +550,7 @@ const AuctionProducts = () => {
                 <DateTimePicker
                   clearable
                   label="End Date"
-                  // value={end}
+                  value={end}
                   minDate={start}
                   onChange={(newValue) => {
                     setValue({
@@ -589,8 +572,6 @@ const AuctionProducts = () => {
                 required
                 multiline
                 fullWidth
-                maxRows={2}
-                minRows={1}
                 id="sdescription"
                 label="Short Description"
                 name="sdescription"
