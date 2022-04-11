@@ -251,6 +251,12 @@ const AuctionPage = () => {
     item: 0,
     subtotal: 0.0,
   });
+  const AUCTION_STATUS = {
+    RUNNING: "running",
+    COMING_SOON: "coming_soon",
+    EXPIRED: "expired",
+  };
+  const [status, setStatus] = React.useState("");
   const handleCartClick = (event) => {
     setAnchorCartEl(event.currentTarget);
   };
@@ -363,51 +369,44 @@ const AuctionPage = () => {
     allProducts();
   }, []);
   const DisplayTimebox = (start, end) => {
-    const AUCTION_STATUS = {
-      RUNNING: "running",
-      COMING_SOON: "coming_soon",
-      EXPIRED: "expired",
-    };
-    const [status, setStatus] = React.useState(AUCTION_STATUS.RUNNING);
+    // await useEffect(() => {
+    const cl = setInterval(cb, 1000);
+    function cb() {
+      const d = new Date();
+      if (end - d.getTime() >= 0 && start <= d.getTime()) {
+        console.log("KK", 1);
+        const diff = end - d.getTime();
+        const day = Math.floor(diff / (1000 * 60 * 60 * 24));
+        const hour = Math.floor((diff / (1000 * 60 * 60)) % 24);
+        const min = Math.floor((diff / (1000 * 60)) % 60);
+        const sec = Math.floor((diff / 1000) % 60);
+        setTime({
+          day: day,
+          hour: hour,
+          min: min,
+          sec: sec,
+        });
+        setStatus(AUCTION_STATUS.RUNNING);
+        // console.log("diff: ", diff);
+        // console.log("day diff : ", day);
+        // console.log("Hours diff : ", hour);
+        // console.log("Minutes diff : ", min);
+        // console.log("Seconds diff : ", sec);
+      } else if (end - d.getTime() <= 0) {
+        console.log("KK", 2);
 
-    useEffect(() => {
-      const cl = setInterval(cb, 1000);
-      function cb() {
-        const d = new Date();
-        if (end - d.getTime() >= 0 && start <= d.getTime()) {
-          console.log("KK", 1);
-          const diff = end - d.getTime();
-          const day = Math.floor(diff / (1000 * 60 * 60 * 24));
-          const hour = Math.floor((diff / (1000 * 60 * 60)) % 24);
-          const min = Math.floor((diff / (1000 * 60)) % 60);
-          const sec = Math.floor((diff / 1000) % 60);
-          setTime({
-            day: day,
-            hour: hour,
-            min: min,
-            sec: sec,
-          });
-          setStatus(AUCTION_STATUS.RUNNING);
-          // console.log("diff: ", diff);
-          // console.log("day diff : ", day);
-          // console.log("Hours diff : ", hour);
-          // console.log("Minutes diff : ", min);
-          // console.log("Seconds diff : ", sec);
-        } else if (end - d.getTime() <= 0) {
-          console.log("KK", 2);
+        // console.log("time ended");
+        setStatus(AUCTION_STATUS.EXPIRED);
+        clearInterval(cl);
+      } else if (start >= d.getTime()) {
+        console.log("KK", 3);
 
-          // console.log("time ended");
-          setStatus(AUCTION_STATUS.EXPIRED);
-          clearInterval(cl);
-        } else if (start <= d.getTime()) {
-          console.log("KK", 3);
-
-          // console.log("comimg soon");
-          setStatus(AUCTION_STATUS.COMING_SOON);
-          clearInterval(cl);
-        }
+        // console.log("comimg soon");
+        setStatus(AUCTION_STATUS.COMING_SOON);
+        clearInterval(cl);
       }
-    }, []);
+    }
+    // }, []);
 
     if (status === AUCTION_STATUS.COMING_SOON) {
       return (
@@ -421,7 +420,7 @@ const AuctionPage = () => {
           <h3>Auction Ended</h3>
         </Typography>
       );
-    } else if (status === AUCTION_STATUS.RUNNING)
+    } else if (status === AUCTION_STATUS.RUNNING) {
       return (
         <div>
           <Box
@@ -491,6 +490,7 @@ const AuctionPage = () => {
           </Box>
         </div>
       );
+    }
   };
   const displayProducts = (Data) => {
     return (
@@ -509,7 +509,7 @@ const AuctionPage = () => {
               className={classes.productCard}
               key={data._id}
               onClick={() => {
-                const link = `/ibid/products/${data._id}`;
+                const link = `/ibid/auction/${data._id}`;
                 window.location.replace(link);
               }}
             >
@@ -532,7 +532,7 @@ const AuctionPage = () => {
                         setState({
                           isLogged: true,
                           open1: true,
-                          message: "Successfully Product Add in Cart",
+                          message: "Successfully Product Add in WishList",
                         });
                       }
                     } else {
