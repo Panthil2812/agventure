@@ -236,7 +236,12 @@ const AuctionPage = () => {
     message: "",
   });
   const { isLogged, open1, message } = state;
-
+  const [time, setTime] = React.useState({
+    day: 0,
+    hour: 0,
+    min: 0,
+    sec: 0,
+  });
   const [ProductData, setProductData] = React.useState([]);
   const [VendorData, setVendorData] = React.useState([]);
   const [RelatedData, setRelatedData] = React.useState([]);
@@ -357,6 +362,136 @@ const AuctionPage = () => {
   React.useEffect(() => {
     allProducts();
   }, []);
+  const DisplayTimebox = (start, end) => {
+    const AUCTION_STATUS = {
+      RUNNING: "running",
+      COMING_SOON: "coming_soon",
+      EXPIRED: "expired",
+    };
+    const [status, setStatus] = React.useState(AUCTION_STATUS.RUNNING);
+
+    useEffect(() => {
+      const cl = setInterval(cb, 1000);
+      function cb() {
+        const d = new Date();
+        if (end - d.getTime() >= 0 && start <= d.getTime()) {
+          console.log("KK", 1);
+          const diff = end - d.getTime();
+          const day = Math.floor(diff / (1000 * 60 * 60 * 24));
+          const hour = Math.floor((diff / (1000 * 60 * 60)) % 24);
+          const min = Math.floor((diff / (1000 * 60)) % 60);
+          const sec = Math.floor((diff / 1000) % 60);
+          setTime({
+            day: day,
+            hour: hour,
+            min: min,
+            sec: sec,
+          });
+          setStatus(AUCTION_STATUS.RUNNING);
+          // console.log("diff: ", diff);
+          // console.log("day diff : ", day);
+          // console.log("Hours diff : ", hour);
+          // console.log("Minutes diff : ", min);
+          // console.log("Seconds diff : ", sec);
+        } else if (end - d.getTime() <= 0) {
+          console.log("KK", 2);
+
+          // console.log("time ended");
+          setStatus(AUCTION_STATUS.EXPIRED);
+          clearInterval(cl);
+        } else if (start <= d.getTime()) {
+          console.log("KK", 3);
+
+          // console.log("comimg soon");
+          setStatus(AUCTION_STATUS.COMING_SOON);
+          clearInterval(cl);
+        }
+      }
+    }, []);
+
+    if (status === AUCTION_STATUS.COMING_SOON) {
+      return (
+        <Typography>
+          <h3>Coming Soon</h3>
+        </Typography>
+      );
+    } else if (status === AUCTION_STATUS.EXPIRED) {
+      return (
+        <Typography>
+          <h3>Auction Ended</h3>
+        </Typography>
+      );
+    } else if (status === AUCTION_STATUS.RUNNING)
+      return (
+        <div>
+          <Box
+            sx={{
+              mt: 3,
+              width: "100%",
+              maxWidth: "80%",
+              // margin: "auto",
+              backgroundColor: "#f0f0f0",
+              color: "#325240",
+              border: "2px solid #325240",
+              borderRadius: "20px",
+              textAlign: "center",
+            }}
+          >
+            <Typography sx={{ mb: 1 }}>Time Left:</Typography>
+            <Grid container spacing={0.5}>
+              <Grid item xs={3} sx={{ textAlign: "center" }}>
+                <Typography>
+                  <h3>
+                    {time.day}
+                    <br />
+                    Days
+                  </h3>
+                </Typography>
+              </Grid>
+              <Grid
+                item
+                xs={3}
+                sx={{ borderLeft: "1px solid #325240", textAlign: "center" }}
+              >
+                <Typography>
+                  <h3>
+                    {time.hour}
+                    <br />
+                    Hours
+                  </h3>
+                </Typography>
+              </Grid>
+              <Grid
+                item
+                xs={3}
+                sx={{ borderLeft: "1px solid #325240", textAlign: "center" }}
+              >
+                <Typography>
+                  <h3>
+                    {time.min}
+                    <br />
+                    Min
+                  </h3>
+                </Typography>
+              </Grid>
+              <Grid
+                item
+                xs={3}
+                sx={{ borderLeft: "1px solid #325240", textAlign: "center" }}
+              >
+                <Typography>
+                  <h3>
+                    {time.sec}
+                    <br />
+                    Sec
+                  </h3>
+                </Typography>
+              </Grid>
+            </Grid>
+          </Box>
+        </div>
+      );
+  };
   const displayProducts = (Data) => {
     return (
       <Box>
@@ -902,7 +1037,10 @@ const AuctionPage = () => {
                   sx={{ color: "#f9f9f9", bgcolor: "#B10000" }}
                 />
               </Typography>
-
+              {DisplayTimebox(
+                ProductData.pro_start_time,
+                ProductData.pro_end_time
+              )}
               <Button
                 sx={{
                   color: "#f9f9f9",
@@ -1005,7 +1143,7 @@ const AuctionPage = () => {
             <Typography
               sx={{ color: "#f9f9f9", fontSize: "24px", fontWeight: "bold" }}
             >
-              {ProductData.pro_name}
+              {/* {ProductData.pro_name} */}
             </Typography>
           </Breadcrumbs>
         </Box>
