@@ -238,6 +238,9 @@ const AuctionProducts = () => {
     );
   };
 
+  const capitalizeFirstLetter = (string) => {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+  };
   const handleSubmit = async (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
@@ -249,7 +252,7 @@ const AuctionProducts = () => {
       vendor_state: account.state,
       vendor_phone: account.phone,
       pro_image: imagefile,
-      pro_name: validator.trim(data.get("pro_name")),
+      pro_name: capitalizeFirstLetter(validator.trim(data.get("pro_name"))),
       pro_category: data.get("pro_category"),
       pro_unit: data.get("pro_unit"),
       pro_qty: data.get("pro_qty"),

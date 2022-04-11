@@ -81,6 +81,33 @@ export const getCart = () => {
   if (!cookie) cookie = "[]";
   return JSON.parse(cookie);
 };
+export const addInfoTowishlist = (wishlistinfo) => {
+  let cookie = getwishlist();
+  if (cookie.length) {
+    // console.log("calling");
+    let data = cookie;
+    data = data.filter((e) => e._id === wishlistinfo._id);
+    if (data.length === 0) {
+      // console.log("efrgegret");
+      setCookie("wishlist", JSON.stringify([wishlistinfo, ...cookie]), 1);
+      // console.log("panthil ", getwishlist());
+    }
+  } else {
+    setCookie("wishlist", JSON.stringify([wishlistinfo, ...cookie]), 1);
+  }
+};
+export const deletewishlistProduct = (id) => {
+  let data = getwishlist();
+  // console.log("info : ", data);
+  data = data.filter((e) => e._id != id);
+  // console.log("delete info : ", data);
+  setCookie("wishlist", JSON.stringify(data), 1);
+};
+export const getwishlist = () => {
+  let cookie = getCookie("wishlist");
+  if (!cookie) cookie = "[]";
+  return JSON.parse(cookie);
+};
 //   const login = { name: "John", age: 30, city: "New York" };
 //   // document.cookie = "login=" + JSON.stringify(login);
 //   // setCookie("login", JSON.stringify(login), 1);

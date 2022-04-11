@@ -474,6 +474,9 @@ const Shop = () => {
             style={{
               boxSizing: "border-box",
               display: "flex",
+              width: "100%",
+              maxWidth: "90%",
+              margin: "auto",
               alignItems: "center",
               flexWrap: "wrap",
               // justifyContent: "center",

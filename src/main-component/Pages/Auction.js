@@ -24,9 +24,10 @@ import {
 import { makeStyles } from "@mui/styles";
 import {
   getCookie,
-  getCart,
-  addInfoToCart,
+  getwishlist,
+  deletewishlistProduct,
   deleteCartProduct,
+  addInfoTowishlist,
 } from "../Validator/CookieFunction";
 import { ReactSearchAutocomplete } from "react-search-autocomplete";
 // import ShopProducts from "../sub-component/ShopProducts";
@@ -87,8 +88,9 @@ const useStyles = makeStyles(() => ({
     },
   },
   productCard: {
-    width: "352px",
+    width: "252px",
     margin: "20px",
+    padding: "10px",
     position: "relative",
     background: "#f9f9f9",
     border: "1.5px solid #325240",
@@ -108,13 +110,11 @@ const useStyles = makeStyles(() => ({
     top: "0",
     margin: "25px",
     fontSize: "13px",
-    padding: "5px",
-    borderRadius: "5px",
+    padding: "10px",
+    borderRadius: "50%",
     background: "#f9f9f9",
-    alignSelf: "center",
-
     color: "#325240",
-    border: "2px solid #325240",
+    border: "1px solid #325240",
     zIndex: "2",
     overflow: "hidden",
     transform: "scale(1)",
@@ -123,15 +123,15 @@ const useStyles = makeStyles(() => ({
       color: "#f9f9f9",
       border: "2px solid #f0f0f0",
       transform: "scale(1.01)",
-      boxShadow: "0 18px 18px 0 rgba(0, 0, 0, 0.2)",
+      /* box-shadow: 0 8px 8px 0 rgba(0, 0, 0, 0.2)", */
     },
   },
   productTumb: {
     width: "100%",
-    height: "280px",
-    // m: 1,
-    // boxShadow: "0 8px 8px 4px rgba(0, 0, 0, 0.2)",
-    borderBottom: "2px solid #325240",
+    height: "270px",
+    borderRadius: "5%",
+    boxShadow: "0 8px 8px 4px rgba(0, 0, 0, 0.2)",
+    border: "2px solid #325240",
     overflow: "hidden",
     "& img": {
       width: "100%",
@@ -153,6 +153,7 @@ const useStyles = makeStyles(() => ({
       color: "#325240",
       textDecoration: "none",
       transition: "0.3s",
+      borderBottom: "2px solid #325240",
     },
     "& h3": {
       fontWeight: "600",
@@ -401,7 +402,7 @@ const Shop = () => {
   };
   React.useEffect(() => {
     allProducts();
-    // getCartProducts();
+    // getwishlistProducts();
   }, []);
   React.useEffect(() => {
     // console.log(cityname);
@@ -409,8 +410,8 @@ const Shop = () => {
     const getSortKey = {
       "Default Sorting": { key: "_id", order: "asc" },
       "Sort by Latest": { key: "create_date", order: "asc" },
-      "Sort by Price: Low to High": { key: "pro_sell_price", order: "desc" },
-      "Sort by Price: High to Low": { key: "pro_sell_price", order: "asc" },
+      "Sort by Price: Low to High": { key: "bid_start_amount", order: "desc" },
+      "Sort by Price: High to Low": { key: "bid_start_amount", order: "asc" },
     };
     setcurrentpageDate(
       ProductData.filter(
@@ -438,130 +439,6 @@ const Shop = () => {
     const indexOfFirstPost = indexOfLastPost - DataperPage;
     return currentpageData.slice(indexOfFirstPost, indexOfLastPost);
   }, [page, currentpageData]);
-  const auctionTimerBox = (, start, end) => {
-    const time = 
-    const setTime = "set" + time;
-    [time, setTime] = React.useState({
-      day: 0,
-      hour: 0,
-      min: 0,
-      sec: 0,
-    });
-    setInterval(() => {
-      const d = new Date();
-      if (end - d.getTime() >= 0 && start <= d.getTime()) {
-        const d = new Date();
-        const diff = end - d.getTime();
-        const day = Math.floor(diff / (1000 * 60 * 60 * 24));
-        const hour = Math.floor((diff / (1000 * 60 * 60)) % 24);
-        const min = Math.floor((diff / (1000 * 60)) % 60);
-        const sec = Math.floor((diff / 1000) % 60);
-        ({
-          day: day,
-          hour: hour,
-          min: min,
-          sec: sec,
-        });
-        console.log("diff: ", diff);
-        console.log("day diff : ", day);
-        console.log("Hours diff : ", hour);
-        console.log("Minutes diff : ", min);
-        console.log("Seconds diff : ", sec);
-      } else if (end - d.getTime() <= 0) {
-        console.log("time ended");
-        setTime({
-          day: 0,
-          hour: 0,
-          min: 0,
-          sec: 0,
-        });
-      } else {
-        console.log("comimg soon");
-        setTime({
-          day: 0,
-          hour: 0,
-          min: 0,
-          sec: 0,
-        });
-      }
-    }, 1000);
-    return (
-      <div>
-        <Box
-          sx={{
-            width: "auto",
-            bgcolor: "#f9f9f9",
-            color: "#325240",
-            textAlign: "center",
-            p: 1,
-            m: 1,
-            border: "2px solid #325240",
-            borderRadius: "10px",
-          }}
-        >
-          <Typography sx={{ mb: 1, fontSize: "14px" }}>
-            {/* {setInterval(() => {
-                      data.pro_end_time.getTime() - date.getTime() >= 0 &&
-                        data.pro_start_time.getTime() <= date.getTime();
-                    }, 1000)} */}
-            Time Left:
-          </Typography>
-
-          <Grid container spacing={0.5}>
-            <Grid item xs={3} sx={{ textAlign: "center" }}>
-              <Typography sx={{ fontSize: "14px" }}>
-                {time.day}
-                <br />
-                Days
-              </Typography>
-            </Grid>
-            <Grid
-              item
-              xs={3}
-              sx={{
-                borderLeft: "1px solid black",
-                textAlign: "center",
-              }}
-            >
-              <Typography sx={{ fontSize: "14px" }}>
-                {time.hour}
-                <br />
-                Hours
-              </Typography>
-            </Grid>
-            <Grid
-              item
-              xs={3}
-              sx={{
-                borderLeft: "1px solid black",
-                textAlign: "center",
-              }}
-            >
-              <Typography sx={{ fontSize: "14px" }}>
-                {time.min}
-                <br />
-                Min
-              </Typography>
-            </Grid>
-            <Grid
-              item
-              xs={3}
-              sx={{
-                borderLeft: "1px solid black",
-                textAlign: "center",
-              }}
-            >
-              <Typography sx={{ fontSize: "14px" }}>
-                {time.sec}
-                <br />
-                Sec
-              </Typography>
-            </Grid>
-          </Grid>
-        </Box>
-      </div>
-    );
-  };
   const displayProductsInShop = () => {
     if (!currentpageData.length) {
       return (
@@ -601,7 +478,6 @@ const Shop = () => {
               width: "100%",
               maxWidth: "90%",
               margin: "auto",
-              justifyContent: "space-between",
             }}
           >
             {DisplayProducts.map((data) => {
@@ -610,63 +486,55 @@ const Shop = () => {
                   className={classes.productCard}
                   key={data._id}
                   onClick={() => {
-                    //const link = `/ibid/products/${data._id}`;
-                    //window.location.replace(link);
+                    const link = `/ibid/auction/${data._id}`;
+                    window.location.replace(link);
                   }}
                 >
                   <Box
                     className={classes.badge}
-                    // onClick={(e) => {
-                    //   const info = {
-                    //     pro_image: data.pro_image,
-                    //     pro_name: data.pro_name,
-                    //     pro_qty: data.pro_qty,
-                    //     pro_sell_price: data.pro_sell_price,
-                    //     pro_unit: data.pro_unit,
-                    //     vendor_id: data.vendor_id,
-                    //     vendor_name: data.vendor_name,
-                    //     _id: data._id,
-                    //   };
-                    //   if (getCookie("account")) {
-                    //     if (getCookie("city") === data.vendor_city) {
-                    //       if (data.pro_stock === "Out of Stock") {
-                    //         setState({
-                    //           open1: true,
-                    //           message: "Sorry Products is Out of Stock",
-                    //         });
-                    //       } else {
-                    //         if (getCart().length <= 9) {
-                    //           addInfoToCart(info);
-                    //           setDeletecartproduct(Math.random());
-                    //           setState({
-                    //             isLogged: true,
-                    //             open1: true,
-                    //             message: "Successfully Product Add in Cart",
-                    //           });
-                    //         } else {
-                    //           setState({
-                    //             open1: true,
-                    //             message:
-                    //               "Sorry, you maximun 10 Products Add in Cart.",
-                    //           });
-                    //         }
-                    //       }
-                    //     } else {
-                    //       setState({
-                    //         open1: true,
-                    //         message:
-                    //           "Sorry, you must be products select in your city.",
-                    //       });
-                    //     }
-                    //   } else {
-                    //     setState({
-                    //       open1: true,
-                    //       message:
-                    //         "Sorry, you must be logged in to place a Cart.",
-                    //     });
-                    //   }
-                    //   e.stopPropagation();
-                    // }}
+                    onClick={(e) => {
+                      const info = {
+                        pro_image: data.pro_image,
+                        pro_name: data.pro_name,
+                        bid_start_amount: data.bid_start_amount,
+                        pro_unit: data.pro_unit,
+                        vendor_id: data.vendor_id,
+                        vendor_name: data.vendor_name,
+                        _id: data._id,
+                      };
+                      if (getCookie("account")) {
+                        if (getCookie("city") === data.vendor_city) {
+                          if (getwishlist().length <= 9) {
+                            addInfoTowishlist(info);
+                            deletewishlistProduct(Math.random());
+                            setState({
+                              isLogged: true,
+                              open1: true,
+                              message: "Successfully Product Add in Cart",
+                            });
+                          } else {
+                            setState({
+                              open1: true,
+                              message:
+                                "Sorry, you maximun 10 Products Add in Cart.",
+                            });
+                          }
+                        } else {
+                          setState({
+                            open1: true,
+                            message:
+                              "Sorry, you must be products select in your city.",
+                          });
+                        }
+                      } else {
+                        setState({
+                          open1: true,
+                          message:
+                            "Sorry, you must be logged in to place a Cart.",
+                        });
+                      }
+                      e.stopPropagation();
+                    }}
                   >
                     <AiFillHeart size="25" />
                   </Box>
@@ -677,15 +545,11 @@ const Shop = () => {
                       alt="products_img"
                     />
                   </Box>
-                  {auctionTimerBox(
-                    data._id,
-                    data.pro_start_time,
-                    data.pro_end_time
-                  )}
+
                   <Box className={classes.productDetails}>
                     <h2>{data.pro_name}</h2>
 
-                    <h3>Bid : {data.pro_sell_price}₹</h3>
+                    <h3>Bid : {data.bid_start_amount}₹</h3>
                   </Box>
                 </Box>
                 // </Link>
@@ -749,7 +613,7 @@ const Shop = () => {
   )}`;
 
   const DisplayCartPopover = () => {
-    const cart_Data = getCart();
+    const cart_Data = getwishlist();
     console.log(cart_Data);
     if (!cart_Data.length) {
       return (
@@ -765,7 +629,7 @@ const Shop = () => {
                 borderBottom: "2px solid #325240",
               }}
             >
-              CART
+              WishList
             </Typography>
             <Box
               sx={{
@@ -780,7 +644,7 @@ const Shop = () => {
                   fontWeight: "550",
                 }}
               >
-                No products in the cart.
+                No products in the WishList.
               </Typography>
             </Box>
           </Box>
@@ -800,10 +664,16 @@ const Shop = () => {
                 borderBottom: "2px solid #325240",
               }}
             >
-              CART
+              WishList
             </Typography>
-            <Box sx={{ borderBottom: "2px solid #325240" }}>
-              <ScrollBox sx={{ overflow: "auto", maxHeight: "232px" }}>
+            <Box>
+              <ScrollBox
+                sx={{
+                  overflow: "auto",
+                  maxHeight: "232px",
+                  borderBottom: "2px solid #325240",
+                }}
+              >
                 {cart_Data.map((data) => {
                   return (
                     <>
@@ -847,7 +717,7 @@ const Shop = () => {
                               color: "#325240",
                             }}
                           >
-                            {data.pro_qty} x ₹ {data.pro_sell_price}
+                            ₹ {data.bid_start_amount}
                           </Typography>
                         </Box>
                         <Box
@@ -870,25 +740,8 @@ const Shop = () => {
                   );
                 })}
               </ScrollBox>
-            </Box>
-            <Box>
-              <Box
-                sx={{
-                  display: "flex",
-                  justifyContent: "space-between",
-                  color: "#325240",
-                  padding: "8px",
-                }}
-              >
-                <Typography sx={{ fontSize: "18px", fontWeight: "550" }}>
-                  SUBTOTAL:
-                </Typography>
-                <Typography sx={{ fontSize: "18px", fontWeight: "550" }}>
-                  ₹{countItem.subtotal.toFixed(2)} /-
-                </Typography>
-              </Box>
               <Link
-                href="/ibid/cart"
+                href="/ibid/wishlist"
                 sx={{
                   textDecoration: "none",
                 }}
@@ -899,37 +752,14 @@ const Shop = () => {
                     color: "#f9f9f9",
                     bgcolor: "#325240",
                     border: "2px solid transparent",
-
+                    mt: 2,
                     "&: hover": {
                       border: "2px solid #325240",
                       color: "#325240",
                     },
                   }}
                 >
-                  View Cart
-                </Button>
-              </Link>
-              <Link
-                href="/ibid/checkout"
-                sx={{
-                  textDecoration: "none",
-                }}
-              >
-                <Button
-                  fullWidth
-                  sx={{
-                    color: "#f9f9f9",
-                    marginTop: "10px",
-                    bgcolor: "#325240",
-                    border: "2px solid transparent",
-
-                    "&: hover": {
-                      border: "2px solid #325240",
-                      color: "#325240",
-                    },
-                  }}
-                >
-                  CheckOut
+                  View WishList
                 </Button>
               </Link>
             </Box>
