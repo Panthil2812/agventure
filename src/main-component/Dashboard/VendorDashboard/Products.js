@@ -35,7 +35,7 @@ import axios from "axios";
 import qs from "query-string";
 import profile from "../../../assets/Images/profile.png";
 import nofound from "../../../assets/Images/nofound.png";
-import { storage } from "../../../Firebase/index";
+import { storage }from "../../../Firebase/index"; 
 import { getCookie } from "../../Validator/CookieFunction";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { ReactSearchAutocomplete } from "react-search-autocomplete";
